@@ -152,8 +152,7 @@ def check_season_ordering(frame: pl.DataFrame, report: LeakageReport) -> Leakage
             check="season_ordering",
             passed=violations.height == 0,
             detail=(
-                f"{violations.height} row(s) have a feature season at or after the outcome "
-                f"season."
+                f"{violations.height} row(s) have a feature season at or after the outcome season."
                 if violations.height
                 else f"All {frame.height} rows have season < target_season."
             ),
@@ -185,8 +184,7 @@ def check_fold_separation(
             check="fold_separation",
             passed=passed,
             detail=(
-                f"Training outcomes reach {max_train} while the test season starts at "
-                f"{min_test}."
+                f"Training outcomes reach {max_train} while the test season starts at {min_test}."
                 if not passed
                 else f"Training outcomes end at {max_train}, test season is {min_test}."
             ),
@@ -230,8 +228,7 @@ def check_no_duplicate_rows(frame: pl.DataFrame, report: LeakageReport) -> Leaka
             check="no_duplicate_rows",
             passed=duplicates.height == 0,
             detail=(
-                f"{duplicates.height} (player, outcome season) combinations appear more "
-                f"than once."
+                f"{duplicates.height} (player, outcome season) combinations appear more than once."
                 if duplicates.height
                 else f"All {frame.height} rows are unique on (player, outcome season)."
             ),

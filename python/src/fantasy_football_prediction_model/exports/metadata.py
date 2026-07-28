@@ -5,13 +5,14 @@ from __future__ import annotations
 import hashlib
 import importlib.metadata
 import subprocess
-from datetime import datetime
 from pathlib import Path
-from typing import Any
 
 from fantasy_football_prediction_model.config import Settings
 from fantasy_football_prediction_model.projections.generate import ProjectionBundle
-from fantasy_football_prediction_model.projections.scoring import rules_from_preset, rules_to_export_dict
+from fantasy_football_prediction_model.projections.scoring import (
+    rules_from_preset,
+    rules_to_export_dict,
+)
 from fantasy_football_prediction_model.schemas import (
     ExportMetadata,
     LeagueDefaultsExport,

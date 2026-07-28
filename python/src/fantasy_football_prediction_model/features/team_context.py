@@ -54,9 +54,7 @@ TEAM_CONTEXT_COLUMNS: tuple[str, ...] = (
 )
 
 
-def build_team_context(
-    team_seasons: pl.DataFrame, pbp_team: pl.DataFrame | None
-) -> pl.DataFrame:
+def build_team_context(team_seasons: pl.DataFrame, pbp_team: pl.DataFrame | None) -> pl.DataFrame:
     """Merge weekly-derived and play-by-play-derived team context."""
     context = team_seasons
     if pbp_team is not None and not pbp_team.is_empty():
@@ -109,9 +107,7 @@ def attach_team_context(frame: pl.DataFrame, team_context: pl.DataFrame) -> pl.D
     return frame.join(context, on=["projected_team", "season"], how="left")
 
 
-def add_vacated_opportunity(
-    frame: pl.DataFrame, team_context: pl.DataFrame
-) -> pl.DataFrame:
+def add_vacated_opportunity(frame: pl.DataFrame, team_context: pl.DataFrame) -> pl.DataFrame:
     """Compute vacated and returning target/carry share for each team-season.
 
     For team ``T`` in season ``t``: the share of ``T``'s season-``t`` targets
@@ -168,9 +164,7 @@ def add_vacated_opportunity(
         (1.0 - pl.col("vacated_carries_share")).alias("returning_carry_competition"),
     )
 
-    coverage = (
-        known.height / frame.height if frame.height else 0.0
-    )
+    coverage = known.height / frame.height if frame.height else 0.0
     logger.info(
         "Vacated-opportunity coverage: %.1f%% of player-seasons have a known week-1 "
         "team for the following season.",
@@ -190,9 +184,7 @@ def add_vacated_opportunity(
     return frame.join(vacancy, on=["projected_team", "season"], how="left")
 
 
-def add_quarterback_context(
-    frame: pl.DataFrame, team_context: pl.DataFrame
-) -> pl.DataFrame:
+def add_quarterback_context(frame: pl.DataFrame, team_context: pl.DataFrame) -> pl.DataFrame:
     """Quarterback quality and expected quarterback change for each offence.
 
     ``qb_quality_prior`` is the season-``t`` EPA per dropback of the team's
@@ -209,9 +201,7 @@ def add_quarterback_context(
             pl.lit(None, dtype=pl.Int8).alias("qb_change_expected"),
         )
 
-    epa_column = (
-        "epa_per_dropback" if "epa_per_dropback" in quarterbacks.columns else "passing_epa"
-    )
+    epa_column = "epa_per_dropback" if "epa_per_dropback" in quarterbacks.columns else "passing_epa"
     primary = (
         quarterbacks.sort("pass_attempts", descending=True, nulls_last=True)
         .group_by(["team", "season"])

@@ -19,7 +19,10 @@ from sklearn.ensemble import (
 from sklearn.linear_model import ElasticNet, Ridge
 
 from fantasy_football_prediction_model.config import PreprocessingSettings
-from fantasy_football_prediction_model.evaluation.metrics import RegressionMetrics, regression_metrics
+from fantasy_football_prediction_model.evaluation.metrics import (
+    RegressionMetrics,
+    regression_metrics,
+)
 from fantasy_football_prediction_model.logging import get_logger
 from fantasy_football_prediction_model.models.preprocessing import (
     FoldPreprocessor,

@@ -83,9 +83,7 @@ class ProjectedStats(ExportModel):
             and self.targets is not None
             and self.receptions > self.targets + tolerance
         ):
-            raise ValueError(
-                f"receptions ({self.receptions}) exceeds targets ({self.targets})."
-            )
+            raise ValueError(f"receptions ({self.receptions}) exceeds targets ({self.targets}).")
         return self
 
 

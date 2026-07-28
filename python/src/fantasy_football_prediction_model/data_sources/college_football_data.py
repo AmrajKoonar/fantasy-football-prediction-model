@@ -109,9 +109,7 @@ def resolve_api_key(explicit: str | None = None) -> str | None:
     return key or None
 
 
-def resolve_rookie_mode(
-    api_key: str | None = None, *, fixture: bool = False
-) -> RookieMode:
+def resolve_rookie_mode(api_key: str | None = None, *, fixture: bool = False) -> RookieMode:
     """Decide which rookie mode this run can use."""
     if fixture:
         return RookieMode.FIXTURE
@@ -184,9 +182,7 @@ class CollegeFootballDataAdapter:
         usage = self._read_usage()
         usage["session_requests"] = self._session_requests
         usage["current_month"] = datetime.now(UTC).strftime("%Y-%m")
-        usage["current_month_requests"] = usage.get("by_month", {}).get(
-            usage["current_month"], 0
-        )
+        usage["current_month_requests"] = usage.get("by_month", {}).get(usage["current_month"], 0)
         usage["note"] = (
             "Counts requests made from this machine only. The authoritative monthly "
             "allowance is enforced by CollegeFootballData."
@@ -347,8 +343,12 @@ class CollegeFootballDataAdapter:
                 .str.to_lowercase()
                 .alias("stat_key"),
             )
-            .pivot(on="stat_key", index=["playerId", "player", "team"], values="stat",
-                   aggregate_function="sum")
+            .pivot(
+                on="stat_key",
+                index=["playerId", "player", "team"],
+                values="stat",
+                aggregate_function="sum",
+            )
             .with_columns(pl.lit(season).alias("college_season"))
         )
         return wide

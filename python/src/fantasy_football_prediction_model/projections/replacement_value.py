@@ -63,7 +63,7 @@ def allocate_flex_demand(
         remaining.extend(players[start:])
     remaining.sort(key=lambda p: (-p.points, p.player_id))
     flex_taken = remaining[: int(flex_slots)]
-    extra = {pos: 0.0 for pos in FANTASY_POSITIONS}
+    extra = dict.fromkeys(FANTASY_POSITIONS, 0.0)
     for player in flex_taken:
         extra[player.position] = extra.get(player.position, 0.0) + 1.0
     return {pos: demand.get(pos, 0.0) + extra.get(pos, 0.0) for pos in FANTASY_POSITIONS}
@@ -79,14 +79,14 @@ def compute_replacement_levels(
     for player in players:
         if player.position in by_pos:
             by_pos[player.position].append(player)
-    for pos in by_pos:
-        by_pos[pos].sort(key=lambda p: (-p.points, p.player_id))
+    for players_at_pos in by_pos.values():
+        players_at_pos.sort(key=lambda p: (-p.points, p.player_id))
 
     if settings.method == "fixed_rank":
         ranks = dict(settings.fixed_rank)
     else:
         demand = allocate_flex_demand(by_pos, league)
-        ranks = {pos: max(int(round(demand[pos])), 1) for pos in FANTASY_POSITIONS}
+        ranks = {pos: max(round(demand[pos]), 1) for pos in FANTASY_POSITIONS}
         # Sanity floor from fixed_rank when a position is thin.
         for pos, floor in settings.fixed_rank.items():
             ranks[pos] = max(ranks.get(pos, floor), 1)

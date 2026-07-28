@@ -79,16 +79,58 @@ def _fixture_players(settings: Settings, count: int = 48) -> list[PlayerProjecti
     """
     seed = settings.seed
     teams = [
-        "KC", "BUF", "PHI", "SF", "DAL", "MIA", "BAL", "DET",
-        "CIN", "GB", "MIN", "LAC", "SEA", "HOU", "ATL", "CHI",
+        "KC",
+        "BUF",
+        "PHI",
+        "SF",
+        "DAL",
+        "MIA",
+        "BAL",
+        "DET",
+        "CIN",
+        "GB",
+        "MIN",
+        "LAC",
+        "SEA",
+        "HOU",
+        "ATL",
+        "CHI",
     ]
     first_names = [
-        "Jordan", "Alex", "Casey", "Riley", "Morgan", "Quinn", "Avery", "Reese",
-        "Cameron", "Drew", "Parker", "Sawyer", "Harper", "Rowan", "Elliot", "Finley",
+        "Jordan",
+        "Alex",
+        "Casey",
+        "Riley",
+        "Morgan",
+        "Quinn",
+        "Avery",
+        "Reese",
+        "Cameron",
+        "Drew",
+        "Parker",
+        "Sawyer",
+        "Harper",
+        "Rowan",
+        "Elliot",
+        "Finley",
     ]
     last_names = [
-        "Brooks", "Hayes", "Coleman", "Bennett", "Foster", "Griffin", "Sullivan",
-        "Pearson", "Walters", "Nash", "Porter", "Reid", "Bishop", "Clarke", "Dunn", "Frost",
+        "Brooks",
+        "Hayes",
+        "Coleman",
+        "Bennett",
+        "Foster",
+        "Griffin",
+        "Sullivan",
+        "Pearson",
+        "Walters",
+        "Nash",
+        "Porter",
+        "Reid",
+        "Bishop",
+        "Clarke",
+        "Dunn",
+        "Frost",
     ]
     position_cycle = ["QB", "RB", "RB", "WR", "WR", "WR", "TE", "TE"]
     rules = rules_from_preset(settings.scoring, "ppr")
@@ -97,7 +139,9 @@ def _fixture_players(settings: Settings, count: int = 48) -> list[PlayerProjecti
     for index in range(count):
         position = position_cycle[index % len(position_cycle)]
         u = _stable_unit(seed, f"player-{index}")
-        name = f"{first_names[index % len(first_names)]} {last_names[(index * 3) % len(last_names)]}"
+        name = (
+            f"{first_names[index % len(first_names)]} {last_names[(index * 3) % len(last_names)]}"
+        )
         if index >= len(first_names):
             name = f"{name} {index}"
         team = teams[index % len(teams)]
@@ -225,7 +269,9 @@ def _fixture_players(settings: Settings, count: int = 48) -> list[PlayerProjecti
             rookie=row["rookie"],
             method="unavailable",
         )
-        label = "high" if row["confidence"] >= 0.7 else "medium" if row["confidence"] >= 0.45 else "low"
+        label = (
+            "high" if row["confidence"] >= 0.7 else "medium" if row["confidence"] >= 0.45 else "low"
+        )
         projected = ProjectedStats(
             games=games,
             pass_attempts=stats.get("pass_attempts"),
@@ -349,7 +395,9 @@ def generate_projections(
     settings = settings or get_settings()
     if fixture:
         players = _fixture_players(settings, count=max(output_count or 48, 20))
-        limit = output_count or min(settings.project_config.project.output_player_count, len(players))
+        limit = output_count or min(
+            settings.project_config.project.output_player_count, len(players)
+        )
         players = players[:limit]
         logger.warning(
             "Generated %d FIXTURE projections. dataMode=fixture — not for production use.",
@@ -400,9 +448,7 @@ def generate_projections(
     if missing:
         raise ValueError(f"projection_features.parquet missing columns: {sorted(missing)}")
     if "display_name" not in frame.columns and "player_name" not in frame.columns:
-        raise ValueError(
-            "projection_features.parquet needs display_name or player_name."
-        )
+        raise ValueError("projection_features.parquet needs display_name or player_name.")
 
     for row in frame.to_dicts():
         position = str(row["position"])
@@ -445,7 +491,9 @@ def generate_projections(
                 short_name=short,
                 team=str(row.get("team") or "FA"),
                 position=position,  # type: ignore[arg-type]
-                age=float(row["age_at_target_season"]) if row.get("age_at_target_season") is not None else None,
+                age=float(row["age_at_target_season"])
+                if row.get("age_at_target_season") is not None
+                else None,
                 experience=int(row["experience_at_target_season"])
                 if row.get("experience_at_target_season") is not None
                 else None,

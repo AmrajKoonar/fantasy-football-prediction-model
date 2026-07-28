@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
 
 import typer
 from rich.console import Console
@@ -35,10 +34,10 @@ logger = get_logger(__name__)
 
 
 def _settings(
-    config: Optional[Path],
-    target_season: Optional[int],
-    offline: Optional[bool],
-    log_level: Optional[str],
+    config: Path | None,
+    target_season: int | None,
+    offline: bool | None,
+    log_level: str | None,
 ):
     settings = load_settings(config_dir=str(config) if config else None)
     if target_season is not None:
@@ -69,12 +68,12 @@ def _settings(
 
 @data_app.command("fetch-nfl")
 def data_fetch_nfl(
-    start_season: Optional[int] = typer.Option(None, "--start-season"),
-    end_season: Optional[int] = typer.Option(None, "--end-season"),
+    start_season: int | None = typer.Option(None, "--start-season"),
+    end_season: int | None = typer.Option(None, "--end-season"),
     force_refresh: bool = typer.Option(False, "--force-refresh"),
     offline: bool = typer.Option(False, "--offline"),
-    config: Optional[Path] = typer.Option(None, "--config"),
-    log_level: Optional[str] = typer.Option(None, "--log-level"),
+    config: Path | None = typer.Option(None, "--config"),
+    log_level: str | None = typer.Option(None, "--log-level"),
 ) -> None:
     """Download and cache nflverse datasets."""
     settings = _settings(config, None, offline, log_level)
@@ -87,16 +86,15 @@ def data_fetch_nfl(
         seasons = list(range(start_season, settings.feature_end_season + 1))
     result = ingest(settings, force_refresh=force_refresh, seasons=seasons)
     console.print(
-        f"[green]Ingested nflverse data[/green]: "
-        f"{result.player_seasons.height} player-seasons."
+        f"[green]Ingested nflverse data[/green]: {result.player_seasons.height} player-seasons."
     )
 
 
 @data_app.command("fetch-rookies")
 def data_fetch_rookies(
     offline: bool = typer.Option(False, "--offline"),
-    config: Optional[Path] = typer.Option(None, "--config"),
-    log_level: Optional[str] = typer.Option(None, "--log-level"),
+    config: Path | None = typer.Option(None, "--config"),
+    log_level: str | None = typer.Option(None, "--log-level"),
 ) -> None:
     """Fetch optional CollegeFootballData rookie enrichment."""
     settings = _settings(config, None, offline, log_level)
@@ -110,9 +108,7 @@ def data_fetch_rookies(
         ttl_hours=settings.project_config.ingestion.cache_ttl_hours,
         offline=settings.project_config.ingestion.offline,
     )
-    client = CollegeFootballDataAdapter(
-        cache, offline=settings.project_config.ingestion.offline
-    )
+    client = CollegeFootballDataAdapter(cache, offline=settings.project_config.ingestion.offline)
     console.print(f"Rookie data mode: [cyan]{client.mode.value}[/cyan]")
     if client.enabled:
         console.print(
@@ -127,8 +123,8 @@ def data_fetch_rookies(
 
 @data_app.command("audit")
 def data_audit(
-    config: Optional[Path] = typer.Option(None, "--config"),
-    log_level: Optional[str] = typer.Option(None, "--log-level"),
+    config: Path | None = typer.Option(None, "--config"),
+    log_level: str | None = typer.Option(None, "--log-level"),
 ) -> None:
     """Write a data-coverage audit report."""
     settings = _settings(config, None, None, log_level)
@@ -138,15 +134,15 @@ def data_audit(
         data = ingest(settings, force_refresh=False)
         paths = write_coverage_reports(data)
         console.print(f"[green]Coverage reports:[/green] {paths}")
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:
         console.print(f"[yellow]Coverage audit unavailable:[/yellow] {exc}")
 
 
 @data_app.command("build-dataset")
 def data_build_dataset(
-    config: Optional[Path] = typer.Option(None, "--config"),
+    config: Path | None = typer.Option(None, "--config"),
     offline: bool = typer.Option(False, "--offline"),
-    log_level: Optional[str] = typer.Option(None, "--log-level"),
+    log_level: str | None = typer.Option(None, "--log-level"),
 ) -> None:
     """Build player-season feature tables and modelling pairs."""
     settings = _settings(config, None, offline, log_level)
@@ -173,8 +169,8 @@ def data_build_dataset(
 
 @research_app.command("features")
 def research_features(
-    config: Optional[Path] = typer.Option(None, "--config"),
-    log_level: Optional[str] = typer.Option(None, "--log-level"),
+    config: Path | None = typer.Option(None, "--config"),
+    log_level: str | None = typer.Option(None, "--log-level"),
 ) -> None:
     """Measure feature coverage, stability and next-season relationships."""
     settings = _settings(config, None, None, log_level)
@@ -186,8 +182,8 @@ def research_features(
 
 @research_app.command("coverage")
 def research_coverage(
-    config: Optional[Path] = typer.Option(None, "--config"),
-    log_level: Optional[str] = typer.Option(None, "--log-level"),
+    config: Path | None = typer.Option(None, "--config"),
+    log_level: str | None = typer.Option(None, "--log-level"),
 ) -> None:
     """Alias for data coverage audit plus feature coverage CSV."""
     data_audit(config=config, log_level=log_level)
@@ -201,9 +197,9 @@ def research_coverage(
 
 @model_app.command("backtest")
 def model_backtest(
-    config: Optional[Path] = typer.Option(None, "--config"),
-    position: Optional[str] = typer.Option(None, "--position"),
-    log_level: Optional[str] = typer.Option(None, "--log-level"),
+    config: Path | None = typer.Option(None, "--config"),
+    position: str | None = typer.Option(None, "--position"),
+    log_level: str | None = typer.Option(None, "--log-level"),
 ) -> None:
     """Rolling-origin backtest of baselines and candidate models."""
     settings = _settings(config, None, None, log_level)
@@ -227,9 +223,9 @@ def model_backtest(
 
 @model_app.command("train")
 def model_train(
-    config: Optional[Path] = typer.Option(None, "--config"),
-    position: Optional[str] = typer.Option(None, "--position"),
-    log_level: Optional[str] = typer.Option(None, "--log-level"),
+    config: Path | None = typer.Option(None, "--config"),
+    position: str | None = typer.Option(None, "--position"),
+    log_level: str | None = typer.Option(None, "--log-level"),
 ) -> None:
     """Train final models for the configured target season."""
     settings = _settings(config, None, None, log_level)
@@ -281,8 +277,8 @@ def model_train(
 
 @model_app.command("evaluate")
 def model_evaluate(
-    config: Optional[Path] = typer.Option(None, "--config"),
-    log_level: Optional[str] = typer.Option(None, "--log-level"),
+    config: Path | None = typer.Option(None, "--config"),
+    log_level: str | None = typer.Option(None, "--log-level"),
 ) -> None:
     """Summarise the latest backtest artifacts."""
     settings = _settings(config, None, None, log_level)
@@ -301,9 +297,9 @@ def model_evaluate(
 @project_app.command("generate")
 def project_generate(
     fixture: bool = typer.Option(False, "--fixture", help="Generate labelled synthetic data."),
-    target_season: Optional[int] = typer.Option(None, "--target-season"),
-    config: Optional[Path] = typer.Option(None, "--config"),
-    log_level: Optional[str] = typer.Option(None, "--log-level"),
+    target_season: int | None = typer.Option(None, "--target-season"),
+    config: Path | None = typer.Option(None, "--config"),
+    log_level: str | None = typer.Option(None, "--log-level"),
 ) -> None:
     """Generate season projections (fixture or production)."""
     settings = _settings(config, target_season, None, log_level)
@@ -331,8 +327,8 @@ def project_generate(
 
 @project_app.command("validate")
 def project_validate(
-    config: Optional[Path] = typer.Option(None, "--config"),
-    log_level: Optional[str] = typer.Option(None, "--log-level"),
+    config: Path | None = typer.Option(None, "--config"),
+    log_level: str | None = typer.Option(None, "--log-level"),
 ) -> None:
     """Validate committed web JSON against Pydantic schemas."""
     settings = _settings(config, None, None, log_level)
@@ -357,7 +353,7 @@ def project_validate(
         try:
             model.model_validate_json(path.read_text(encoding="utf-8"))
             console.print(f"[green]OK[/green] {name}")
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             console.print(f"[red]INVALID {name}:[/red] {exc}")
             errors += 1
     meta_path = web / "metadata.json"
@@ -373,8 +369,8 @@ def project_validate(
 @project_app.command("export-web")
 def project_export_web(
     fixture: bool = typer.Option(False, "--fixture"),
-    config: Optional[Path] = typer.Option(None, "--config"),
-    log_level: Optional[str] = typer.Option(None, "--log-level"),
+    config: Path | None = typer.Option(None, "--config"),
+    log_level: str | None = typer.Option(None, "--log-level"),
 ) -> None:
     """Regenerate and export web JSON (defaults to reusing generate)."""
     project_generate(fixture=fixture, target_season=None, config=config, log_level=log_level)
@@ -391,8 +387,8 @@ def pipeline_run_all(
         False, "--fixture", help="Skip live downloads; emit fixture projections."
     ),
     offline: bool = typer.Option(False, "--offline"),
-    config: Optional[Path] = typer.Option(None, "--config"),
-    log_level: Optional[str] = typer.Option(None, "--log-level"),
+    config: Path | None = typer.Option(None, "--config"),
+    log_level: str | None = typer.Option(None, "--log-level"),
 ) -> None:
     """Run the full pipeline, or fixture export when ``--fixture`` is set."""
     settings = _settings(config, None, offline, log_level)
@@ -408,7 +404,7 @@ def pipeline_run_all(
         model_train(config=config, log_level=log_level)
         project_generate(fixture=False, config=config, log_level=log_level)
         project_validate(config=config, log_level=log_level)
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:
         console.print(f"[red]Pipeline failed:[/red] {exc}")
         console.print(
             "[yellow]Hint:[/yellow] use `ffpm pipeline run-all --fixture` for local UI/CI data."
@@ -418,7 +414,7 @@ def pipeline_run_all(
 
 @pipeline_app.command("status")
 def pipeline_status(
-    config: Optional[Path] = typer.Option(None, "--config"),
+    config: Path | None = typer.Option(None, "--config"),
 ) -> None:
     """Show which artifacts exist on disk."""
     settings = _settings(config, None, None, None)

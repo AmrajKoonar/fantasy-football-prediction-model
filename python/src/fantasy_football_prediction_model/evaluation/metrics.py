@@ -21,9 +21,7 @@ import numpy as np
 from scipy import stats
 
 
-def _clean(
-    predicted: np.ndarray, actual: np.ndarray
-) -> tuple[np.ndarray, np.ndarray]:
+def _clean(predicted: np.ndarray, actual: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     """Drop pairs where either side is missing or non-finite."""
     predicted = np.asarray(predicted, dtype=float).ravel()
     actual = np.asarray(actual, dtype=float).ravel()
@@ -244,8 +242,10 @@ def volume_bucket(values: np.ndarray, *, quantiles: int = 4) -> np.ndarray:
     indices = np.digitize(values, edges, right=True)
     labels = [f"Q{index + 1}" for index in range(edges.size + 1)]
     return np.array(
-        [labels[min(int(index), len(labels) - 1)] if np.isfinite(value) else "unknown"
-         for index, value in zip(indices, values, strict=True)],
+        [
+            labels[min(int(index), len(labels) - 1)] if np.isfinite(value) else "unknown"
+            for index, value in zip(indices, values, strict=True)
+        ],
         dtype=object,
     )
 

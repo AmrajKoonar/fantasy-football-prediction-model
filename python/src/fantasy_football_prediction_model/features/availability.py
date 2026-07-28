@@ -79,7 +79,10 @@ def add_availability_features(
         (pl.col("games_played_share_prev2"), weights[2]),
     ]
     weighted_sum = pl.sum_horizontal(
-        [pl.when(expr.is_not_null()).then(expr * weight).otherwise(0.0) for expr, weight in components]
+        [
+            pl.when(expr.is_not_null()).then(expr * weight).otherwise(0.0)
+            for expr, weight in components
+        ]
     )
     weight_total = pl.sum_horizontal(
         [pl.when(expr.is_not_null()).then(weight).otherwise(0.0) for expr, weight in components]
@@ -120,9 +123,7 @@ def add_availability_features(
     return frame
 
 
-def add_next_season_context(
-    frame: pl.DataFrame, week1_teams: pl.DataFrame | None
-) -> pl.DataFrame:
+def add_next_season_context(frame: pl.DataFrame, week1_teams: pl.DataFrame | None) -> pl.DataFrame:
     """Attach the projected season's week-1 team and derived change flags.
 
     This is the single place where information about season ``t + 1`` enters a
@@ -175,9 +176,7 @@ def add_next_season_context(
     )
 
 
-def add_roster_status_features(
-    frame: pl.DataFrame, rosters: pl.DataFrame
-) -> pl.DataFrame:
+def add_roster_status_features(frame: pl.DataFrame, rosters: pl.DataFrame) -> pl.DataFrame:
     """Attach season-``t`` roster status.
 
     Only the season-``t`` roster row is used. The season-``t+1`` roster is
@@ -214,4 +213,6 @@ def add_depth_chart_features(
         )
     columns = [CANONICAL_ID_COLUMN, "season", "depth_chart_rank", "depth_chart_is_starter"]
     available = [column for column in columns if column in depth_seasons.columns]
-    return frame.join(depth_seasons.select(available), on=[CANONICAL_ID_COLUMN, "season"], how="left")
+    return frame.join(
+        depth_seasons.select(available), on=[CANONICAL_ID_COLUMN, "season"], how="left"
+    )

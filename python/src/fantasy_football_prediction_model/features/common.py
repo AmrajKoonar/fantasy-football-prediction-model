@@ -50,7 +50,6 @@ from fantasy_football_prediction_model.features.availability import (
 )
 from fantasy_football_prediction_model.features.quarterback import add_quarterback_features
 from fantasy_football_prediction_model.features.receiver import (
-    add_receiver_features,
     add_target_competition,
 )
 from fantasy_football_prediction_model.features.running_back import (
@@ -197,8 +196,9 @@ def _attach_player_dimension(frame: pl.DataFrame, data: IngestedData) -> pl.Data
         pl.coalesce([pl.col("birth_date"), pl.col("roster_birth_date")]).alias("birth_date"),
         pl.coalesce([pl.col("height"), pl.col("roster_height")]).alias("height"),
         pl.coalesce([pl.col("weight"), pl.col("roster_weight")]).alias("weight"),
-        pl.coalesce([pl.col("rookie_year"), pl.col("roster_entry_year"), pl.col("draft_year")])
-        .alias("entry_season"),
+        pl.coalesce(
+            [pl.col("rookie_year"), pl.col("roster_entry_year"), pl.col("draft_year")]
+        ).alias("entry_season"),
     ).drop(["roster_birth_date", "roster_height", "roster_weight", "roster_entry_year"])
 
     return joined.with_columns(
@@ -271,12 +271,8 @@ def _add_shared_rates(frame: pl.DataFrame) -> pl.DataFrame:
         safe_ratio(pl.col("fantasy_points_ppr").cast(pl.Float64), games).alias(
             "fantasy_points_ppr_per_game"
         ),
-        safe_ratio(pl.col("fumbles_lost").cast(pl.Float64), games).alias(
-            "fumbles_lost_per_game"
-        ),
-        safe_ratio(pl.col("rushing_yards").cast(pl.Float64), games).alias(
-            "rushing_yards_per_game"
-        ),
+        safe_ratio(pl.col("fumbles_lost").cast(pl.Float64), games).alias("fumbles_lost_per_game"),
+        safe_ratio(pl.col("rushing_yards").cast(pl.Float64), games).alias("rushing_yards_per_game"),
     )
 
 
@@ -286,14 +282,20 @@ def _weighted_lag(column: str, weights: tuple[float, ...]) -> pl.Expr:
     Seasons the player did not record are skipped and the weights renormalise,
     so a two-season veteran is not penalised for having no third season.
     """
-    shifted = [pl.col(column).shift(index).over(CANONICAL_ID_COLUMN) for index in range(len(weights))]
+    shifted = [
+        pl.col(column).shift(index).over(CANONICAL_ID_COLUMN) for index in range(len(weights))
+    ]
     numerator = pl.sum_horizontal(
-        [pl.when(expr.is_not_null()).then(expr * weight).otherwise(0.0)
-         for expr, weight in zip(shifted, weights, strict=True)]
+        [
+            pl.when(expr.is_not_null()).then(expr * weight).otherwise(0.0)
+            for expr, weight in zip(shifted, weights, strict=True)
+        ]
     )
     denominator = pl.sum_horizontal(
-        [pl.when(expr.is_not_null()).then(weight).otherwise(0.0)
-         for expr, weight in zip(shifted, weights, strict=True)]
+        [
+            pl.when(expr.is_not_null()).then(weight).otherwise(0.0)
+            for expr, weight in zip(shifted, weights, strict=True)
+        ]
     )
     return pl.when(denominator > 0).then(numerator / denominator).otherwise(None)
 
@@ -329,12 +331,15 @@ def _add_lag_and_trend_features(frame: pl.DataFrame) -> pl.DataFrame:
         .over(CANONICAL_ID_COLUMN)
         .alias("career_fantasy_points"),
         pl.col("games").cum_sum().over(CANONICAL_ID_COLUMN).alias("career_games"),
-        pl.col("fantasy_points_ppr").cum_max().over(CANONICAL_ID_COLUMN).alias(
-            "best_season_fantasy_points"
-        ),
-        pl.col("season").cum_count().over(CANONICAL_ID_COLUMN).cast(pl.Int64).alias(
-            "seasons_observed"
-        ),
+        pl.col("fantasy_points_ppr")
+        .cum_max()
+        .over(CANONICAL_ID_COLUMN)
+        .alias("best_season_fantasy_points"),
+        pl.col("season")
+        .cum_count()
+        .over(CANONICAL_ID_COLUMN)
+        .cast(pl.Int64)
+        .alias("seasons_observed"),
     ]
 
     for source, target in trend_columns.items():
@@ -373,9 +378,7 @@ def _add_lag_and_trend_features(frame: pl.DataFrame) -> pl.DataFrame:
         if name in frame.columns
     ]
     if trend_parts:
-        frame = frame.with_columns(
-            pl.mean_horizontal(trend_parts).alias("opportunity_trend")
-        )
+        frame = frame.with_columns(pl.mean_horizontal(trend_parts).alias("opportunity_trend"))
     else:
         frame = frame.with_columns(pl.lit(None, dtype=pl.Float64).alias("opportunity_trend"))
 
@@ -508,9 +511,9 @@ def _add_age_features(frame: pl.DataFrame) -> pl.DataFrame:
     )
     frame = frame.with_columns(
         (pl.col("age_at_target_season") ** 2).alias("age_squared"),
-        (pl.col("target_season") - pl.col("entry_season")).clip(0, None).alias(
-            "experience_at_target_season"
-        ),
+        (pl.col("target_season") - pl.col("entry_season"))
+        .clip(0, None)
+        .alias("experience_at_target_season"),
     )
     return frame.with_columns(
         (pl.col("experience_at_target_season") == 0).cast(pl.Int8).alias("is_rookie_season")
@@ -543,11 +546,7 @@ def _attach_outcomes(
     joined = frame.join(season_outcomes, on=[CANONICAL_ID_COLUMN, "target_season"], how="left")
 
     outcome_columns = [column for column in joined.columns if column.startswith("outcome_")]
-    numeric = [
-        column
-        for column in outcome_columns
-        if joined.schema[column].is_numeric()
-    ]
+    numeric = [column for column in outcome_columns if joined.schema[column].is_numeric()]
 
     joined = joined.with_columns(
         pl.col("outcome_games").is_not_null().cast(pl.Int8).alias("target_played")
@@ -591,9 +590,7 @@ def build_feature_table(
 
     # Outcome seasons that can be supervised: everything after the first
     # season with data, up to and including the last observed season.
-    training_seasons = list(
-        range(settings.data_start_season + 1, settings.feature_end_season + 1)
-    )
+    training_seasons = list(range(settings.data_start_season + 1, settings.feature_end_season + 1))
     pairs = build_modelling_pairs(
         data, season_features, training_seasons, lookback=lookback, attach_outcomes=True
     )

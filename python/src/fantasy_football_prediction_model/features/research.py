@@ -71,9 +71,7 @@ def run_feature_research(settings: Settings) -> dict[str, Path]:
     predict_rows: list[dict[str, Any]] = []
 
     target_col = (
-        "outcome_fantasy_points_ppr"
-        if "outcome_fantasy_points_ppr" in pairs.columns
-        else None
+        "outcome_fantasy_points_ppr" if "outcome_fantasy_points_ppr" in pairs.columns else None
     )
     y = (
         pairs.get_column(target_col).cast(pl.Float64, strict=False).fill_null(0.0).to_numpy()

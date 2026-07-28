@@ -230,11 +230,7 @@ class RidgeBaseline(BaselineModel):
         feature_columns: Sequence[str] | None = None,
     ) -> RidgeBaseline:
         cols = list(feature_columns or [])
-        numeric = [
-            c
-            for c in cols
-            if c in train.columns and train.schema[c].is_numeric()
-        ][:40]
+        numeric = [c for c in cols if c in train.columns and train.schema[c].is_numeric()][:40]
         if not numeric:
             numeric = [
                 c
@@ -300,13 +296,13 @@ class HistoricalMedianOpportunity(BaselineModel):
         opportunity = _col_or_zero(train, self._opportunity_column)
         finite = opportunity[np.isfinite(opportunity)]
         if finite.size >= self.n_tiers * 2:
-            self._edges = np.unique(
-                np.quantile(finite, np.linspace(0, 1, self.n_tiers + 1)[1:-1])
-            )
+            self._edges = np.unique(np.quantile(finite, np.linspace(0, 1, self.n_tiers + 1)[1:-1]))
         else:
             self._edges = np.array([])
-        tiers = np.digitize(opportunity, self._edges, right=True) if self._edges.size else np.zeros(
-            train.height, dtype=int
+        tiers = (
+            np.digitize(opportunity, self._edges, right=True)
+            if self._edges.size
+            else np.zeros(train.height, dtype=int)
         )
         for tier in np.unique(tiers):
             mask = tiers == tier
@@ -377,6 +373,6 @@ def fit_and_predict_baselines(
             model.fit(train, target_column=target_column, feature_columns=feature_columns)
             values = model.predict(test)
             results.append(BaselinePrediction(name=name, values=values))
-        except Exception as exc:  # noqa: BLE001 - baselines must not abort a fold
+        except Exception as exc:
             logger.warning("Baseline %s failed: %s", name, exc)
     return results

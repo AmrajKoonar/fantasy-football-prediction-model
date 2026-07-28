@@ -151,7 +151,9 @@ class DataCache:
         try:
             return pl.read_parquet(path)
         except (pl.exceptions.PolarsError, OSError) as exc:
-            logger.warning("Cached file %s could not be read (%s); it will be refetched.", path, exc)
+            logger.warning(
+                "Cached file %s could not be read (%s); it will be refetched.", path, exc
+            )
             return None
 
     def require(self, source: str, key: str) -> pl.DataFrame:

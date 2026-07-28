@@ -31,14 +31,15 @@ logger = get_logger(__name__)
 def _atomic_write_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     fd, tmp_name = tempfile.mkstemp(prefix=path.name, suffix=".tmp", dir=path.parent)
+    tmp_path = Path(tmp_name)
     try:
         with os.fdopen(fd, "w", encoding="utf-8") as handle:
             json.dump(payload, handle, indent=2, default=str)
             handle.write("\n")
-        os.replace(tmp_name, path)
+        tmp_path.replace(path)
     finally:
-        if os.path.exists(tmp_name):
-            os.unlink(tmp_name)
+        if tmp_path.exists():
+            tmp_path.unlink()
 
 
 def _key_opportunity(player: Any) -> tuple[str | None, float | None]:

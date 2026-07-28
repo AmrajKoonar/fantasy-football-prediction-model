@@ -42,11 +42,15 @@ def add_tight_end_features(frame: pl.DataFrame) -> pl.DataFrame:
             room = tight_ends.group_by(["team", "season"]).agg(
                 pl.col("targets").fill_null(0).sum().alias("_team_te_targets")
             )
-            frame = frame.join(room, on=["team", "season"], how="left").with_columns(
-                safe_ratio(
-                    pl.col("targets").cast(pl.Float64), pl.col("_team_te_targets")
-                ).alias("team_tight_end_target_share")
-            ).drop("_team_te_targets")
+            frame = (
+                frame.join(room, on=["team", "season"], how="left")
+                .with_columns(
+                    safe_ratio(
+                        pl.col("targets").cast(pl.Float64), pl.col("_team_te_targets")
+                    ).alias("team_tight_end_target_share")
+                )
+                .drop("_team_te_targets")
+            )
         else:
             frame = frame.with_columns(
                 pl.lit(None, dtype=pl.Float64).alias("team_tight_end_target_share")
@@ -66,16 +70,14 @@ def add_tight_end_features(frame: pl.DataFrame) -> pl.DataFrame:
             ).alias("routes_per_team_dropback")
         )
     else:
-        frame = frame.with_columns(
-            pl.lit(None, dtype=pl.Float64).alias("routes_per_team_dropback")
-        )
+        frame = frame.with_columns(pl.lit(None, dtype=pl.Float64).alias("routes_per_team_dropback"))
 
     # The gap between snap share and route participation is the inline signal.
     if {"snap_share", "route_participation"} <= set(frame.columns):
         frame = frame.with_columns(
-            (
-                pl.col("snap_share").cast(pl.Float64) - pl.col("route_participation")
-            ).alias("inline_usage_gap")
+            (pl.col("snap_share").cast(pl.Float64) - pl.col("route_participation")).alias(
+                "inline_usage_gap"
+            )
         )
     else:
         frame = frame.with_columns(pl.lit(None, dtype=pl.Float64).alias("inline_usage_gap"))

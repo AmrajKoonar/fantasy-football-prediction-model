@@ -2,10 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any
-
 from fantasy_football_prediction_model.schemas import ExplanationBlock, ExplanationFactor
-
 
 FEATURE_LABELS: dict[str, str] = {
     "targets": "Targets",
@@ -110,9 +107,7 @@ def build_explanation(
     negative = negative[:top_n]
     optimistic = ", ".join(f.label for f in positive) or "stable recent usage"
     cautious = ", ".join(f.label for f in negative) or "role or supporting-cast uncertainty"
-    summary = (
-        f"Associated with {optimistic}. Caution associated with {cautious}."
-    )
+    summary = f"Associated with {optimistic}. Caution associated with {cautious}."
     return ExplanationBlock(
         positive_factors=positive,
         negative_factors=negative,

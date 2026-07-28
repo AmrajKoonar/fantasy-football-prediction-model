@@ -41,12 +41,20 @@ def build_rookie_features(
 
     if combine is not None and not combine.is_empty():
         # Best-effort join on name when IDs are absent.
-        join_keys = [c for c in ("pfr_id", "cfb_id", "player_name") if c in frame.columns and c in combine.columns]
+        join_keys = [
+            c
+            for c in ("pfr_id", "cfb_id", "player_name")
+            if c in frame.columns and c in combine.columns
+        ]
         if join_keys:
             frame = frame.join(combine, on=join_keys[0], how="left", suffix="_combine")
 
     if college_stats is not None and not college_stats.is_empty():
-        keys = [c for c in ("cfbd_id", "player_name") if c in frame.columns and c in college_stats.columns]
+        keys = [
+            c
+            for c in ("cfbd_id", "player_name")
+            if c in frame.columns and c in college_stats.columns
+        ]
         if keys:
             frame = frame.join(college_stats, on=keys[0], how="left", suffix="_college")
             logger.info("Joined college stats for rookie features (full mode).")

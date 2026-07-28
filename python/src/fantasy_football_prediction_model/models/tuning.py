@@ -75,10 +75,7 @@ def inner_holdout_split(
         return train.head(split), train.tail(train.height - split)
 
     seasons = sorted(train.get_column(season_column).unique().to_list())
-    if len(seasons) <= holdout_seasons:
-        holdout_cut = seasons[-1:]
-    else:
-        holdout_cut = seasons[-holdout_seasons:]
+    holdout_cut = seasons[-1:] if len(seasons) <= holdout_seasons else seasons[-holdout_seasons:]
     holdout = train.filter(pl.col(season_column).is_in(holdout_cut))
     fit = train.filter(~pl.col(season_column).is_in(holdout_cut))
     if fit.is_empty():
@@ -108,9 +105,7 @@ def tune_estimator(
             search_space=space,
         )
 
-    fit_frame, holdout = inner_holdout_split(
-        train, holdout_seasons=tuning.inner_holdout_seasons
-    )
+    fit_frame, holdout = inner_holdout_split(train, holdout_seasons=tuning.inner_holdout_seasons)
     if holdout.is_empty():
         logger.warning("Inner holdout empty for %s; skipping tuning.", algorithm)
         return TuningResult(
@@ -133,7 +128,7 @@ def tune_estimator(
     scale = algorithm in LINEAR_ALGORITHMS
     for params in trials:
         # sklearn rejects JSON-null max_depth; YAML null becomes None already.
-        cleaned = {k: v for k, v in params.items()}
+        cleaned = dict(params.items())
         try:
             preprocessor = FoldPreprocessor(
                 settings=preprocessing,
@@ -155,7 +150,7 @@ def tune_estimator(
             if best_mae is None or mae < best_mae:
                 best_mae = mae
                 best_params = cleaned
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             logger.debug("Tuning trial failed for %s params=%s: %s", algorithm, cleaned, exc)
 
     logger.info(

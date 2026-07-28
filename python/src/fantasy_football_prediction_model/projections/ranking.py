@@ -84,11 +84,7 @@ def assign_gap_tiers(
     current_tier = 1
     current_size = 1
     for i, gap in enumerate(gaps):
-        if (
-            gap > threshold
-            and current_size >= min_tier_size
-            and current_tier < max_tiers
-        ):
+        if gap > threshold and current_size >= min_tier_size and current_tier < max_tiers:
             current_tier += 1
             current_size = 1
         else:
@@ -120,9 +116,7 @@ def rank_players(
 
     draft_order = sorted(enriched, key=lambda item: _tie_key(item[0], item[1], item[2]))
     points_order = sorted(enriched, key=lambda item: (-item[0].points, item[0].player_id))
-    ppg_order = sorted(
-        enriched, key=lambda item: (-item[0].points_per_game, item[0].player_id)
-    )
+    ppg_order = sorted(enriched, key=lambda item: (-item[0].points_per_game, item[0].player_id))
     vorp_order = sorted(enriched, key=lambda item: (-item[1], item[0].player_id))
     risk_order = sorted(enriched, key=lambda item: (-item[2], item[0].player_id))
 
@@ -138,7 +132,7 @@ def rank_players(
         min_tier_size=league.tiers.min_tier_size,
     )
 
-    pos_counters = {pos: 0 for pos in FANTASY_POSITIONS}
+    pos_counters = dict.fromkeys(FANTASY_POSITIONS, 0)
     ranked: list[RankedPlayer] = []
     for overall, ((player, value, risk_value), tier) in enumerate(
         zip(draft_order, tiers, strict=True), start=1

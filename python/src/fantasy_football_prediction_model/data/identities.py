@@ -35,9 +35,7 @@ logger = get_logger(__name__)
 
 _PUNCTUATION = re.compile(r"[^a-z0-9 ]+")
 _WHITESPACE = re.compile(r"\s+")
-_SUFFIX_PATTERN = re.compile(
-    r"\s+(" + "|".join(suffix.lower() for suffix in NAME_SUFFIXES) + r")$"
-)
+_SUFFIX_PATTERN = re.compile(r"\s+(" + "|".join(suffix.lower() for suffix in NAME_SUFFIXES) + r")$")
 
 
 # ---------------------------------------------------------------------------
@@ -334,8 +332,15 @@ class PlayerIdentityResolver:
             source = self._first_available(players, candidates)
             if source is None:
                 selections.append(pl.lit(None).alias(target))
-            elif target in {"height", "weight", "draft_year", "draft_round", "draft_pick",
-                            "rookie_year", "entry_year"}:
+            elif target in {
+                "height",
+                "weight",
+                "draft_year",
+                "draft_round",
+                "draft_pick",
+                "rookie_year",
+                "entry_year",
+            }:
                 selections.append(pl.col(source).cast(pl.Float64, strict=False).alias(target))
             else:
                 selections.append(pl.col(source).cast(pl.Utf8).alias(target))
@@ -426,8 +431,10 @@ class PlayerIdentityResolver:
 
         crosswalk = ff_playerids.select(
             pl.col("gsis_id").cast(pl.Utf8).alias(CANONICAL_ID_COLUMN),
-            *[pl.col(source).cast(pl.Utf8).alias(f"{target}_ff") for target, source in
-              available.items()],
+            *[
+                pl.col(source).cast(pl.Utf8).alias(f"{target}_ff")
+                for target, source in available.items()
+            ],
         ).unique(subset=[CANONICAL_ID_COLUMN], keep="first")
 
         merged = dimension.join(crosswalk, on=CANONICAL_ID_COLUMN, how="left")
@@ -717,7 +724,5 @@ class PlayerIdentityResolver:
         """Write the unresolved-identity audit report."""
         path.parent.mkdir(parents=True, exist_ok=True)
         self.report.to_frame().write_csv(path)
-        logger.info(
-            "Wrote %d identity issue(s) to %s.", len(self.report.issues), path
-        )
+        logger.info("Wrote %d identity issue(s) to %s.", len(self.report.issues), path)
         return path

@@ -131,8 +131,12 @@ class IngestedData:
                 {
                     "dataset": status.name,
                     "description": spec.description if spec else "",
-                    "earliest_season": min(status.seasons_present) if status.seasons_present else None,
-                    "latest_season": max(status.seasons_present) if status.seasons_present else None,
+                    "earliest_season": min(status.seasons_present)
+                    if status.seasons_present
+                    else None,
+                    "latest_season": max(status.seasons_present)
+                    if status.seasons_present
+                    else None,
                     "positions_covered": _positions_for(status.name),
                     "row_count": status.rows,
                     "column_count": status.columns,
@@ -176,8 +180,7 @@ def _status_for(
     seasons_present: list[int] = []
     if "season" in frame.columns:
         seasons_present = sorted(
-            int(season)
-            for season in frame.get_column("season").drop_nulls().unique().to_list()
+            int(season) for season in frame.get_column("season").drop_nulls().unique().to_list()
         )
     missing = sorted(set(requested) - set(seasons_present)) if requested and seasons_present else []
 
@@ -344,9 +347,7 @@ def ingest(
     corrections = _read_manual_csv(
         settings.repo_root / settings.project_config.overrides.id_corrections_file
     )
-    resolver = PlayerIdentityResolver(
-        players, ff_playerids=ff_playerids, corrections=corrections
-    )
+    resolver = PlayerIdentityResolver(players, ff_playerids=ff_playerids, corrections=corrections)
     logger.info("Canonical player dimension holds %d players.", resolver.dimension.height)
 
     # -- season tables -------------------------------------------------------
@@ -376,9 +377,7 @@ def ingest(
             target_season,
             settings.feature_end_season,
         )
-        target_rosters = normalised_rosters.filter(
-            pl.col("season") == settings.feature_end_season
-        )
+        target_rosters = normalised_rosters.filter(pl.col("season") == settings.feature_end_season)
 
     target_depth = aggregate_depth_charts(depth_charts, season=target_season)
 
@@ -515,9 +514,7 @@ def _normalise_rosters(rosters: pl.DataFrame) -> pl.DataFrame:
         if column in frame.columns:
             casts.append(pl.col(column).cast(dtype, strict=False))
     if "birth_date" in frame.columns:
-        casts.append(
-            pl.col("birth_date").cast(pl.Utf8).str.slice(0, 10).str.to_date(strict=False)
-        )
+        casts.append(pl.col("birth_date").cast(pl.Utf8).str.slice(0, 10).str.to_date(strict=False))
     return frame.with_columns(casts) if casts else frame
 
 
@@ -644,8 +641,6 @@ def write_coverage_reports(data: IngestedData) -> tuple[Path, Path]:
     )
     json_path = settings.path("web_data_dir") / "data-coverage.json"
     json_path.parent.mkdir(parents=True, exist_ok=True)
-    json_path.write_text(
-        payload.model_dump_json(by_alias=True, indent=2), encoding="utf-8"
-    )
+    json_path.write_text(payload.model_dump_json(by_alias=True, indent=2), encoding="utf-8")
     logger.info("Wrote the data-coverage matrix to %s and %s.", csv_path, json_path)
     return csv_path, json_path

@@ -292,7 +292,7 @@ def nflverse_package_versions() -> dict[str, str]:
 
 def _import_nflreadpy() -> Any:
     try:
-        import nflreadpy  # noqa: PLC0415
+        import nflreadpy
     except ImportError as exc:  # pragma: no cover - install-time failure
         raise DataUnavailableError(
             "The nflreadpy package is not installed, so no NFL data can be fetched.",
@@ -432,7 +432,7 @@ class NflverseAdapter:
                     self.max_retries,
                 )
                 return _to_polars(loader(**kwargs))
-            except Exception as exc:  # noqa: BLE001 - retry any transport failure
+            except Exception as exc:
                 last_error = exc
                 if attempt >= self.max_retries:
                     break

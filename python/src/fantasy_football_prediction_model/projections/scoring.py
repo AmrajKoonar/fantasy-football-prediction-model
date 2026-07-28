@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
-from typing import Any, Mapping
+from typing import Any
 
 from fantasy_football_prediction_model.config import ScoringConfig, ScoringRules
 
@@ -21,6 +22,7 @@ class ScoreBreakdown:
 
 def score_stats(stats: Mapping[str, float | None], rules: ScoringRules) -> ScoreBreakdown:
     """Score a mapping of snake_case or camelCase projected statistics."""
+
     def g(*keys: str) -> float:
         for key in keys:
             value = stats.get(key)

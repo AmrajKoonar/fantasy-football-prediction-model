@@ -73,9 +73,7 @@ class ValidationReport:
             log("[%s] %s (%d affected)", result.check, result.message, result.count)
         return result
 
-    def ok(
-        self, check: str, message: str = "", *, dataset: str = ""
-    ) -> ValidationResult:
+    def ok(self, check: str, message: str = "", *, dataset: str = "") -> ValidationResult:
         return self.add(
             ValidationResult(
                 check=check,
@@ -180,8 +178,11 @@ def check_required_columns(
             dataset=dataset,
         )
     else:
-        report.ok("required_columns", f"{dataset} has all {len(columns)} required columns.",
-                  dataset=dataset)
+        report.ok(
+            "required_columns",
+            f"{dataset} has all {len(columns)} required columns.",
+            dataset=dataset,
+        )
 
 
 def check_not_empty(frame: pl.DataFrame, *, dataset: str, report: ValidationReport) -> None:
@@ -285,8 +286,7 @@ def check_stat_bounds(
                 examples.append(f"{identifier}: {column}={row[column]}")
             report.fail(
                 "stat_bounds",
-                f"{dataset}.{column} has {violations.height} value(s) outside "
-                f"[{low}, {high}].",
+                f"{dataset}.{column} has {violations.height} value(s) outside [{low}, {high}].",
                 severity=severity,
                 count=violations.height,
                 examples=examples,
@@ -328,9 +328,7 @@ def check_ratio_consistency(
                 dataset=dataset,
             )
         else:
-            report.ok(
-                "ratio_consistency", f"{dataset}: {smaller} <= {larger}.", dataset=dataset
-            )
+            report.ok("ratio_consistency", f"{dataset}: {smaller} <= {larger}.", dataset=dataset)
 
 
 def check_games_within_schedule(
@@ -371,8 +369,9 @@ def check_games_within_schedule(
             dataset=dataset,
         )
     else:
-        report.ok("games_within_schedule", f"{dataset}: games are within schedule.",
-                  dataset=dataset)
+        report.ok(
+            "games_within_schedule", f"{dataset}: games are within schedule.", dataset=dataset
+        )
 
 
 def check_positions(
@@ -396,8 +395,7 @@ def check_positions(
         examples = sorted({str(v) for v in invalid.get_column(column).to_list()})[:10]
         report.fail(
             "valid_positions",
-            f"{dataset} has {invalid.height} row(s) with a position outside "
-            f"{FANTASY_POSITIONS}.",
+            f"{dataset} has {invalid.height} row(s) with a position outside {FANTASY_POSITIONS}.",
             severity=severity,
             count=invalid.height,
             examples=examples,
@@ -451,9 +449,7 @@ def check_finite(
     offenders: list[str] = []
     total = 0
     for column in numeric:
-        count = int(
-            frame.select(pl.col(column).is_infinite().fill_null(False).sum()).item() or 0
-        )
+        count = int(frame.select(pl.col(column).is_infinite().fill_null(False).sum()).item() or 0)
         if count:
             offenders.append(f"{column} ({count})")
             total += count
@@ -529,9 +525,7 @@ def check_target_season_alignment(
             dataset=dataset,
         )
         return
-    misaligned = frame.filter(
-        pl.col(target_season_column) != pl.col(feature_season_column) + 1
-    )
+    misaligned = frame.filter(pl.col(target_season_column) != pl.col(feature_season_column) + 1)
     if misaligned.height:
         report.fail(
             "target_season_alignment",

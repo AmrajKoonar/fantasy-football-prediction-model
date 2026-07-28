@@ -37,9 +37,9 @@ def add_running_back_features(frame: pl.DataFrame) -> pl.DataFrame:
         safe_ratio(carries, games).alias("carries_per_game"),
         safe_ratio(targets, games).alias("rb_targets_per_game"),
         safe_ratio(receptions, games).alias("receptions_per_game"),
-        (
-            CARRY_WEIGHT * carries.fill_null(0) + TARGET_WEIGHT * targets.fill_null(0)
-        ).alias("weighted_opportunity"),
+        (CARRY_WEIGHT * carries.fill_null(0) + TARGET_WEIGHT * targets.fill_null(0)).alias(
+            "weighted_opportunity"
+        ),
         # Rushing efficiency, gated on volume.
         safe_ratio(
             pl.col("rushing_yards").cast(pl.Float64), carries, min_denominator=MIN_CARRIES
@@ -67,9 +67,7 @@ def add_running_back_features(frame: pl.DataFrame) -> pl.DataFrame:
     )
 
     frame = frame.with_columns(
-        safe_ratio(
-            pl.col("weighted_opportunity"), games
-        ).alias("weighted_opportunity_per_game")
+        safe_ratio(pl.col("weighted_opportunity"), games).alias("weighted_opportunity_per_game")
     )
 
     # Share of team opportunity. The denominators come from the player's own
@@ -139,9 +137,7 @@ def add_backfield_competition(frame: pl.DataFrame) -> pl.DataFrame:
         pl.col("carries").fill_null(0).sum().alias("_room_carries")
     )
     joined = frame.join(
-        room.select(
-            pl.col("next_team").alias("projected_team"), "season", "_room_carries"
-        ),
+        room.select(pl.col("next_team").alias("projected_team"), "season", "_room_carries"),
         on=["projected_team", "season"],
         how="left",
     )

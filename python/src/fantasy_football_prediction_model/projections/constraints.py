@@ -88,9 +88,7 @@ def apply_constraints(
     return out
 
 
-def enforce_quantile_ordering(
-    low: float, median: float, high: float
-) -> tuple[float, float, float]:
+def enforce_quantile_ordering(low: float, median: float, high: float) -> tuple[float, float, float]:
     """Ensure low ≤ median ≤ high."""
     median = float(median)
     low = min(float(low), median)

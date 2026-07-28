@@ -55,8 +55,8 @@ def package_versions() -> dict[str, str]:
 def git_commit(repo_root: Path) -> str | None:
     """Current commit SHA, or ``None`` outside a git checkout."""
     try:
-        result = subprocess.run(  # noqa: S603
-            ["git", "rev-parse", "HEAD"],  # noqa: S607
+        result = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
             cwd=repo_root,
             capture_output=True,
             text=True,
@@ -73,8 +73,8 @@ def git_commit(repo_root: Path) -> str | None:
 def git_is_dirty(repo_root: Path) -> bool | None:
     """Whether the working tree has uncommitted changes."""
     try:
-        result = subprocess.run(  # noqa: S603
-            ["git", "status", "--porcelain"],  # noqa: S607
+        result = subprocess.run(
+            ["git", "status", "--porcelain"],
             cwd=repo_root,
             capture_output=True,
             text=True,

@@ -37,9 +37,7 @@ def add_receiver_features(frame: pl.DataFrame) -> pl.DataFrame:
         safe_ratio(air_yards, games).alias("air_yards_per_game"),
         # Efficiency, volume-gated.
         safe_ratio(receptions, targets, min_denominator=MIN_TARGETS).alias("catch_rate"),
-        safe_ratio(receiving_yards, targets, min_denominator=MIN_TARGETS).alias(
-            "yards_per_target"
-        ),
+        safe_ratio(receiving_yards, targets, min_denominator=MIN_TARGETS).alias("yards_per_target"),
         safe_ratio(receiving_yards, receptions, min_denominator=MIN_RECEPTIONS).alias(
             "yards_per_reception"
         ),

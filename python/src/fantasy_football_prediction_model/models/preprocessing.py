@@ -38,8 +38,7 @@ class FeatureMatrix:
             raise ValueError(f"Feature matrix must be 2-D, got shape {self.values.shape}.")
         if self.values.shape[1] != len(self.columns):
             raise ValueError(
-                f"Feature matrix has {self.values.shape[1]} columns but "
-                f"{len(self.columns)} names."
+                f"Feature matrix has {self.values.shape[1]} columns but {len(self.columns)} names."
             )
 
     @property
@@ -206,9 +205,7 @@ def extract_target(frame: pl.DataFrame, column: str) -> np.ndarray:
     return frame.get_column(column).cast(pl.Float64, strict=False).fill_null(0.0).to_numpy()
 
 
-def apply_minimum_volume(
-    frame: pl.DataFrame, min_volume: dict[str, float]
-) -> pl.DataFrame:
+def apply_minimum_volume(frame: pl.DataFrame, min_volume: dict[str, float]) -> pl.DataFrame:
     """Null out rate features computed from too little volume.
 
     A completion percentage from four attempts is noise dressed up as a

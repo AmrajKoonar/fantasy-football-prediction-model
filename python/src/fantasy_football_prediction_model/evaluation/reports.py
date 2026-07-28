@@ -46,7 +46,9 @@ def write_backtest_artifacts(result: BacktestResult, directory: Path) -> dict[st
         )
         comparison_rows = grouped.to_dicts()
     comparison_path = directory / "model-comparison.csv"
-    pl.DataFrame(comparison_rows).write_csv(comparison_path) if comparison_rows else comparison_path.write_text(
+    pl.DataFrame(comparison_rows).write_csv(
+        comparison_path
+    ) if comparison_rows else comparison_path.write_text(
         "position,target,model,mae\n", encoding="utf-8"
     )
     written["model_comparison"] = comparison_path
@@ -139,14 +141,18 @@ def build_model_performance_file(
     rank_records: list[RankMetricRecord] = []
 
     if summary.height:
-        for row in summary.group_by(["position", "target", "model", "is_baseline"]).agg(
-            pl.col("mae").mean().alias("mae"),
-            pl.col("rmse").mean().alias("rmse"),
-            pl.col("r2").mean().alias("r2"),
-            pl.col("bias").mean().alias("bias"),
-            pl.col("n").sum().alias("n"),
-            pl.col("spearman").mean().alias("spearman"),
-        ).to_dicts():
+        for row in (
+            summary.group_by(["position", "target", "model", "is_baseline"])
+            .agg(
+                pl.col("mae").mean().alias("mae"),
+                pl.col("rmse").mean().alias("rmse"),
+                pl.col("r2").mean().alias("r2"),
+                pl.col("bias").mean().alias("bias"),
+                pl.col("n").sum().alias("n"),
+                pl.col("spearman").mean().alias("spearman"),
+            )
+            .to_dicts()
+        ):
             key = f"{row['position']}:{row['target']}"
             record = MetricRecord(
                 position=row["position"],

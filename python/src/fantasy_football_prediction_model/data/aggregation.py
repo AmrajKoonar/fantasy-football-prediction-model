@@ -201,10 +201,7 @@ def aggregate_player_seasons(weekly: pl.DataFrame) -> pl.DataFrame:
                 .sum()
             )
             aggregations.append(
-                pl.when(denominator > 0)
-                .then(numerator / denominator)
-                .otherwise(None)
-                .alias(rate)
+                pl.when(denominator > 0).then(numerator / denominator).otherwise(None).alias(rate)
             )
 
     seasons = (
@@ -335,8 +332,9 @@ def aggregate_team_seasons(team_weekly: pl.DataFrame) -> pl.DataFrame:
     # Dropbacks approximate team pass volume better than attempts alone,
     # because a sack consumes a pass play without recording an attempt.
     aggregated = aggregated.with_columns(
-        (pl.col("team_pass_attempts").fill_null(0) + pl.col("team_sacks_allowed").fill_null(0))
-        .alias("team_dropbacks")
+        (
+            pl.col("team_pass_attempts").fill_null(0) + pl.col("team_sacks_allowed").fill_null(0)
+        ).alias("team_dropbacks")
     ).with_columns(
         (pl.col("team_dropbacks") + pl.col("team_rush_attempts").fill_null(0)).alias("team_plays"),
         (pl.col("team_passing_tds").fill_null(0) + pl.col("team_rushing_tds").fill_null(0)).alias(
@@ -378,7 +376,9 @@ def _safe_divide(numerator: str, denominator: str) -> pl.Expr:
     )
 
 
-def safe_ratio(numerator: pl.Expr, denominator: pl.Expr, *, min_denominator: float = 0.0) -> pl.Expr:
+def safe_ratio(
+    numerator: pl.Expr, denominator: pl.Expr, *, min_denominator: float = 0.0
+) -> pl.Expr:
     """Null-safe, minimum-volume-aware division for expression pipelines."""
     return (
         pl.when(denominator.is_not_null() & (denominator > max(min_denominator, 0.0)))
@@ -387,12 +387,12 @@ def safe_ratio(numerator: pl.Expr, denominator: pl.Expr, *, min_denominator: flo
     )
 
 
-def add_team_scoring(
-    team_seasons: pl.DataFrame, schedules: pl.DataFrame | None
-) -> pl.DataFrame:
+def add_team_scoring(team_seasons: pl.DataFrame, schedules: pl.DataFrame | None) -> pl.DataFrame:
     """Attach points scored per game from the schedule's final scores."""
     if schedules is None or schedules.is_empty():
-        return team_seasons.with_columns(pl.lit(None, dtype=pl.Float64).alias("team_points_per_game"))
+        return team_seasons.with_columns(
+            pl.lit(None, dtype=pl.Float64).alias("team_points_per_game")
+        )
 
     regular = schedules
     if "game_type" in schedules.columns:
@@ -764,42 +764,36 @@ def aggregate_pbp_player_features(pbp: pl.DataFrame | None) -> pl.DataFrame | No
     rush_plays = plays.filter(
         (pl.col("rush_attempt") == 1) & pl.col("rusher_player_id").is_not_null()
     )
-    rushing = (
-        rush_plays.group_by(
-            [pl.col("rusher_player_id").cast(pl.Utf8).alias(CANONICAL_ID_COLUMN), "season"]
-        )
-        .agg(
-            pl.len().alias("pbp_carries"),
-            (pl.col("yardline_100") <= RED_ZONE_YARDLINE).sum().alias("rz_carries"),
-            (pl.col("yardline_100") <= INSIDE_FIVE_YARDLINE).sum().alias("inside_five_carries"),
-            (pl.col("epa") > 0).mean().alias("rushing_success_rate"),
-            (pl.col("yards_gained") >= 10).mean().alias("explosive_run_rate"),
-            (pl.col("yards_gained") <= 0).mean().alias("stuffed_run_rate"),
-            pl.col("epa").mean().alias("rushing_epa_per_carry"),
-            (pl.col("down") == 3).mean().alias("third_down_carry_rate"),
-        )
+    rushing = rush_plays.group_by(
+        [pl.col("rusher_player_id").cast(pl.Utf8).alias(CANONICAL_ID_COLUMN), "season"]
+    ).agg(
+        pl.len().alias("pbp_carries"),
+        (pl.col("yardline_100") <= RED_ZONE_YARDLINE).sum().alias("rz_carries"),
+        (pl.col("yardline_100") <= INSIDE_FIVE_YARDLINE).sum().alias("inside_five_carries"),
+        (pl.col("epa") > 0).mean().alias("rushing_success_rate"),
+        (pl.col("yards_gained") >= 10).mean().alias("explosive_run_rate"),
+        (pl.col("yards_gained") <= 0).mean().alias("stuffed_run_rate"),
+        pl.col("epa").mean().alias("rushing_epa_per_carry"),
+        (pl.col("down") == 3).mean().alias("third_down_carry_rate"),
     )
 
     pass_plays = plays.filter(
         (pl.col("pass_attempt") == 1) & pl.col("receiver_player_id").is_not_null()
     )
-    receiving = (
-        pass_plays.group_by(
-            [pl.col("receiver_player_id").cast(pl.Utf8).alias(CANONICAL_ID_COLUMN), "season"]
-        )
-        .agg(
-            pl.len().alias("pbp_targets"),
-            (pl.col("yardline_100") <= RED_ZONE_YARDLINE).sum().alias("rz_targets"),
-            pl.col("air_yards")
-            .filter(pl.col("air_yards") >= pl.col("yardline_100"))
-            .len()
-            .alias("end_zone_targets"),
-            (pl.col("epa") > 0).mean().alias("receiving_success_rate"),
-            (pl.col("air_yards") >= 20).mean().alias("deep_target_rate"),
-            pl.col("air_yards").mean().alias("adot"),
-            pl.col("epa").mean().alias("receiving_epa_per_target"),
-            (pl.col("down") == 3).mean().alias("third_down_target_rate"),
-        )
+    receiving = pass_plays.group_by(
+        [pl.col("receiver_player_id").cast(pl.Utf8).alias(CANONICAL_ID_COLUMN), "season"]
+    ).agg(
+        pl.len().alias("pbp_targets"),
+        (pl.col("yardline_100") <= RED_ZONE_YARDLINE).sum().alias("rz_targets"),
+        pl.col("air_yards")
+        .filter(pl.col("air_yards") >= pl.col("yardline_100"))
+        .len()
+        .alias("end_zone_targets"),
+        (pl.col("epa") > 0).mean().alias("receiving_success_rate"),
+        (pl.col("air_yards") >= 20).mean().alias("deep_target_rate"),
+        pl.col("air_yards").mean().alias("adot"),
+        pl.col("epa").mean().alias("receiving_epa_per_target"),
+        (pl.col("down") == 3).mean().alias("third_down_target_rate"),
     )
 
     passer = None
@@ -808,21 +802,20 @@ def aggregate_pbp_player_features(pbp: pl.DataFrame | None) -> pl.DataFrame | No
             pl.col("passer_player_id").is_not_null()
             & ((pl.col("pass_attempt") == 1) | (pl.col("sack") == 1))
         )
-        passer = (
-            dropbacks.group_by(
-                [pl.col("passer_player_id").cast(pl.Utf8).alias(CANONICAL_ID_COLUMN), "season"]
-            )
-            .agg(
-                pl.len().alias("dropbacks"),
-                pl.col("epa").mean().alias("epa_per_dropback"),
-                (pl.col("epa") > 0).mean().alias("passing_success_rate"),
-                (pl.col("sack") == 1).mean().alias("sack_rate"),
-                (pl.col("yardline_100") <= RED_ZONE_YARDLINE).sum().alias("rz_pass_attempts"),
-                (pl.col("air_yards") >= 20).mean().alias("deep_attempt_rate"),
-            )
+        passer = dropbacks.group_by(
+            [pl.col("passer_player_id").cast(pl.Utf8).alias(CANONICAL_ID_COLUMN), "season"]
+        ).agg(
+            pl.len().alias("dropbacks"),
+            pl.col("epa").mean().alias("epa_per_dropback"),
+            (pl.col("epa") > 0).mean().alias("passing_success_rate"),
+            (pl.col("sack") == 1).mean().alias("sack_rate"),
+            (pl.col("yardline_100") <= RED_ZONE_YARDLINE).sum().alias("rz_pass_attempts"),
+            (pl.col("air_yards") >= 20).mean().alias("deep_attempt_rate"),
         )
 
-    combined = rushing.join(receiving, on=[CANONICAL_ID_COLUMN, "season"], how="full", coalesce=True)
+    combined = rushing.join(
+        receiving, on=[CANONICAL_ID_COLUMN, "season"], how="full", coalesce=True
+    )
     if passer is not None:
         combined = combined.join(
             passer, on=[CANONICAL_ID_COLUMN, "season"], how="full", coalesce=True
@@ -851,20 +844,18 @@ def aggregate_pbp_team_features(pbp: pl.DataFrame | None) -> pl.DataFrame | None
     aggregations = [
         pl.len().alias("team_pbp_plays"),
         (pl.col("yardline_100") <= RED_ZONE_YARDLINE).sum().alias("team_rz_plays"),
-        (
-            (pl.col("play_type") == "pass") & (pl.col("yardline_100") <= RED_ZONE_YARDLINE)
-        ).sum().alias("team_rz_pass_plays"),
-        (
-            (pl.col("play_type") == "run") & (pl.col("yardline_100") <= RED_ZONE_YARDLINE)
-        ).sum().alias("team_rz_rush_plays"),
+        ((pl.col("play_type") == "pass") & (pl.col("yardline_100") <= RED_ZONE_YARDLINE))
+        .sum()
+        .alias("team_rz_pass_plays"),
+        ((pl.col("play_type") == "run") & (pl.col("yardline_100") <= RED_ZONE_YARDLINE))
+        .sum()
+        .alias("team_rz_rush_plays"),
     ]
     if "wp" in plays.columns and "half_seconds_remaining" in plays.columns:
         # "Neutral" script: competitive win probability, outside two-minute
         # situations, where play calling reflects preference not necessity.
         neutral = (
-            (pl.col("wp") >= 0.2)
-            & (pl.col("wp") <= 0.8)
-            & (pl.col("half_seconds_remaining") > 120)
+            (pl.col("wp") >= 0.2) & (pl.col("wp") <= 0.8) & (pl.col("half_seconds_remaining") > 120)
         )
         aggregations.append(
             (pl.col("play_type") == "pass").filter(neutral).mean().alias("team_neutral_pass_rate")
@@ -880,8 +871,7 @@ def aggregate_pbp_team_features(pbp: pl.DataFrame | None) -> pl.DataFrame | None
             .agg(
                 pl.len().alias("plays"),
                 (
-                    pl.col("game_seconds_remaining").max()
-                    - pl.col("game_seconds_remaining").min()
+                    pl.col("game_seconds_remaining").max() - pl.col("game_seconds_remaining").min()
                 ).alias("elapsed_seconds"),
             )
             .group_by(["team", "season"])

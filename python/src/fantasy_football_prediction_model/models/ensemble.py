@@ -68,7 +68,5 @@ class WeightedEnsemble(BaseEstimator, RegressorMixin):
             raise RuntimeError("WeightedEnsemble has no members.")
         blended = np.zeros(X.shape[0], dtype=float)
         for member in self.members:
-            blended += member.weight * np.asarray(
-                member.model.estimator.predict(X), dtype=float
-            )
+            blended += member.weight * np.asarray(member.model.estimator.predict(X), dtype=float)
         return blended

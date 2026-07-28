@@ -83,11 +83,11 @@ def run_backtest(
     )
 
     for position in positions:
-        pos_pairs = pairs.filter(pl.col("position") == position) if "position" in pairs.columns else pairs
+        pos_pairs = (
+            pairs.filter(pl.col("position") == position) if "position" in pairs.columns else pairs
+        )
         if pos_pairs.height < model_cfg.backtest.min_train_rows:
-            logger.warning(
-                "Skipping backtest for %s: only %d rows.", position, pos_pairs.height
-            )
+            logger.warning("Skipping backtest for %s: only %d rows.", position, pos_pairs.height)
             continue
         feature_candidates = settings.features.candidate_features(position)
         for target in targets_by_position.get(position, ()):
@@ -222,7 +222,7 @@ def run_backtest(
                         )
                         if metrics.mae is not None:
                             mae_by_model.setdefault(key, []).append(metrics.mae)
-                    except Exception as exc:  # noqa: BLE001
+                    except Exception as exc:
                         logger.warning(
                             "Backtest fold failed %s/%s/%s/%s: %s",
                             position,
@@ -233,9 +233,7 @@ def run_backtest(
                         )
 
             if mae_by_model:
-                averages = {
-                    name: float(np.mean(values)) for name, values in mae_by_model.items()
-                }
+                averages = {name: float(np.mean(values)) for name, values in mae_by_model.items()}
                 winner = min(averages, key=averages.get)
                 result.selected_models[f"{position}:{target}"] = winner
                 logger.info(

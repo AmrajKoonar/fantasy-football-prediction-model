@@ -72,9 +72,9 @@ def add_quarterback_features(frame: pl.DataFrame) -> pl.DataFrame:
         safe_ratio(
             pl.col("rushing_tds").cast(pl.Float64), carries, min_denominator=MIN_RUSH_ATTEMPTS
         ).alias("qb_rushing_td_rate"),
-        safe_ratio(
-            pl.col("rushing_yards").cast(pl.Float64), games, min_denominator=0
-        ).alias("qb_rushing_yards_per_game"),
+        safe_ratio(pl.col("rushing_yards").cast(pl.Float64), games, min_denominator=0).alias(
+            "qb_rushing_yards_per_game"
+        ),
     ]
 
     frame = frame.with_columns(features)
