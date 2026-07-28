@@ -1,0 +1,84 @@
+# ---------------------------------------------------------------------------
+# Fantasy scoring rules.
+#
+# These values are the single source of truth. The Python scoring engine and
+# the TypeScript client-side scoring engine both consume this shape, and a
+# regression test asserts the two implementations agree on a fixed fixture.
+#
+# `yards_per_point` means "this many yards produce one fantasy point".
+# ---------------------------------------------------------------------------
+default_preset: ppr
+
+presets:
+  standard:
+    label: Standard (no PPR)
+    description: No points for receptions.
+    rules:
+      passing:
+        yards_per_point: 25
+        touchdown: 4
+        interception: -2
+        two_point_conversion: 2
+      rushing:
+        yards_per_point: 10
+        touchdown: 6
+        two_point_conversion: 2
+      receiving:
+        reception: 0
+        yards_per_point: 10
+        touchdown: 6
+        two_point_conversion: 2
+      misc:
+        fumble_lost: -2
+
+  half_ppr:
+    label: Half PPR
+    description: Half a point per reception.
+    rules:
+      passing:
+        yards_per_point: 25
+        touchdown: 4
+        interception: -2
+        two_point_conversion: 2
+      rushing:
+        yards_per_point: 10
+        touchdown: 6
+        two_point_conversion: 2
+      receiving:
+        reception: 0.5
+        yards_per_point: 10
+        touchdown: 6
+        two_point_conversion: 2
+      misc:
+        fumble_lost: -2
+
+  ppr:
+    label: Full PPR
+    description: One point per reception. Project default.
+    rules:
+      passing:
+        yards_per_point: 25
+        touchdown: 4
+        interception: -2
+        two_point_conversion: 2
+      rushing:
+        yards_per_point: 10
+        touchdown: 6
+        two_point_conversion: 2
+      receiving:
+        reception: 1
+        yards_per_point: 10
+        touchdown: 6
+        two_point_conversion: 2
+      misc:
+        fumble_lost: -2
+
+# ---------------------------------------------------------------------------
+# Optional transparent bonuses. Disabled by default so the headline numbers
+# stay comparable to standard league settings.
+# ---------------------------------------------------------------------------
+bonuses:
+  enabled: false
+  passing_yards_300_bonus: 0
+  rushing_yards_100_bonus: 0
+  receiving_yards_100_bonus: 0

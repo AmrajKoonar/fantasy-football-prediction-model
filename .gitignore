@@ -1,0 +1,98 @@
+# ---------------------------------------------------------------------------
+# Secrets
+# ---------------------------------------------------------------------------
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+secrets.json
+
+# ---------------------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib60/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.venv/
+venv/
+env/
+ENV/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+.hypothesis/
+.ipynb_checkpoints/
+
+# ---------------------------------------------------------------------------
+# Node / Next.js
+# ---------------------------------------------------------------------------
+node_modules/
+.next/
+out/
+.vercel/
+*.tsbuildinfo
+next-env.d.ts
+coverage/
+playwright-report/
+test-results/
+blob-report/
+.playwright/
+.turbo/
+
+# ---------------------------------------------------------------------------
+# Data: raw and cached downloads are NEVER committed.
+# They are large, redistributable-with-conditions, and fully reproducible.
+# See data/README.md for the full policy.
+# ---------------------------------------------------------------------------
+data/raw/**
+!data/raw/.gitkeep
+data/cache/**
+!data/cache/.gitkeep
+data/interim/**
+!data/interim/.gitkeep
+data/processed/**
+!data/processed/.gitkeep
+
+# Personal (non-example) manual override files
+data/manual/player-context.csv
+data/manual/projection-overrides.csv
+
+# ---------------------------------------------------------------------------
+# Artifacts: model binaries are not committed; small reports are.
+# ---------------------------------------------------------------------------
+artifacts/models/**
+!artifacts/models/.gitkeep
+artifacts/evaluations/*.parquet
+artifacts/projections/*.parquet
+
+# ---------------------------------------------------------------------------
+# OS / editor
+# ---------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp

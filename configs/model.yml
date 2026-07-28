@@ -1,0 +1,219 @@
+# ---------------------------------------------------------------------------
+# Modelling configuration: backtesting, candidate algorithms, tuning bounds,
+# uncertainty and post-processing constraints.
+# ---------------------------------------------------------------------------
+
+backtest:
+  # Rolling-origin evaluation. Fold `n` trains on every player-season pair
+  # whose OUTCOME season is <= n, then predicts outcome season n + 1.
+  # The first fold is late enough that advanced-era features have coverage
+  # and the training set is large enough to be meaningful.
+  first_test_season: 2018
+  last_test_season: 2025
+
+  # Expanding window (train on everything available) vs sliding window.
+  window: expanding      # expanding | sliding
+  sliding_window_seasons: 8
+
+  # Minimum training rows per position-target before a fold is scored.
+  min_train_rows: 150
+
+  # Rank metrics are computed on the top-N of each fold's actual results.
+  rank_top_k: [12, 24, 50, 100]
+
+# ---------------------------------------------------------------------------
+# Candidate algorithms. `enabled: false` keeps a model documented but skipped.
+# Optional backends (lightgbm / xgboost) are skipped automatically and
+# without error when the package is not installed.
+# ---------------------------------------------------------------------------
+candidates:
+  ridge:
+    enabled: true
+    algorithm: Ridge
+    optional_dependency: null
+  elastic_net:
+    enabled: true
+    algorithm: ElasticNet
+    optional_dependency: null
+  random_forest:
+    enabled: true
+    algorithm: RandomForestRegressor
+    optional_dependency: null
+  extra_trees:
+    enabled: true
+    algorithm: ExtraTreesRegressor
+    optional_dependency: null
+  hist_gbm:
+    enabled: true
+    algorithm: HistGradientBoostingRegressor
+    optional_dependency: null
+  gradient_boosting:
+    enabled: false          # superseded by hist_gbm; kept for reference
+    algorithm: GradientBoostingRegressor
+    optional_dependency: null
+  lightgbm:
+    enabled: true
+    algorithm: LGBMRegressor
+    optional_dependency: lightgbm
+  xgboost:
+    enabled: true
+    algorithm: XGBRegressor
+    optional_dependency: xgboost
+  ensemble:
+    enabled: true
+    algorithm: WeightedEnsemble
+    optional_dependency: null
+    # Blend the best `top_k` candidates, weighted by inverse fold MAE.
+    top_k: 3
+
+# ---------------------------------------------------------------------------
+# Hyperparameter search. Kept deliberately small so a full run finishes on a
+# free GitHub-hosted runner and an ordinary laptop.
+# ---------------------------------------------------------------------------
+tuning:
+  enabled: true
+  strategy: randomized     # randomized | grid | none
+  n_iter: 12
+  # Inner validation uses the last `inner_holdout_seasons` outcome seasons of
+  # the training window, so tuning never sees the fold's test season.
+  inner_holdout_seasons: 2
+  n_jobs: -1
+
+  search_space:
+    ridge:
+      alpha: [0.1, 0.3, 1.0, 3.0, 10.0, 30.0, 100.0]
+    elastic_net:
+      alpha: [0.01, 0.03, 0.1, 0.3, 1.0]
+      l1_ratio: [0.1, 0.3, 0.5, 0.7, 0.9]
+    random_forest:
+      n_estimators: [300]
+      max_depth: [null, 6, 10, 16]
+      min_samples_leaf: [1, 3, 5, 10]
+      max_features: [0.4, 0.7, 1.0]
+    extra_trees:
+      n_estimators: [300]
+      max_depth: [null, 8, 14]
+      min_samples_leaf: [1, 3, 5, 10]
+      max_features: [0.4, 0.7, 1.0]
+    hist_gbm:
+      learning_rate: [0.02, 0.05, 0.08, 0.12]
+      max_depth: [null, 3, 5, 7]
+      max_leaf_nodes: [15, 31, 63]
+      min_samples_leaf: [10, 20, 40]
+      l2_regularization: [0.0, 0.5, 2.0]
+      max_iter: [300]
+    lightgbm:
+      learning_rate: [0.02, 0.05, 0.1]
+      num_leaves: [15, 31, 63]
+      min_child_samples: [10, 20, 40]
+      reg_lambda: [0.0, 1.0, 5.0]
+      n_estimators: [300]
+    xgboost:
+      learning_rate: [0.02, 0.05, 0.1]
+      max_depth: [3, 5, 7]
+      min_child_weight: [1, 5, 10]
+      subsample: [0.7, 1.0]
+      colsample_bytree: [0.7, 1.0]
+      n_estimators: [300]
+
+# ---------------------------------------------------------------------------
+# Projection architecture comparison.
+#
+# `direct`    - predict the season total for each statistic directly.
+# `component` - predict expected games, per-game opportunity and per-
+#               opportunity efficiency, then multiply them together.
+#
+# Both are backtested. The winner is chosen per position-target on
+# out-of-sample fantasy-point MAE, and the comparison is published.
+# ---------------------------------------------------------------------------
+architecture:
+  compare: [direct, component]
+  # Tie-break toward the simpler architecture when MAE differs by less than
+  # this fraction, to avoid churning on noise.
+  relative_tolerance: 0.01
+  default: direct
+
+# ---------------------------------------------------------------------------
+# Preprocessing.
+# ---------------------------------------------------------------------------
+preprocessing:
+  # Imputation strategy per feature kind. Fitted on training rows only.
+  numeric_imputer: median
+  add_missing_indicators: true
+  # Rate features computed from small denominators are unreliable; below the
+  # threshold the rate is set to null and the missing indicator fires.
+  min_volume:
+    pass_attempts: 50
+    rush_attempts: 20
+    targets: 15
+    routes: 50
+    games: 4
+  # Robust clipping of extreme feature values at these training quantiles.
+  winsorize:
+    enabled: true
+    lower_quantile: 0.005
+    upper_quantile: 0.995
+  scale_linear_models: true
+
+# ---------------------------------------------------------------------------
+# Uncertainty.
+# ---------------------------------------------------------------------------
+uncertainty:
+  quantiles: [0.2, 0.5, 0.8]
+  # `residual` calibrates intervals from out-of-fold residuals grouped by
+  # position and opportunity tier. `quantile_model` fits explicit quantile
+  # regressors. Both are evaluated for coverage; `residual` is the default
+  # because it stays calibrated with small samples.
+  method: residual          # residual | quantile_model
+  opportunity_tiers: 4
+  # Minimum out-of-fold residuals required in a bucket before it is used;
+  # otherwise the position-wide residual pool is used.
+  min_bucket_size: 40
+
+  confidence:
+    # Weights must sum to 1.0. Validated at load time.
+    weights:
+      sample_size: 0.22
+      feature_coverage: 0.18
+      interval_width: 0.25
+      role_stability: 0.20
+      model_agreement: 0.15
+    labels:
+      high: 0.70
+      medium: 0.45
+      # anything below `medium` is labelled low
+
+# ---------------------------------------------------------------------------
+# Football constraints applied to raw model output.
+# ---------------------------------------------------------------------------
+constraints:
+  enabled: true
+  # Maximum games comes from the target-season schedule when available.
+  # This fallback is used only if the schedule dataset cannot be loaded.
+  fallback_games_per_season: 17
+  # Upper bounds as a multiple of the historical maximum observed for the
+  # position since data_start_season. Generous on purpose so genuine breakout
+  # projections are not clipped back to last season's range.
+  historical_max_multiplier: 1.15
+  min_games: 0.0
+  # Ratio consistency, enforced in this order.
+  enforce:
+    - completions_le_attempts
+    - receptions_le_targets
+    - non_negative_counts
+    - non_negative_yards
+    - games_within_schedule
+    - quantile_ordering
+
+# ---------------------------------------------------------------------------
+# Explanations.
+# ---------------------------------------------------------------------------
+explanations:
+  # `shap` when the package is importable and the model is tree-based,
+  # otherwise permutation importance. Never an external AI service.
+  method: auto              # auto | shap | permutation
+  top_factors: 4
+  permutation_repeats: 5
+  # Only surface a factor when its absolute contribution clears this share of
+  # the largest contribution, so weak noise factors are not narrated.
+  min_relative_contribution: 0.12

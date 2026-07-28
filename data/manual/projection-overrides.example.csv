@@ -1,0 +1,4 @@
+player_id,player_name,field,new_value,reason,source_note,date_entered
+00-0000000,Example Player,games,14.0,Expect a reduced schedule based on a publicly announced suspension,Official league announcement,2026-07-01
+00-0000001,Another Example,targets,150.0,Expect a larger role after the departure of the previous target leader,Personal judgement,2026-07-01
+00-0000002,Third Example,role_multiplier,1.10,Scale every projected opportunity statistic by 10 percent,Personal judgement,2026-07-01

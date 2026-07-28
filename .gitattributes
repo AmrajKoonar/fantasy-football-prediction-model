@@ -1,0 +1,25 @@
+# Normalise line endings so Windows and WSL/Linux checkouts stay identical.
+* text=auto eol=lf
+
+# Windows-only scripts must keep CRLF.
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary formats.
+*.parquet binary
+*.joblib binary
+*.png binary
+*.jpg binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+
+# Generated data should not pollute pull-request diffs.
+web/public/data/*.json linguist-generated=true -diff
+python/uv.lock linguist-generated=true -diff
+web/package-lock.json linguist-generated=true -diff
+package-lock.json linguist-generated=true -diff
+
+# Notebooks are documentation, not code, for language statistics.
+*.ipynb linguist-documentation=true

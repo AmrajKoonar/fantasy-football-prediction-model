@@ -1,0 +1,73 @@
+# ---------------------------------------------------------------------------
+# Default league settings used for value-over-replacement (VORP) rankings.
+#
+# The web application lets the user change all of these client-side; VORP is
+# recomputed in the browser without re-running any machine learning.
+# ---------------------------------------------------------------------------
+league:
+  teams: 12
+
+  starters:
+    qb: 1
+    rb: 2
+    wr: 2
+    te: 1
+    flex: 1        # RB / WR / TE
+    superflex: 0   # QB / RB / WR / TE
+
+  bench_size: 6
+
+# ---------------------------------------------------------------------------
+# Replacement level.
+#
+# `demand_based` derives the replacement rank from actual starter demand:
+#
+#   base_demand[pos]   = teams * starters[pos]
+#   flex_demand        = teams * (flex + superflex)
+#
+# Flex demand is distributed across flex-eligible positions in proportion to
+# how many of the top `flex_demand` remaining players at each position clear
+# the flex bar. This is deterministic and documented in docs/METHODOLOGY.md.
+#
+# `fixed_rank` instead uses the explicit ranks below.
+# ---------------------------------------------------------------------------
+replacement:
+  method: demand_based   # demand_based | fixed_rank
+
+  # Used when method == fixed_rank, and as a sanity floor otherwise.
+  fixed_rank:
+    QB: 14
+    RB: 30
+    WR: 36
+    TE: 13
+
+  # Replacement points are the average of players ranked in this window
+  # around the replacement rank, which is more stable than a single player.
+  smoothing_window: 3
+
+  # Never let replacement value be computed from fewer than this many players.
+  min_players_per_position: 8
+
+# ---------------------------------------------------------------------------
+# Risk-adjusted ranking.
+#
+#   risk_adjusted_value = vorp - penalty_weight * (median - low) / 2
+#
+# The penalty is half the downside interval width, scaled. The formula is
+# printed in the UI so nothing is hidden.
+# ---------------------------------------------------------------------------
+risk:
+  penalty_weight: 0.35
+
+# ---------------------------------------------------------------------------
+# Tiering.
+#
+# Method `gap` walks the VORP-sorted list and starts a new tier when the drop
+# to the next player exceeds `gap_sigma` standard deviations of the observed
+# consecutive gaps within that position.
+# ---------------------------------------------------------------------------
+tiers:
+  method: gap        # gap | quantile
+  gap_sigma: 1.0
+  max_tiers: 10
+  min_tier_size: 2

@@ -1,0 +1,4 @@
+player_id,player_name,field,old_value,new_value,reason,source_note,date_entered
+00-0000000,Example Player,team,ABC,XYZ,Signed with a new team after the last nflverse roster refresh,Official team transaction page,2026-07-01
+00-0000001,Another Example,position,WR,TE,Listed at the wrong position in the source roster data,Team depth chart,2026-07-01
+00-0000002,Third Example,active,false,true,Returned to the active roster from the reserve list,Official transaction wire,2026-07-02

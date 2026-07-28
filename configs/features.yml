@@ -1,0 +1,302 @@
+# ---------------------------------------------------------------------------
+# Feature groups.
+#
+# Nothing here is automatically trusted. Every candidate feature is measured
+# by `ffpm research features`, and the research artifacts under
+# artifacts/feature-research/ record why each feature was kept or dropped.
+#
+# `era_start` documents the first season with usable league-wide coverage.
+# Rows before that season get a missing indicator rather than being deleted,
+# so early seasons still contribute to the core model.
+# ---------------------------------------------------------------------------
+
+groups:
+  # -------------------------------------------------------------------------
+  identity:
+    description: Player biography and draft capital. Long history.
+    era_start: 2012
+    required: true
+    features:
+      - age_at_target_season
+      - age_squared
+      - experience
+      - is_rookie_season
+      - height
+      - weight
+      - bmi
+      - draft_round
+      - draft_pick
+      - draft_capital_log
+      - is_undrafted
+
+  # -------------------------------------------------------------------------
+  availability:
+    description: >
+      Durability and role continuity. Deliberately built from games played,
+      roster status and workload rather than injury reports, because the
+      nflverse injury feed does not reliably cover seasons after 2024.
+    era_start: 2012
+    required: true
+    features:
+      - games_played
+      - games_played_share
+      - games_played_prev2
+      - games_played_prev3
+      - games_missed_3yr
+      - durability_score
+      - team_changed
+      - position_changed
+      - seasons_with_team
+      - roster_status_active
+      - depth_chart_rank
+      - depth_chart_is_starter
+
+  # -------------------------------------------------------------------------
+  production_core:
+    description: Core box-score production. Available for the full history.
+    era_start: 2012
+    required: true
+    features:
+      - fantasy_points_ppr
+      - fantasy_points_ppr_per_game
+      - fantasy_points_ppr_w2
+      - fantasy_points_ppr_w3
+      - fantasy_points_ppr_trend
+      - career_fantasy_points_per_game
+      - best_season_fantasy_points
+
+  # -------------------------------------------------------------------------
+  opportunity:
+    description: Volume and share of team opportunity - the most stable signal.
+    era_start: 2012
+    required: true
+    features:
+      - pass_attempts
+      - pass_attempts_per_game
+      - dropbacks
+      - dropbacks_per_game
+      - carries
+      - carries_per_game
+      - rush_share
+      - targets
+      - targets_per_game
+      - target_share
+      - air_yards
+      - air_yards_share
+      - wopr
+      - receptions
+      - weighted_opportunity
+      - opportunity_trend
+
+  # -------------------------------------------------------------------------
+  efficiency:
+    description: Per-opportunity efficiency derived from play-by-play.
+    era_start: 2012
+    required: true
+    features:
+      - epa_per_dropback
+      - passing_epa
+      - cpoe
+      - completion_pct
+      - yards_per_attempt
+      - adjusted_yards_per_attempt
+      - passing_td_rate
+      - interception_rate
+      - sack_rate
+      - passing_success_rate
+      - yards_per_carry
+      - rushing_epa_per_carry
+      - rushing_success_rate
+      - explosive_run_rate
+      - stuffed_run_rate
+      - catch_rate
+      - yards_per_target
+      - yards_per_reception
+      - yards_per_route_run
+      - racr
+      - adot
+      - yac_per_reception
+      - receiving_epa_per_target
+      - receiving_success_rate
+      - receiving_td_rate
+      - first_down_rate
+
+  # -------------------------------------------------------------------------
+  snaps:
+    description: Snap counts. League-wide coverage begins in 2012.
+    era_start: 2012
+    required: false
+    features:
+      - offense_snaps
+      - snap_share
+      - snap_share_trend
+      - routes_estimated
+      - route_participation
+      - targets_per_route_run
+
+  # -------------------------------------------------------------------------
+  red_zone:
+    description: Scoring-opportunity usage derived from play-by-play.
+    era_start: 2012
+    required: false
+    features:
+      - rz_carries
+      - rz_carry_share
+      - inside_five_carries
+      - inside_five_carry_share
+      - rz_targets
+      - rz_target_share
+      - end_zone_targets
+      - rz_pass_attempts
+      - rz_rush_attempts_qb
+
+  # -------------------------------------------------------------------------
+  team_context:
+    description: Offensive environment the player operates in.
+    era_start: 2012
+    required: true
+    features:
+      - team_plays
+      - team_pass_attempts
+      - team_rush_attempts
+      - team_pass_rate
+      - team_neutral_pass_rate
+      - team_seconds_per_play
+      - team_points_per_game
+      - team_epa_per_play
+      - team_pass_epa_per_play
+      - team_rush_epa_per_play
+      - team_rz_trips
+      - qb_change_expected
+      - qb_quality_prior
+      - vacated_targets_share
+      - vacated_carries_share
+      - returning_target_competition
+      - returning_carry_competition
+
+  # -------------------------------------------------------------------------
+  nextgen:
+    description: >
+      NFL Next Gen Stats. Public coverage begins in 2016 and is position
+      specific, so these are treated as an advanced-era feature block.
+    era_start: 2016
+    required: false
+    features:
+      - ngs_avg_time_to_throw
+      - ngs_avg_completed_air_yards
+      - ngs_avg_intended_air_yards
+      - ngs_aggressiveness
+      - ngs_expected_completion_pct
+      - ngs_completion_pct_above_expectation
+      - ngs_avg_air_yards_differential
+      - ngs_efficiency
+      - ngs_pct_attempts_gte_eight_defenders
+      - ngs_avg_time_to_los
+      - ngs_rush_yards_over_expected
+      - ngs_rush_yards_over_expected_per_att
+      - ngs_rush_pct_over_expected
+      - ngs_avg_cushion
+      - ngs_avg_separation
+      - ngs_avg_yac_above_expectation
+      - ngs_catch_pct
+      - ngs_share_of_intended_air_yards
+
+  # -------------------------------------------------------------------------
+  pfr_advanced:
+    description: >
+      Pro Football Reference advanced season splits redistributed by
+      nflverse. Coverage begins in 2018.
+    era_start: 2018
+    required: false
+    features:
+      - pfr_pocket_time
+      - pfr_pressure_pct
+      - pfr_blitz_pct
+      - pfr_bad_throw_pct
+      - pfr_drop_pct
+      - pfr_yards_before_contact_per_att
+      - pfr_yards_after_contact_per_att
+      - pfr_broken_tackles_per_att
+      - pfr_receiving_broken_tackles
+      - pfr_receiving_drop_pct
+      - pfr_adot
+
+  # -------------------------------------------------------------------------
+  rookie_college:
+    description: >
+      College production from CollegeFootballData. Only populated in "full"
+      rookie mode when CFBD_API_KEY is present.
+    era_start: 2012
+    required: false
+    features:
+      - college_final_games
+      - college_final_pass_attempts
+      - college_final_pass_yards
+      - college_final_pass_td
+      - college_final_yards_per_attempt
+      - college_final_rush_attempts
+      - college_final_rush_yards
+      - college_final_rush_td
+      - college_final_receptions
+      - college_final_rec_yards
+      - college_final_rec_td
+      - college_career_games
+      - college_dominator_rating
+      - college_yards_per_team_attempt
+      - college_conference_tier
+      - college_breakout_age
+
+  # -------------------------------------------------------------------------
+  rookie_athletic:
+    description: Combine measurements from nflverse. Available without a key.
+    era_start: 2012
+    required: false
+    features:
+      - combine_forty
+      - combine_bench
+      - combine_vertical
+      - combine_broad_jump
+      - combine_cone
+      - combine_shuttle
+      - speed_score
+      - height_adjusted_speed_score
+      - burst_score
+      - agility_score
+      - has_combine_data
+
+# ---------------------------------------------------------------------------
+# Which groups each position model may draw from.
+# ---------------------------------------------------------------------------
+position_groups:
+  QB: [identity, availability, production_core, opportunity, efficiency, snaps, red_zone, team_context, nextgen, pfr_advanced]
+  RB: [identity, availability, production_core, opportunity, efficiency, snaps, red_zone, team_context, nextgen, pfr_advanced]
+  WR: [identity, availability, production_core, opportunity, efficiency, snaps, red_zone, team_context, nextgen, pfr_advanced]
+  TE: [identity, availability, production_core, opportunity, efficiency, snaps, red_zone, team_context, nextgen, pfr_advanced]
+
+rookie_position_groups:
+  QB: [identity, team_context, rookie_college, rookie_athletic]
+  RB: [identity, team_context, rookie_college, rookie_athletic]
+  WR: [identity, team_context, rookie_college, rookie_athletic]
+  TE: [identity, team_context, rookie_college, rookie_athletic]
+
+# ---------------------------------------------------------------------------
+# Automated feature selection thresholds applied by `ffpm research features`.
+# A feature must clear ALL of these to enter the final feature set.
+# ---------------------------------------------------------------------------
+selection:
+  # Fraction of training rows where the feature is present.
+  min_coverage: 0.35
+  # |Spearman| against the next-season fantasy outcome.
+  min_target_correlation: 0.03
+  # Redundancy: drop the lower-coverage member of a pair above this |r|.
+  max_pairwise_correlation: 0.95
+  # Keep at most this many features per position model, ranked by the
+  # research pipeline's combined importance score. Guards against overfitting
+  # a few thousand player-seasons with hundreds of columns.
+  max_features_per_model: 45
+  # Always keep these regardless of the thresholds above.
+  always_keep:
+    - age_at_target_season
+    - experience
+    - games_played
+    - fantasy_points_ppr_per_game

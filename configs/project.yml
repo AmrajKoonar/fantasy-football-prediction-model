@@ -1,0 +1,122 @@
+# ---------------------------------------------------------------------------
+# Project-level configuration.
+#
+# Validated at startup by fantasy_football_prediction_model.config.ProjectConfig.
+# Invalid values fail fast rather than silently degrading the pipeline.
+#
+# Season naming follows the standard NFL convention used throughout the code
+# and UI: the "2025 season" is the regular season that began in 2025.
+# ---------------------------------------------------------------------------
+project:
+  # Earliest season pulled from nflverse for feature construction.
+  # 2012 is the first season with league-wide snap-count coverage, which is a
+  # load-bearing opportunity feature for RB/WR/TE.
+  data_start_season: 2012
+
+  # Last season with completed, observed statistics. Features may use data
+  # only up to and including this season.
+  feature_end_season: 2025
+
+  # Season being projected. Must be feature_end_season + 1.
+  # Override at runtime with FFPM_TARGET_SEASON or --target-season.
+  target_season: 2026
+
+  # Number of players published in the headline overall ranking.
+  output_player_count: 130
+
+  # Offensive positions modelled. Each gets its own veteran and rookie model.
+  positions: [QB, RB, WR, TE]
+
+  # Fixed for reproducibility. Changing this changes every model fit.
+  random_seed: 371
+
+  # Semantic versions surfaced in generated metadata and the web footer.
+  schema_version: "1.0.0"
+  model_version: "2026.1.0"
+  projection_release: "2026-preseason-1"
+
+# ---------------------------------------------------------------------------
+# Filesystem layout. Relative paths resolve from the repository root.
+# ---------------------------------------------------------------------------
+paths:
+  data_dir: data
+  raw_dir: data/raw
+  cache_dir: data/cache
+  interim_dir: data/interim
+  processed_dir: data/processed
+  manual_dir: data/manual
+  manifest_dir: data/manifests
+  artifacts_dir: artifacts
+  model_dir: artifacts/models
+  evaluation_dir: artifacts/evaluations
+  feature_research_dir: artifacts/feature-research
+  projection_dir: artifacts/projections
+  web_data_dir: web/public/data
+
+# ---------------------------------------------------------------------------
+# Data ingestion behaviour.
+# ---------------------------------------------------------------------------
+ingestion:
+  # Reuse a cached parquet file when it is younger than this. Set to 0 to
+  # always re-check the source.
+  cache_ttl_hours: 24
+
+  # Retry policy for transient network failures (exponential backoff).
+  max_retries: 4
+  backoff_initial_seconds: 1.0
+  backoff_max_seconds: 30.0
+  request_timeout_seconds: 120
+
+  # When true, no network calls are made and missing cache entries are errors.
+  offline: false
+
+  # Datasets whose absence aborts the pipeline.
+  required_datasets:
+    - player_stats_week
+    - players
+    - rosters
+    - schedules
+    - team_stats_week
+
+  # Datasets that degrade the model gracefully when unavailable.
+  # `injuries` is optional on purpose: the nflverse injury feed has not
+  # reliably covered seasons after 2024. See docs/LIMITATIONS.md.
+  optional_datasets:
+    - snap_counts
+    - depth_charts
+    - nextgen_passing
+    - nextgen_rushing
+    - nextgen_receiving
+    - pfr_pass
+    - pfr_rush
+    - pfr_rec
+    - draft_picks
+    - combine
+    - ff_playerids
+    - injuries
+
+# ---------------------------------------------------------------------------
+# Logging.
+# ---------------------------------------------------------------------------
+logging:
+  level: INFO
+  # Write a timestamped run log next to the artifacts.
+  file_logging: true
+  log_dir: artifacts/logs
+
+# ---------------------------------------------------------------------------
+# Manual override policy. See docs/USER_ACTIONS.md section "Manual context".
+# ---------------------------------------------------------------------------
+overrides:
+  # Factual corrections (team, position, active status, player id) may be
+  # applied by the production pipeline.
+  apply_factual_corrections: true
+
+  # Subjective projection overrides are OFF by default. When enabled they
+  # never replace the model value; they add a parallel `adjusted` value and
+  # flag the player in the UI.
+  apply_projection_overrides: false
+
+  factual_corrections_file: data/manual/player-context.csv
+  projection_overrides_file: data/manual/projection-overrides.csv
+  id_corrections_file: data/manual/player-id-corrections.csv
