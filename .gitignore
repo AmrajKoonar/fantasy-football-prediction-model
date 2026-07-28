@@ -85,6 +85,7 @@ artifacts/models/**
 !artifacts/models/.gitkeep
 artifacts/evaluations/*.parquet
 artifacts/projections/*.parquet
+artifacts/logs/
 
 # ---------------------------------------------------------------------------
 # OS / editor
