@@ -1,0 +1,443 @@
+"""Typer CLI entry point: ``ffpm``."""
+
+from __future__ import annotations
+
+from pathlib import Path
+from typing import Optional
+
+import typer
+from rich.console import Console
+from rich.table import Table
+
+from fantasy_football_prediction_model.config import get_settings, load_settings
+from fantasy_football_prediction_model.logging import configure_logging, get_logger
+
+app = typer.Typer(
+    name="ffpm",
+    help="Fantasy Football Prediction Model — reproducible NFL projection pipeline.",
+    no_args_is_help=True,
+    add_completion=False,
+)
+data_app = typer.Typer(help="Data ingestion and dataset construction.")
+research_app = typer.Typer(help="Feature research and coverage audits.")
+model_app = typer.Typer(help="Backtesting, training and evaluation.")
+project_app = typer.Typer(help="Projection generation and web export.")
+pipeline_app = typer.Typer(help="End-to-end pipeline orchestration.")
+
+app.add_typer(data_app, name="data")
+app.add_typer(research_app, name="research")
+app.add_typer(model_app, name="model")
+app.add_typer(project_app, name="project")
+app.add_typer(pipeline_app, name="pipeline")
+
+console = Console()
+logger = get_logger(__name__)
+
+
+def _settings(
+    config: Optional[Path],
+    target_season: Optional[int],
+    offline: Optional[bool],
+    log_level: Optional[str],
+):
+    settings = load_settings(config_dir=str(config) if config else None)
+    if target_season is not None:
+        # Rebuild is heavy; document override via env for production.
+        import os
+
+        os.environ["FFPM_TARGET_SEASON"] = str(target_season)
+        settings = get_settings()
+    if offline is not None:
+        import os
+
+        os.environ["FFPM_OFFLINE"] = "true" if offline else "false"
+        settings = get_settings()
+    level = log_level or settings.project_config.logging.level
+    configure_logging(
+        level,
+        log_dir=settings.repo_root / settings.project_config.logging.log_dir,
+        file_logging=settings.project_config.logging.file_logging,
+    )
+    settings.ensure_directories()
+    return settings
+
+
+# ---------------------------------------------------------------------------
+# data
+# ---------------------------------------------------------------------------
+
+
+@data_app.command("fetch-nfl")
+def data_fetch_nfl(
+    start_season: Optional[int] = typer.Option(None, "--start-season"),
+    end_season: Optional[int] = typer.Option(None, "--end-season"),
+    force_refresh: bool = typer.Option(False, "--force-refresh"),
+    offline: bool = typer.Option(False, "--offline"),
+    config: Optional[Path] = typer.Option(None, "--config"),
+    log_level: Optional[str] = typer.Option(None, "--log-level"),
+) -> None:
+    """Download and cache nflverse datasets."""
+    settings = _settings(config, None, offline, log_level)
+    from fantasy_football_prediction_model.data.ingestion import ingest
+
+    seasons = None
+    if start_season is not None and end_season is not None:
+        seasons = list(range(start_season, end_season + 1))
+    elif start_season is not None:
+        seasons = list(range(start_season, settings.feature_end_season + 1))
+    result = ingest(settings, force_refresh=force_refresh, seasons=seasons)
+    console.print(
+        f"[green]Ingested nflverse data[/green]: "
+        f"{result.player_seasons.height} player-seasons."
+    )
+
+
+@data_app.command("fetch-rookies")
+def data_fetch_rookies(
+    offline: bool = typer.Option(False, "--offline"),
+    config: Optional[Path] = typer.Option(None, "--config"),
+    log_level: Optional[str] = typer.Option(None, "--log-level"),
+) -> None:
+    """Fetch optional CollegeFootballData rookie enrichment."""
+    settings = _settings(config, None, offline, log_level)
+    from fantasy_football_prediction_model.data_sources.college_football_data import (
+        CollegeFootballDataAdapter,
+    )
+    from fantasy_football_prediction_model.data_sources.local_cache import DataCache
+
+    cache = DataCache(
+        settings.path("cache_dir"),
+        ttl_hours=settings.project_config.ingestion.cache_ttl_hours,
+        offline=settings.project_config.ingestion.offline,
+    )
+    client = CollegeFootballDataAdapter(
+        cache, offline=settings.project_config.ingestion.offline
+    )
+    console.print(f"Rookie data mode: [cyan]{client.mode.value}[/cyan]")
+    if client.enabled:
+        console.print(
+            "[green]CFBD key present — full rookie mode available. "
+            "Requests are cached under data/cache.[/green]"
+        )
+    else:
+        console.print(
+            "[yellow]No CFBD_API_KEY — reduced rookie mode (nflverse draft/combine only).[/yellow]"
+        )
+
+
+@data_app.command("audit")
+def data_audit(
+    config: Optional[Path] = typer.Option(None, "--config"),
+    log_level: Optional[str] = typer.Option(None, "--log-level"),
+) -> None:
+    """Write a data-coverage audit report."""
+    settings = _settings(config, None, None, log_level)
+    try:
+        from fantasy_football_prediction_model.data.ingestion import ingest, write_coverage_reports
+
+        data = ingest(settings, force_refresh=False)
+        paths = write_coverage_reports(data)
+        console.print(f"[green]Coverage reports:[/green] {paths}")
+    except Exception as exc:  # noqa: BLE001
+        console.print(f"[yellow]Coverage audit unavailable:[/yellow] {exc}")
+
+
+@data_app.command("build-dataset")
+def data_build_dataset(
+    config: Optional[Path] = typer.Option(None, "--config"),
+    offline: bool = typer.Option(False, "--offline"),
+    log_level: Optional[str] = typer.Option(None, "--log-level"),
+) -> None:
+    """Build player-season feature tables and modelling pairs."""
+    settings = _settings(config, None, offline, log_level)
+    from fantasy_football_prediction_model.data.ingestion import ingest
+    from fantasy_football_prediction_model.features.common import build_feature_table
+
+    data = ingest(settings, force_refresh=False)
+    result = build_feature_table(data, settings)
+    out = settings.path("processed_dir")
+    out.mkdir(parents=True, exist_ok=True)
+    result.season_features.write_parquet(out / "season_features.parquet")
+    result.pairs.write_parquet(out / "modelling_pairs.parquet")
+    result.projection_rows.write_parquet(out / "projection_features.parquet")
+    console.print(
+        f"[green]Wrote feature tables[/green] "
+        f"({result.season_features.height} seasons, {result.pairs.height} pairs)."
+    )
+
+
+# ---------------------------------------------------------------------------
+# research
+# ---------------------------------------------------------------------------
+
+
+@research_app.command("features")
+def research_features(
+    config: Optional[Path] = typer.Option(None, "--config"),
+    log_level: Optional[str] = typer.Option(None, "--log-level"),
+) -> None:
+    """Measure feature coverage, stability and next-season relationships."""
+    settings = _settings(config, None, None, log_level)
+    from fantasy_football_prediction_model.features.research import run_feature_research
+
+    paths = run_feature_research(settings)
+    console.print(f"[green]Feature research artifacts:[/green] {paths}")
+
+
+@research_app.command("coverage")
+def research_coverage(
+    config: Optional[Path] = typer.Option(None, "--config"),
+    log_level: Optional[str] = typer.Option(None, "--log-level"),
+) -> None:
+    """Alias for data coverage audit plus feature coverage CSV."""
+    data_audit(config=config, log_level=log_level)
+    research_features(config=config, log_level=log_level)
+
+
+# ---------------------------------------------------------------------------
+# model
+# ---------------------------------------------------------------------------
+
+
+@model_app.command("backtest")
+def model_backtest(
+    config: Optional[Path] = typer.Option(None, "--config"),
+    position: Optional[str] = typer.Option(None, "--position"),
+    log_level: Optional[str] = typer.Option(None, "--log-level"),
+) -> None:
+    """Rolling-origin backtest of baselines and candidate models."""
+    settings = _settings(config, None, None, log_level)
+    pairs_path = settings.path("processed_dir") / "modelling_pairs.parquet"
+    if not pairs_path.is_file():
+        console.print(
+            "[red]Missing modelling_pairs.parquet. Run `ffpm data build-dataset` first.[/red]"
+        )
+        raise typer.Exit(code=1)
+    import polars as pl
+
+    from fantasy_football_prediction_model.evaluation.backtesting import run_backtest
+    from fantasy_football_prediction_model.evaluation.reports import write_backtest_artifacts
+
+    pairs = pl.read_parquet(pairs_path)
+    positions = [position] if position else None
+    result = run_backtest(pairs, settings, positions=positions, candidate_limit=2)
+    paths = write_backtest_artifacts(result, settings.path("evaluation_dir"))
+    console.print(f"[green]Backtest complete.[/green] Artifacts: {paths}")
+
+
+@model_app.command("train")
+def model_train(
+    config: Optional[Path] = typer.Option(None, "--config"),
+    position: Optional[str] = typer.Option(None, "--position"),
+    log_level: Optional[str] = typer.Option(None, "--log-level"),
+) -> None:
+    """Train final models for the configured target season."""
+    settings = _settings(config, None, None, log_level)
+    pairs_path = settings.path("processed_dir") / "modelling_pairs.parquet"
+    if not pairs_path.is_file():
+        console.print("[red]Missing modelling pairs. Run build-dataset first.[/red]")
+        raise typer.Exit(1)
+    import polars as pl
+
+    from fantasy_football_prediction_model.constants import PROJECTION_TARGETS
+    from fantasy_football_prediction_model.models.preprocessing import select_feature_columns
+    from fantasy_football_prediction_model.models.registry import LocalModelRegistry
+    from fantasy_football_prediction_model.models.training import train_position_target
+
+    pairs = pl.read_parquet(pairs_path)
+    registry = LocalModelRegistry(settings.path("model_dir"))
+    positions = [position] if position else settings.positions
+    for pos in positions:
+        frame = pairs.filter(pl.col("position") == pos)
+        features = select_feature_columns(
+            frame,
+            settings.features.candidate_features(pos),
+            min_coverage=settings.features.selection.min_coverage,
+            always_keep=settings.features.selection.always_keep,
+            max_features=settings.features.selection.max_features_per_model,
+        )
+        for target in list(PROJECTION_TARGETS.get(pos, ()))[:3]:
+            col = f"outcome_{target}"
+            if col not in frame.columns or not features:
+                continue
+            model = train_position_target(
+                frame,
+                position=pos,
+                target_column=col,
+                feature_columns=features,
+                algorithm="HistGradientBoostingRegressor",
+                preprocessing=settings.model.preprocessing,
+                random_seed=settings.seed,
+            )
+            registry.register(
+                model,
+                model_version=settings.project_config.project.model_version,
+                training_seasons=sorted(frame.get_column("target_season").unique().to_list()),
+                feature_end_season=settings.feature_end_season,
+                projection_season=settings.target_season,
+            )
+    console.print("[green]Training complete.[/green]")
+
+
+@model_app.command("evaluate")
+def model_evaluate(
+    config: Optional[Path] = typer.Option(None, "--config"),
+    log_level: Optional[str] = typer.Option(None, "--log-level"),
+) -> None:
+    """Summarise the latest backtest artifacts."""
+    settings = _settings(config, None, None, log_level)
+    summary = settings.path("evaluation_dir") / "backtest-summary.csv"
+    if not summary.is_file():
+        console.print("[yellow]No backtest-summary.csv found. Run model backtest first.[/yellow]")
+        raise typer.Exit(0)
+    console.print(summary.read_text(encoding="utf-8")[:2000])
+
+
+# ---------------------------------------------------------------------------
+# project
+# ---------------------------------------------------------------------------
+
+
+@project_app.command("generate")
+def project_generate(
+    fixture: bool = typer.Option(False, "--fixture", help="Generate labelled synthetic data."),
+    target_season: Optional[int] = typer.Option(None, "--target-season"),
+    config: Optional[Path] = typer.Option(None, "--config"),
+    log_level: Optional[str] = typer.Option(None, "--log-level"),
+) -> None:
+    """Generate season projections (fixture or production)."""
+    settings = _settings(config, target_season, None, log_level)
+    from fantasy_football_prediction_model.exports.csv import write_projection_csv
+    from fantasy_football_prediction_model.projections.generate import generate_projections
+
+    bundle = generate_projections(settings, fixture=fixture)
+    art = settings.path("projection_dir")
+    write_projection_csv(bundle, art / "projections.csv")
+    # Stash bundle path marker
+    marker = art / "last_bundle_mode.txt"
+    marker.write_text(bundle.data_mode, encoding="utf-8")
+    # Persist players via export-web typically; here save a pickle-free JSON sidecar count.
+    (art / "player_count.txt").write_text(str(len(bundle.players)), encoding="utf-8")
+    # Keep in-memory path for chained commands via temp json
+    from fantasy_football_prediction_model.exports.web import export_web_data
+
+    export_web_data(bundle, settings, allow_fixture=True)
+    mode_colour = "yellow" if fixture else "green"
+    console.print(
+        f"[{mode_colour}]Generated {len(bundle.players)} projections "
+        f"(dataMode={bundle.data_mode})[/{mode_colour}]"
+    )
+
+
+@project_app.command("validate")
+def project_validate(
+    config: Optional[Path] = typer.Option(None, "--config"),
+    log_level: Optional[str] = typer.Option(None, "--log-level"),
+) -> None:
+    """Validate committed web JSON against Pydantic schemas."""
+    settings = _settings(config, None, None, log_level)
+    from fantasy_football_prediction_model.schemas import (
+        ExportMetadata,
+        ProjectionsFile,
+        RankingsFile,
+    )
+
+    web = settings.path("web_data_dir")
+    errors = 0
+    for name, model in (
+        ("metadata.json", ExportMetadata),
+        ("projections.json", ProjectionsFile),
+        ("rankings.json", RankingsFile),
+    ):
+        path = web / name
+        if not path.is_file():
+            console.print(f"[red]Missing {path}[/red]")
+            errors += 1
+            continue
+        try:
+            model.model_validate_json(path.read_text(encoding="utf-8"))
+            console.print(f"[green]OK[/green] {name}")
+        except Exception as exc:  # noqa: BLE001
+            console.print(f"[red]INVALID {name}:[/red] {exc}")
+            errors += 1
+    meta_path = web / "metadata.json"
+    if meta_path.is_file():
+        meta = ExportMetadata.model_validate_json(meta_path.read_text(encoding="utf-8"))
+        if meta.data_mode == "fixture":
+            console.print(
+                "[yellow]WARNING: dataMode=fixture. Do not deploy as production.[/yellow]"
+            )
+    raise typer.Exit(code=1 if errors else 0)
+
+
+@project_app.command("export-web")
+def project_export_web(
+    fixture: bool = typer.Option(False, "--fixture"),
+    config: Optional[Path] = typer.Option(None, "--config"),
+    log_level: Optional[str] = typer.Option(None, "--log-level"),
+) -> None:
+    """Regenerate and export web JSON (defaults to reusing generate)."""
+    project_generate(fixture=fixture, target_season=None, config=config, log_level=log_level)
+
+
+# ---------------------------------------------------------------------------
+# pipeline
+# ---------------------------------------------------------------------------
+
+
+@pipeline_app.command("run-all")
+def pipeline_run_all(
+    fixture: bool = typer.Option(
+        False, "--fixture", help="Skip live downloads; emit fixture projections."
+    ),
+    offline: bool = typer.Option(False, "--offline"),
+    config: Optional[Path] = typer.Option(None, "--config"),
+    log_level: Optional[str] = typer.Option(None, "--log-level"),
+) -> None:
+    """Run the full pipeline, or fixture export when ``--fixture`` is set."""
+    settings = _settings(config, None, offline, log_level)
+    if fixture:
+        project_generate(fixture=True, config=config, log_level=log_level)
+        project_validate(config=config, log_level=log_level)
+        return
+    try:
+        data_fetch_nfl(config=config, offline=offline, log_level=log_level)
+        data_build_dataset(config=config, offline=offline, log_level=log_level)
+        research_features(config=config, log_level=log_level)
+        model_backtest(config=config, log_level=log_level)
+        model_train(config=config, log_level=log_level)
+        project_generate(fixture=False, config=config, log_level=log_level)
+        project_validate(config=config, log_level=log_level)
+    except Exception as exc:  # noqa: BLE001
+        console.print(f"[red]Pipeline failed:[/red] {exc}")
+        console.print(
+            "[yellow]Hint:[/yellow] use `ffpm pipeline run-all --fixture` for local UI/CI data."
+        )
+        raise typer.Exit(1) from exc
+
+
+@pipeline_app.command("status")
+def pipeline_status(
+    config: Optional[Path] = typer.Option(None, "--config"),
+) -> None:
+    """Show which artifacts exist on disk."""
+    settings = _settings(config, None, None, None)
+    table = Table(title="Pipeline status")
+    table.add_column("Artifact")
+    table.add_column("Present")
+    checks = {
+        "modelling_pairs.parquet": settings.path("processed_dir") / "modelling_pairs.parquet",
+        "projection_features.parquet": settings.path("processed_dir")
+        / "projection_features.parquet",
+        "web/projections.json": settings.path("web_data_dir") / "projections.json",
+        "web/metadata.json": settings.path("web_data_dir") / "metadata.json",
+        "backtest-summary.csv": settings.path("evaluation_dir") / "backtest-summary.csv",
+        "model registry": settings.path("model_dir") / "registry.json",
+    }
+    for label, path in checks.items():
+        table.add_row(label, "yes" if path.exists() else "no")
+    console.print(table)
+
+
+if __name__ == "__main__":
+    app()
