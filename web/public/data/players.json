@@ -1,0 +1,487 @@
+{
+  "schemaVersion": "1.0.0",
+  "dataMode": "fixture",
+  "generatedAt": "2026-07-28T20:11:03.031538Z",
+  "players": [
+    {
+      "playerId": "00-fixture0028",
+      "slug": "harper-foster-28",
+      "name": "Harper Foster 28",
+      "shortName": "H. 28",
+      "team": "SEA",
+      "position": "WR",
+      "rookie": true,
+      "overallRank": 1
+    },
+    {
+      "playerId": "00-fixture0045",
+      "slug": "rowan-pearson-45",
+      "name": "Rowan Pearson 45",
+      "shortName": "R. 45",
+      "team": "HOU",
+      "position": "WR",
+      "rookie": true,
+      "overallRank": 2
+    },
+    {
+      "playerId": "00-fixture0013",
+      "slug": "rowan-pearson",
+      "name": "Rowan Pearson",
+      "shortName": "R. Pearson",
+      "team": "HOU",
+      "position": "WR",
+      "rookie": false,
+      "overallRank": 3
+    },
+    {
+      "playerId": "00-fixture0042",
+      "slug": "parker-dunn-42",
+      "name": "Parker Dunn 42",
+      "shortName": "P. 42",
+      "team": "MIN",
+      "position": "RB",
+      "rookie": true,
+      "overallRank": 4
+    },
+    {
+      "playerId": "00-fixture0011",
+      "slug": "sawyer-hayes",
+      "name": "Sawyer Hayes",
+      "shortName": "S. Hayes",
+      "team": "LAC",
+      "position": "WR",
+      "rookie": false,
+      "overallRank": 5
+    },
+    {
+      "playerId": "00-fixture0017",
+      "slug": "alex-bennett-17",
+      "name": "Alex Bennett 17",
+      "shortName": "A. 17",
+      "team": "BUF",
+      "position": "RB",
+      "rookie": true,
+      "overallRank": 6
+    },
+    {
+      "playerId": "00-fixture0041",
+      "slug": "drew-reid-41",
+      "name": "Drew Reid 41",
+      "shortName": "D. 41",
+      "team": "GB",
+      "position": "RB",
+      "rookie": true,
+      "overallRank": 7
+    },
+    {
+      "playerId": "00-fixture0025",
+      "slug": "drew-reid-25",
+      "name": "Drew Reid 25",
+      "shortName": "D. 25",
+      "team": "GB",
+      "position": "RB",
+      "rookie": true,
+      "overallRank": 8
+    },
+    {
+      "playerId": "00-fixture0019",
+      "slug": "riley-nash-19",
+      "name": "Riley Nash 19",
+      "shortName": "R. 19",
+      "team": "SF",
+      "position": "WR",
+      "rookie": false,
+      "overallRank": 9
+    },
+    {
+      "playerId": "00-fixture0043",
+      "slug": "sawyer-hayes-43",
+      "name": "Sawyer Hayes 43",
+      "shortName": "S. 43",
+      "team": "LAC",
+      "position": "WR",
+      "rookie": false,
+      "overallRank": 10
+    },
+    {
+      "playerId": "00-fixture0003",
+      "slug": "riley-nash",
+      "name": "Riley Nash",
+      "shortName": "R. Nash",
+      "team": "SF",
+      "position": "WR",
+      "rookie": false,
+      "overallRank": 11
+    },
+    {
+      "playerId": "00-fixture0021",
+      "slug": "quinn-frost-21",
+      "name": "Quinn Frost 21",
+      "shortName": "Q. 21",
+      "team": "MIA",
+      "position": "WR",
+      "rookie": false,
+      "overallRank": 12
+    },
+    {
+      "playerId": "00-fixture0014",
+      "slug": "elliot-porter",
+      "name": "Elliot Porter",
+      "shortName": "E. Porter",
+      "team": "ATL",
+      "position": "TE",
+      "rookie": true,
+      "overallRank": 13
+    },
+    {
+      "playerId": "00-fixture0012",
+      "slug": "harper-foster",
+      "name": "Harper Foster",
+      "shortName": "H. Foster",
+      "team": "SEA",
+      "position": "WR",
+      "rookie": false,
+      "overallRank": 14
+    },
+    {
+      "playerId": "00-fixture0024",
+      "slug": "cameron-walters-24",
+      "name": "Cameron Walters 24",
+      "shortName": "C. 24",
+      "team": "CIN",
+      "position": "QB",
+      "rookie": true,
+      "overallRank": 15
+    },
+    {
+      "playerId": "00-fixture0007",
+      "slug": "reese-griffin",
+      "name": "Reese Griffin",
+      "shortName": "R. Griffin",
+      "team": "DET",
+      "position": "TE",
+      "rookie": true,
+      "overallRank": 16
+    },
+    {
+      "playerId": "00-fixture0040",
+      "slug": "cameron-walters-40",
+      "name": "Cameron Walters 40",
+      "shortName": "C. 40",
+      "team": "CIN",
+      "position": "QB",
+      "rookie": true,
+      "overallRank": 17
+    },
+    {
+      "playerId": "00-fixture0005",
+      "slug": "quinn-frost",
+      "name": "Quinn Frost",
+      "shortName": "Q. Frost",
+      "team": "MIA",
+      "position": "WR",
+      "rookie": false,
+      "overallRank": 18
+    },
+    {
+      "playerId": "00-fixture0031",
+      "slug": "finley-clarke-31",
+      "name": "Finley Clarke 31",
+      "shortName": "F. 31",
+      "team": "CHI",
+      "position": "TE",
+      "rookie": false,
+      "overallRank": 19
+    },
+    {
+      "playerId": "00-fixture0001",
+      "slug": "alex-bennett",
+      "name": "Alex Bennett",
+      "shortName": "A. Bennett",
+      "team": "BUF",
+      "position": "RB",
+      "rookie": false,
+      "overallRank": 20
+    },
+    {
+      "playerId": "00-fixture0008",
+      "slug": "cameron-walters",
+      "name": "Cameron Walters",
+      "shortName": "C. Walters",
+      "team": "CIN",
+      "position": "QB",
+      "rookie": false,
+      "overallRank": 21
+    },
+    {
+      "playerId": "00-fixture0037",
+      "slug": "quinn-frost-37",
+      "name": "Quinn Frost 37",
+      "shortName": "Q. 37",
+      "team": "MIA",
+      "position": "WR",
+      "rookie": false,
+      "overallRank": 22
+    },
+    {
+      "playerId": "00-fixture0022",
+      "slug": "avery-coleman-22",
+      "name": "Avery Coleman 22",
+      "shortName": "A. 22",
+      "team": "BAL",
+      "position": "TE",
+      "rookie": false,
+      "overallRank": 23
+    },
+    {
+      "playerId": "00-fixture0015",
+      "slug": "finley-clarke",
+      "name": "Finley Clarke",
+      "shortName": "F. Clarke",
+      "team": "CHI",
+      "position": "TE",
+      "rookie": false,
+      "overallRank": 24
+    },
+    {
+      "playerId": "00-fixture0006",
+      "slug": "avery-coleman",
+      "name": "Avery Coleman",
+      "shortName": "A. Coleman",
+      "team": "BAL",
+      "position": "TE",
+      "rookie": false,
+      "overallRank": 25
+    },
+    {
+      "playerId": "00-fixture0030",
+      "slug": "elliot-porter-30",
+      "name": "Elliot Porter 30",
+      "shortName": "E. 30",
+      "team": "ATL",
+      "position": "TE",
+      "rookie": false,
+      "overallRank": 26
+    },
+    {
+      "playerId": "00-fixture0000",
+      "slug": "jordan-brooks",
+      "name": "Jordan Brooks",
+      "shortName": "J. Brooks",
+      "team": "KC",
+      "position": "QB",
+      "rookie": false,
+      "overallRank": 27
+    },
+    {
+      "playerId": "00-fixture0038",
+      "slug": "avery-coleman-38",
+      "name": "Avery Coleman 38",
+      "shortName": "A. 38",
+      "team": "BAL",
+      "position": "TE",
+      "rookie": false,
+      "overallRank": 28
+    },
+    {
+      "playerId": "00-fixture0034",
+      "slug": "casey-sullivan-34",
+      "name": "Casey Sullivan 34",
+      "shortName": "C. 34",
+      "team": "PHI",
+      "position": "RB",
+      "rookie": false,
+      "overallRank": 29
+    },
+    {
+      "playerId": "00-fixture0002",
+      "slug": "casey-sullivan",
+      "name": "Casey Sullivan",
+      "shortName": "C. Sullivan",
+      "team": "PHI",
+      "position": "RB",
+      "rookie": false,
+      "overallRank": 30
+    },
+    {
+      "playerId": "00-fixture0020",
+      "slug": "morgan-bishop-20",
+      "name": "Morgan Bishop 20",
+      "shortName": "M. 20",
+      "team": "DAL",
+      "position": "WR",
+      "rookie": false,
+      "overallRank": 31
+    },
+    {
+      "playerId": "00-fixture0026",
+      "slug": "parker-dunn-26",
+      "name": "Parker Dunn 26",
+      "shortName": "P. 26",
+      "team": "MIN",
+      "position": "RB",
+      "rookie": false,
+      "overallRank": 32
+    },
+    {
+      "playerId": "00-fixture0004",
+      "slug": "morgan-bishop",
+      "name": "Morgan Bishop",
+      "shortName": "M. Bishop",
+      "team": "DAL",
+      "position": "WR",
+      "rookie": false,
+      "overallRank": 33
+    },
+    {
+      "playerId": "00-fixture0044",
+      "slug": "harper-foster-44",
+      "name": "Harper Foster 44",
+      "shortName": "H. 44",
+      "team": "SEA",
+      "position": "WR",
+      "rookie": false,
+      "overallRank": 34
+    },
+    {
+      "playerId": "00-fixture0009",
+      "slug": "drew-reid",
+      "name": "Drew Reid",
+      "shortName": "D. Reid",
+      "team": "GB",
+      "position": "RB",
+      "rookie": false,
+      "overallRank": 35
+    },
+    {
+      "playerId": "00-fixture0016",
+      "slug": "jordan-brooks-16",
+      "name": "Jordan Brooks 16",
+      "shortName": "J. 16",
+      "team": "KC",
+      "position": "QB",
+      "rookie": false,
+      "overallRank": 36
+    },
+    {
+      "playerId": "00-fixture0018",
+      "slug": "casey-sullivan-18",
+      "name": "Casey Sullivan 18",
+      "shortName": "C. 18",
+      "team": "PHI",
+      "position": "RB",
+      "rookie": false,
+      "overallRank": 37
+    },
+    {
+      "playerId": "00-fixture0035",
+      "slug": "riley-nash-35",
+      "name": "Riley Nash 35",
+      "shortName": "R. 35",
+      "team": "SF",
+      "position": "WR",
+      "rookie": false,
+      "overallRank": 38
+    },
+    {
+      "playerId": "00-fixture0027",
+      "slug": "sawyer-hayes-27",
+      "name": "Sawyer Hayes 27",
+      "shortName": "S. 27",
+      "team": "LAC",
+      "position": "WR",
+      "rookie": false,
+      "overallRank": 39
+    },
+    {
+      "playerId": "00-fixture0033",
+      "slug": "alex-bennett-33",
+      "name": "Alex Bennett 33",
+      "shortName": "A. 33",
+      "team": "BUF",
+      "position": "RB",
+      "rookie": false,
+      "overallRank": 40
+    },
+    {
+      "playerId": "00-fixture0039",
+      "slug": "reese-griffin-39",
+      "name": "Reese Griffin 39",
+      "shortName": "R. 39",
+      "team": "DET",
+      "position": "TE",
+      "rookie": false,
+      "overallRank": 41
+    },
+    {
+      "playerId": "00-fixture0023",
+      "slug": "reese-griffin-23",
+      "name": "Reese Griffin 23",
+      "shortName": "R. 23",
+      "team": "DET",
+      "position": "TE",
+      "rookie": false,
+      "overallRank": 42
+    },
+    {
+      "playerId": "00-fixture0036",
+      "slug": "morgan-bishop-36",
+      "name": "Morgan Bishop 36",
+      "shortName": "M. 36",
+      "team": "DAL",
+      "position": "WR",
+      "rookie": false,
+      "overallRank": 43
+    },
+    {
+      "playerId": "00-fixture0046",
+      "slug": "elliot-porter-46",
+      "name": "Elliot Porter 46",
+      "shortName": "E. 46",
+      "team": "ATL",
+      "position": "TE",
+      "rookie": false,
+      "overallRank": 44
+    },
+    {
+      "playerId": "00-fixture0032",
+      "slug": "jordan-brooks-32",
+      "name": "Jordan Brooks 32",
+      "shortName": "J. 32",
+      "team": "KC",
+      "position": "QB",
+      "rookie": false,
+      "overallRank": 45
+    },
+    {
+      "playerId": "00-fixture0047",
+      "slug": "finley-clarke-47",
+      "name": "Finley Clarke 47",
+      "shortName": "F. 47",
+      "team": "CHI",
+      "position": "TE",
+      "rookie": false,
+      "overallRank": 46
+    },
+    {
+      "playerId": "00-fixture0029",
+      "slug": "rowan-pearson-29",
+      "name": "Rowan Pearson 29",
+      "shortName": "R. 29",
+      "team": "HOU",
+      "position": "WR",
+      "rookie": false,
+      "overallRank": 47
+    },
+    {
+      "playerId": "00-fixture0010",
+      "slug": "parker-dunn",
+      "name": "Parker Dunn",
+      "shortName": "P. Dunn",
+      "team": "MIN",
+      "position": "RB",
+      "rookie": false,
+      "overallRank": 48
+    }
+  ]
+}

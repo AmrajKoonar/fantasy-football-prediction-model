@@ -1,0 +1,17 @@
+{
+  "name": "fantasy-football-prediction-model",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "setup": "npm --prefix web install",
+    "dev": "npm --prefix web run dev",
+    "dev:web": "npm --prefix web run dev",
+    "test": "npm --prefix web run test",
+    "lint": "npm --prefix web run lint",
+    "typecheck": "npm --prefix web run typecheck",
+    "build": "npm --prefix web run build",
+    "pipeline": "python -m fantasy_football_prediction_model.cli pipeline run-all",
+    "projections": "python -m fantasy_football_prediction_model.cli project generate",
+    "validate:data": "python -m fantasy_football_prediction_model.cli project validate"
+  }
+}
