@@ -58,6 +58,7 @@ CORE_DATASETS: tuple[str, ...] = (
     "player_stats_week",
     "team_stats_week",
     "rosters",
+    "weekly_rosters",
     "ff_playerids",
     "snap_counts",
     "depth_charts",
@@ -98,6 +99,11 @@ class IngestedData:
     team_seasons: pl.DataFrame
     rosters: pl.DataFrame
     games_per_season: dict[int, int]
+    #: ``(gsis_id, season) -> team`` as of week 1. Genuinely preseason
+    #: information, unlike the season roster, whose team reflects where a
+    #: player *finished*. Used for the team-change signal without leaking
+    #: survival information into historical folds.
+    week1_teams: pl.DataFrame | None = None
     snap_seasons: pl.DataFrame | None = None
     depth_seasons: pl.DataFrame | None = None
     ngs_passing: pl.DataFrame | None = None
@@ -292,6 +298,10 @@ def ingest(
     weekly = fetch("player_stats_week", season_list)
     team_weekly = fetch("team_stats_week", season_list)
     rosters = fetch("rosters", roster_seasons)
+    # Weekly rosters only exist for seasons that have been played, so the
+    # target season is deliberately excluded. Its week-1 assignment comes from
+    # the current season roster instead, which is already the preseason one.
+    weekly_rosters = fetch("weekly_rosters", season_list)
     ff_playerids = fetch("ff_playerids", None)
     snap_counts = fetch("snap_counts", season_list)
     depth_charts = fetch("depth_charts", roster_seasons)
@@ -357,6 +367,7 @@ def ingest(
     pbp_team = aggregate_pbp_team_features(pbp)
 
     normalised_rosters = _normalise_rosters(rosters)
+    week1_teams = _week_one_teams(weekly_rosters, normalised_rosters, target_season)
     target_rosters = normalised_rosters.filter(pl.col("season") == target_season)
     if target_rosters.is_empty():
         logger.warning(
@@ -424,6 +435,7 @@ def ingest(
         team_seasons=team_seasons,
         rosters=normalised_rosters,
         games_per_season=games_per_season,
+        week1_teams=week1_teams,
         snap_seasons=snap_seasons,
         depth_seasons=depth_seasons,
         ngs_passing=ngs_passing,
@@ -507,6 +519,72 @@ def _normalise_rosters(rosters: pl.DataFrame) -> pl.DataFrame:
             pl.col("birth_date").cast(pl.Utf8).str.slice(0, 10).str.to_date(strict=False)
         )
     return frame.with_columns(casts) if casts else frame
+
+
+def _week_one_teams(
+    weekly_rosters: pl.DataFrame | None,
+    season_rosters: pl.DataFrame,
+    target_season: int,
+) -> pl.DataFrame | None:
+    """Each player's team as of week 1 of each season.
+
+    Why this exists: ``load_rosters`` reports the team a player *finished* a
+    season with, and its ``week`` column is really "last week on the roster",
+    which encodes survival. Using either as a feature would leak the outcome
+    into historical folds.
+
+    Week 1 of the weekly rosters is genuinely available before a season is
+    played, so it is safe to use as the documented preseason "where does this
+    player line up next year" signal.
+
+    The target season has no games yet, so its current roster is used
+    directly - that *is* the preseason roster.
+    """
+    from fantasy_football_prediction_model.data.identities import normalise_team_expr
+
+    frames: list[pl.DataFrame] = []
+
+    if weekly_rosters is not None and not weekly_rosters.is_empty():
+        required = {"gsis_id", "season", "week", "team"}
+        if required <= set(weekly_rosters.columns):
+            historical = (
+                weekly_rosters.with_columns(
+                    pl.col("gsis_id").cast(pl.Utf8).alias(CANONICAL_ID_COLUMN),
+                    pl.col("season").cast(pl.Int64),
+                    pl.col("week").cast(pl.Int64, strict=False),
+                    normalise_team_expr("team", "team"),
+                )
+                .filter(
+                    (pl.col("week") == 1)
+                    & pl.col(CANONICAL_ID_COLUMN).is_not_null()
+                    & (pl.col("season") != target_season)
+                )
+                .select(CANONICAL_ID_COLUMN, "season", pl.col("team").alias("week1_team"))
+                .unique(subset=[CANONICAL_ID_COLUMN, "season"], keep="first")
+            )
+            frames.append(historical)
+        else:
+            logger.warning(
+                "Weekly rosters lack %s; the preseason team signal falls back to season "
+                "rosters, which reflect where a player finished.",
+                sorted(required - set(weekly_rosters.columns)),
+            )
+
+    target = season_rosters.filter(pl.col("season") == target_season).select(
+        CANONICAL_ID_COLUMN, "season", pl.col("team").alias("week1_team")
+    )
+    if not target.is_empty():
+        frames.append(target.unique(subset=[CANONICAL_ID_COLUMN, "season"], keep="first"))
+
+    if not frames:
+        logger.warning("No week-1 roster data available; team-change features will be missing.")
+        return None
+
+    combined = pl.concat(frames, how="vertical_relaxed").unique(
+        subset=[CANONICAL_ID_COLUMN, "season"], keep="first"
+    )
+    logger.info("Built week-1 team assignments for %d player-seasons.", combined.height)
+    return combined
 
 
 def _read_manual_csv(path: Path) -> pl.DataFrame | None:
