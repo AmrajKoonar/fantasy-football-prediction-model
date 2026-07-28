@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelVersion": "2026.1.0",
+  "projectionRelease": "2026-preseason-1",
+  "dataMode": "fixture",
+  "projectionSeason": 2026,
+  "sourceSeason": 2025,
+  "dataStartSeason": 2012,
+  "generatedAt": "2026-07-28T20:11:03.031538Z",
+  "gitCommit": "f29890336667ed271372d1d6ac620bfa5929d636",
+  "datasetHash": null,
+  "playerCount": 48,
+  "candidatePoolSize": 48,
+  "positions": [
+    "QB",
+    "RB",
+    "WR",
+    "TE"
+  ],
+  "rookieMode": "fixture",
+  "scoring": {
+    "passingYardsPerPoint": 25.0,
+    "passingTouchdown": 4.0,
+    "interception": -2.0,
+    "passingTwoPoint": 2.0,
+    "rushingYardsPerPoint": 10.0,
+    "rushingTouchdown": 6.0,
+    "rushingTwoPoint": 2.0,
+    "reception": 1.0,
+    "receivingYardsPerPoint": 10.0,
+    "receivingTouchdown": 6.0,
+    "receivingTwoPoint": 2.0,
+    "fumbleLost": -2.0
+  },
+  "leagueDefaults": {
+    "teams": 12,
+    "qb": 1,
+    "rb": 2,
+    "wr": 2,
+    "te": 1,
+    "flex": 1,
+    "superflex": 0,
+    "benchSize": 6,
+    "replacementMethod": "demand_based",
+    "replacementRanks": {
+      "QB": 14,
+      "RB": 30,
+      "WR": 36,
+      "TE": 13
+    },
+    "riskPenaltyWeight": 0.35
+  },
+  "sources": [],
+  "pipeline": [],
+  "limitations": [
+    "Projections are estimates, not guarantees.",
+    "Injury reports after 2024 are not automatically ingested.",
+    "CollegeFootballData enrichment is optional; reduced rookie mode may apply.",
+    "Fixture mode active. Do not deploy as production rankings."
+  ],
+  "packageVersions": {
+    "fantasy-football-prediction-model": "1.0.0",
+    "numpy": "2.4.6",
+    "polars": "1.43.1",
+    "scikit-learn": "1.9.0",
+    "pydantic": "2.13.4",
+    "nflreadpy": "0.1.5"
+  }
+}
