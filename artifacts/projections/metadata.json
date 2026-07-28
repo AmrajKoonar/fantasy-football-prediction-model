@@ -2,22 +2,22 @@
   "schemaVersion": "1.0.0",
   "modelVersion": "2026.1.0",
   "projectionRelease": "2026-preseason-1",
-  "dataMode": "fixture",
+  "dataMode": "production",
   "projectionSeason": 2026,
   "sourceSeason": 2025,
   "dataStartSeason": 2012,
-  "generatedAt": "2026-07-28T20:11:03.031538Z",
-  "gitCommit": "f29890336667ed271372d1d6ac620bfa5929d636",
+  "generatedAt": "2026-07-28T20:52:36.619941Z",
+  "gitCommit": "d61cbf0537fbaf7a2afbc86c27c8da9c0246936a",
   "datasetHash": null,
-  "playerCount": 48,
-  "candidatePoolSize": 48,
+  "playerCount": 130,
+  "candidatePoolSize": 867,
   "positions": [
     "QB",
     "RB",
     "WR",
     "TE"
   ],
-  "rookieMode": "fixture",
+  "rookieMode": "reduced",
   "scoring": {
     "passingYardsPerPoint": 25.0,
     "passingTouchdown": 4.0,
@@ -55,8 +55,7 @@
   "limitations": [
     "Projections are estimates, not guarantees.",
     "Injury reports after 2024 are not automatically ingested.",
-    "CollegeFootballData enrichment is optional; reduced rookie mode may apply.",
-    "Fixture mode active. Do not deploy as production rankings."
+    "CollegeFootballData enrichment is optional; reduced rookie mode may apply."
   ],
   "packageVersions": {
     "fantasy-football-prediction-model": "1.0.0",

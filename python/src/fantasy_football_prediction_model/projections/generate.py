@@ -394,11 +394,15 @@ def generate_projections(
         )
     rules = rules_from_preset(settings.scoring, "ppr")
     players_out: list[PlayerProjection] = []
-    # Keep implementation conservative: require essential columns.
-    required = {"gsis_id", "player_name", "position", "team"}
+    # Feature tables use display_name / short_name / slug from the identity layer.
+    required = {"gsis_id", "position", "team"}
     missing = required - set(frame.columns)
     if missing:
         raise ValueError(f"projection_features.parquet missing columns: {sorted(missing)}")
+    if "display_name" not in frame.columns and "player_name" not in frame.columns:
+        raise ValueError(
+            "projection_features.parquet needs display_name or player_name."
+        )
 
     for row in frame.to_dicts():
         position = str(row["position"])
@@ -411,17 +415,34 @@ def generate_projections(
             # Prefer model prediction column when present.
             pred_key = f"pred_{stat}"
             raw_val = row.get(pred_key, row.get(stat))
+            if raw_val is None and stat == "fumbles_lost":
+                raw_val = row.get(
+                    "pred_fumbles_lost",
+                    row.get(
+                        "fumbles_lost",
+                        (row.get("rushing_fumbles_lost") or 0)
+                        + (row.get("receiving_fumbles_lost") or 0)
+                        + (row.get("sack_fumbles_lost") or 0),
+                    ),
+                )
             stats[stat] = float(raw_val) if raw_val is not None else 0.0
         stats = apply_constraints(stats)
         points = score_total(stats, rules)
         low, points, high = enforce_quantile_ordering(points * 0.8, points, points * 1.2)
-        name = str(row.get("player_name") or row.get("name") or row["gsis_id"])
+        name = str(
+            row.get("display_name")
+            or row.get("player_name")
+            or row.get("source_name")
+            or row["gsis_id"]
+        )
+        slug = str(row.get("slug") or _slugify(name))
+        short = str(row.get("short_name") or _short_name(name))
         players_out.append(
             PlayerProjection(
                 player_id=str(row["gsis_id"]),
-                slug=_slugify(name),
+                slug=slug,
                 name=name,
-                short_name=_short_name(name),
+                short_name=short,
                 team=str(row.get("team") or "FA"),
                 position=position,  # type: ignore[arg-type]
                 age=float(row["age_at_target_season"]) if row.get("age_at_target_season") is not None else None,

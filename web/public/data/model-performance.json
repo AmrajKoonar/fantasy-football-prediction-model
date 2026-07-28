@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "dataMode": "fixture",
-  "generatedAt": "2026-07-28T20:11:03.125710Z",
+  "dataMode": "production",
+  "generatedAt": "2026-07-28T20:52:36.720384Z",
   "modelVersion": "2026.1.0",
   "backtestSeasons": [],
   "statMetrics": [],
@@ -11,6 +11,6 @@
   "errorSlices": [],
   "selectedModels": {},
   "knownWeaknesses": [
-    "Fixture or incomplete backtest: treat metrics as illustrative only."
+    "Run `ffpm model backtest` to populate performance metrics."
   ]
 }
