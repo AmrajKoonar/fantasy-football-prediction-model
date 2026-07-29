@@ -189,12 +189,12 @@ def build_college_feature_lookup(settings: Settings) -> pl.DataFrame | None:
         return None
     sort_cols = ["college_season"] if "college_season" in frame.columns else []
     if id_col:
-        descending = [True] * len(sort_cols) + [False]
-        frame = frame.sort(sort_cols + [id_col], descending=descending)
+        descending = [*([True] * len(sort_cols)), False]
+        frame = frame.sort([*sort_cols, id_col], descending=descending)
         frame = frame.unique(subset=[id_col], keep="first")
     else:
-        descending = [True] * len(sort_cols) + [False]
-        frame = frame.sort(sort_cols + [name_col], descending=descending)
+        descending = [*([True] * len(sort_cols)), False]
+        frame = frame.sort([*sort_cols, name_col], descending=descending)
         frame = frame.unique(subset=[name_col], keep="first")
 
     frame = frame.with_columns(
