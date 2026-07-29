@@ -1,0 +1,41 @@
+gsis_id,projected_team,display_name,player_name,new_team,priority,roster_status,expected_team,old_team
+00-0034791,HOU,Nick Chubb,Nick Chubb,FA,P1,unsigned,FA,
+00-0031588,NE,Stefon Diggs,Stefon Diggs,FA,P1,unsigned,FA,
+00-0030035,MIN,Adam Thielen,Adam Thielen,RET,P1,retired,FA,
+00-0026498,LA,Matthew Stafford,Matthew Stafford,LAR,P1,active,LAR,
+00-0033858,PIT,Jonnu Smith,Jonnu Smith,FA,P1,unsigned,FA,
+00-0033040,MIA,Tyreek Hill,Tyreek Hill,FA,P1,unsigned,FA,
+00-0036893,LAC,Najee Harris,Najee Harris,FA,P1,unsigned,FA,
+00-0035719,WAS,Deebo Samuel Sr.,Deebo Samuel Sr.,FA,P1,unsigned,FA,
+00-0033897,HOU,Joe Mixon,Joe Mixon,FA,P1,unsigned,FA,
+00-0030279,LAC,Keenan Allen,Keenan Allen,FA,P1,unsigned,FA,
+00-0029263,NYG,Russell Wilson,Russell Wilson,RET,P1,retired,FA,
+00-0033357,NO,,Taysom Hill,FA,P2,ACT,,NO
+00-0034791,HOU,,Nick Chubb,FA,P1,ACT,,HOU
+00-0031588,NE,,Stefon Diggs,FA,P1,ACT,,NE
+00-0033282,BUF,,Curtis Samuel,FA,P2,ACT,,BUF
+00-0036328,NE,,Antonio Gibson,FA,P2,RES,,NE
+00-0034159,LAC,,Will Dissly,FA,P3,ACT,,LAC
+00-0031687,LV,,Raheem Mostert,FA,P2,INA,,LV
+00-0033923,KC,,Kareem Hunt,FA,P2,ACT,,KC
+00-0036906,NYJ,,Khalil Herbert,FA,P3,ACT,,NYJ
+00-0031610,MIA,,Darren Waller,FA,P2,RES,,MIA
+00-0033949,NE,,Joshua Dobbs,FA,P3,ACT,,NE
+00-0031236,BUF,,Brandin Cooks,FA,P2,ACT,,BUF
+00-0036414,SEA,,Cam Akers,FA,P3,ACT,,SEA
+00-0034983,CAR,,Hunter Renfrow,FA,P3,CUT,,CAR
+00-0033858,PIT,,Jonnu Smith,FA,P1,ACT,,PIT
+00-0030564,BAL,,DeAndre Hopkins,FA,P2,ACT,,BAL
+00-0032156,ATL,,Trevor Siemian,FA,P3,ACT,,ATL
+00-0033662,BAL,,Cooper Rush,ATL,P2,INA,,BAL
+00-0030061,WAS,,Zach Ertz,FA,P2,RES,,WAS
+00-0033040,MIA,,Tyreek Hill,FA,P1,RES,,MIA
+00-0036893,LAC,,Najee Harris,FA,P1,RES,,LAC
+00-0035719,WAS,,Deebo Samuel Sr.,FA,P1,ACT,,WAS
+00-0033897,HOU,,Joe Mixon,FA,P1,ACT,,HOU
+00-0030279,LAC,,Keenan Allen,FA,P1,ACT,,LAC
+00-0038040,LV,,Zamir White,FA,P2,ACT,,LV
+00-0032211,LV,,Tyler Lockett,FA,P2,ACT,,LV
+00-0033699,WAS,,Austin Ekeler,FA,P2,RES,,WAS
+00-0036196,BUF,,Gabe Davis,FA,P2,RES,,BUF
+00-0029263,NYG,,Russell Wilson,RET,P1,INA,,NYG

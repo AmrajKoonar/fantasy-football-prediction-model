@@ -33,7 +33,7 @@ project:
   # Semantic versions surfaced in generated metadata and the web footer.
   schema_version: "1.0.0"
   model_version: "2026.2.0"
-  projection_release: "2026-preseason-2"
+  projection_release: "2026-preseason-3"
 
 # ---------------------------------------------------------------------------
 # Filesystem layout. Relative paths resolve from the repository root.
@@ -116,6 +116,13 @@ overrides:
   # value silently; they add a parallel adjusted value and flag the player.
   apply_projection_overrides: true
 
+  # Point-in-time 2026 offseason roster patch. Applied only to target-season
+  # week-1 / projection context — never rewrites historical 2025 teams.
+  apply_offseason_transactions: true
+  # When false, unsigned free agents remain in the ranked export pool.
+  exclude_unsigned_from_rankings: true
+
   factual_corrections_file: data/manual/player-context.csv
   projection_overrides_file: data/manual/projection-overrides.csv
   id_corrections_file: data/manual/player-id-corrections.csv
+  offseason_transactions_file: data/manual/2026_offseason_transactions.csv

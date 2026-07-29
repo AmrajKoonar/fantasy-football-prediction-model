@@ -157,9 +157,12 @@ class LoggingSettings(_Base):
 class OverrideSettings(_Base):
     apply_factual_corrections: bool
     apply_projection_overrides: bool
+    apply_offseason_transactions: bool = True
+    exclude_unsigned_from_rankings: bool = True
     factual_corrections_file: str
     projection_overrides_file: str
     id_corrections_file: str
+    offseason_transactions_file: str = "data/manual/2026_offseason_transactions.csv"
 
 
 class ProjectConfig(_Base):

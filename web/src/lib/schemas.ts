@@ -135,6 +135,7 @@ export const MetadataSchema = z.object({
   positions: z.array(PositionSchema),
   rookieMode: z.enum(["full", "reduced", "fixture"]),
   limitations: z.array(z.string()).default([]),
+  rosterDataAsOf: z.string().nullable().optional(),
 });
 
 export const ModelPerformanceSchema = z.object({

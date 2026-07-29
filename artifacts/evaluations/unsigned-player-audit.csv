@@ -1,0 +1,30 @@
+player_id,player_name,position,old_team,new_team,transaction_type,transaction_status,roster_status,expected_depth_chart_rank,starter_confidence,role_uncertainty,active_roster,projection_eligible,priority,effective_season,as_of_date,source,notes,active_roster_bool,projection_eligible_bool
+00-0032156,Trevor Siemian,QB,ATL,FA,released,confirmed,unsigned,,low,high,false,true,P3,2026,2026-07-29,manual_offseason_patch,Released ATL,false,true
+00-0031345,Jimmy Garoppolo,QB,LAR,FA,unsigned,confirmed,unsigned,,low,high,false,true,P3,2026,2026-07-29,manual_offseason_patch,Unsigned as of patch,false,true
+00-0033949,Joshua Dobbs,QB,NE,FA,unsigned,confirmed,unsigned,,low,high,false,true,P3,2026,2026-07-29,manual_offseason_patch,Unsigned as of patch,false,true
+00-0033897,Joe Mixon,RB,HOU,FA,unsigned,confirmed,unsigned,,low,high,false,true,P1,2026,2026-07-29,manual_offseason_patch,Remove HOU workload,false,true
+00-0034791,Nick Chubb,RB,HOU,FA,unsigned,confirmed,unsigned,,low,high,false,true,P1,2026,2026-07-29,manual_offseason_patch,Remove HOU workload,false,true
+00-0036893,Najee Harris,RB,LAC,FA,unsigned,confirmed,unsigned,,low,high,false,true,P1,2026,2026-07-29,manual_offseason_patch,Remove LAC workload,false,true
+00-0033923,Kareem Hunt,RB,KC,FA,unsigned,confirmed,unsigned,,low,high,false,true,P2,2026,2026-07-29,manual_offseason_patch,Remove KC workload,false,true
+00-0033699,Austin Ekeler,RB,WAS,FA,unsigned,confirmed,unsigned,,low,high,false,true,P2,2026,2026-07-29,manual_offseason_patch,Remove WAS workload,false,true
+00-0036328,Antonio Gibson,RB,NE,FA,unsigned,confirmed,unsigned,,low,high,false,true,P2,2026,2026-07-29,manual_offseason_patch,Remove NE workload,false,true
+00-0031687,Raheem Mostert,RB,LV,FA,unsigned,confirmed,unsigned,,low,high,false,true,P2,2026,2026-07-29,manual_offseason_patch,Remove LV workload,false,true
+00-0038040,Zamir White,RB,LV,FA,unsigned,confirmed,unsigned,,low,high,false,true,P2,2026,2026-07-29,manual_offseason_patch,Remove LV workload,false,true
+00-0034972,Alexander Mattison,RB,MIA,FA,unsigned,confirmed,unsigned,,low,high,false,true,P2,2026,2026-07-29,manual_offseason_patch,Remove MIA workload,false,true
+00-0036906,Khalil Herbert,RB,NYJ,FA,unsigned,confirmed,unsigned,,low,high,false,true,P3,2026,2026-07-29,manual_offseason_patch,Remove NYJ workload,false,true
+00-0036414,Cam Akers,RB,SEA,FA,unsigned,confirmed,unsigned,,low,high,false,true,P3,2026,2026-07-29,manual_offseason_patch,Remove SEA workload,false,true
+00-0033040,Tyreek Hill,WR,MIA,FA,unsigned,confirmed,unsigned,,low,high,false,true,P1,2026,2026-07-29,manual_offseason_patch,Injury/availability uncertain,false,true
+00-0031588,Stefon Diggs,WR,NE,FA,unsigned,confirmed,unsigned,,low,high,false,true,P1,2026,2026-07-29,manual_offseason_patch,Remove NE targets,false,true
+00-0035719,Deebo Samuel Sr.,WR,WAS,FA,unsigned,confirmed,unsigned,,low,high,false,true,P1,2026,2026-07-29,manual_offseason_patch,Remove WAS targets,false,true
+00-0030279,Keenan Allen,WR,LAC,FA,unsigned,confirmed,unsigned,,low,high,false,true,P1,2026,2026-07-29,manual_offseason_patch,Remove LAC targets,false,true
+00-0030564,DeAndre Hopkins,WR,BAL,FA,unsigned,confirmed,unsigned,,low,high,false,true,P2,2026,2026-07-29,manual_offseason_patch,Retirement uncertainty,false,true
+00-0032211,Tyler Lockett,WR,LV,FA,unsigned,confirmed,unsigned,,low,high,false,true,P2,2026,2026-07-29,manual_offseason_patch,Remove LV targets,false,true
+00-0031236,Brandin Cooks,WR,BUF,FA,unsigned,confirmed,unsigned,,low,high,false,true,P2,2026,2026-07-29,manual_offseason_patch,Remove BUF targets,false,true
+00-0036196,Gabe Davis,WR,BUF,FA,unsigned,confirmed,unsigned,,low,high,false,true,P2,2026,2026-07-29,manual_offseason_patch,Remove BUF targets,false,true
+00-0033282,Curtis Samuel,WR,BUF,FA,unsigned,confirmed,unsigned,,low,high,false,true,P2,2026,2026-07-29,manual_offseason_patch,Remove BUF targets,false,true
+00-0034983,Hunter Renfrow,WR,CAR,FA,unsigned,confirmed,unsigned,,low,high,false,true,P3,2026,2026-07-29,manual_offseason_patch,Remove CAR targets,false,true
+00-0033858,Jonnu Smith,TE,PIT,FA,unsigned,confirmed,unsigned,,low,high,false,true,P1,2026,2026-07-29,manual_offseason_patch,Remove PIT targets,false,true
+00-0031610,Darren Waller,TE,MIA,FA,unsigned,confirmed,unsigned,,low,high,false,true,P2,2026,2026-07-29,manual_offseason_patch,Availability uncertain,false,true
+00-0030061,Zach Ertz,TE,WAS,FA,unsigned,confirmed,unsigned,,low,high,false,true,P2,2026,2026-07-29,manual_offseason_patch,Remove WAS targets,false,true
+00-0033357,Taysom Hill,TE,NO,FA,unsigned,confirmed,unsigned,,low,high,false,true,P2,2026,2026-07-29,manual_offseason_patch,Remove hybrid usage,false,true
+00-0034159,Will Dissly,TE,LAC,FA,unsigned,confirmed,unsigned,,low,high,false,true,P3,2026,2026-07-29,manual_offseason_patch,Remove LAC TE,false,true

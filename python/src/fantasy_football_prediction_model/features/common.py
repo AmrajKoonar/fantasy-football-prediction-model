@@ -602,6 +602,7 @@ def build_feature_table(
         lookback=lookback,
         attach_outcomes=False,
     )
+    projection_rows = _apply_offseason_projection_context(projection_rows, settings)
 
     feature_columns = _resolve_feature_columns(pairs, settings)
     coverage = _feature_coverage(pairs, feature_columns)
@@ -620,6 +621,32 @@ def build_feature_table(
         feature_columns=feature_columns,
         coverage=coverage,
     )
+
+
+def _apply_offseason_projection_context(
+    projection_rows: pl.DataFrame, settings: Settings
+) -> pl.DataFrame:
+    """Attach roster-status fields and reinforce 2026 team context from the patch."""
+    overrides = settings.project_config.overrides
+    if not overrides.apply_offseason_transactions:
+        return projection_rows
+    path = settings.repo_root / overrides.offseason_transactions_file
+    if not path.is_file():
+        return projection_rows
+    from fantasy_football_prediction_model.data.transactions import (
+        apply_transactions_to_projection_frame,
+        load_offseason_transactions,
+    )
+
+    transactions = load_offseason_transactions(path)
+    updated, report = apply_transactions_to_projection_frame(
+        projection_rows, transactions, target_season=settings.target_season
+    )
+    logger.info(
+        "Applied offseason transaction context to projection rows (%s).",
+        report,
+    )
+    return updated
 
 
 def _resolve_feature_columns(pairs: pl.DataFrame, settings: Settings) -> list[str]:

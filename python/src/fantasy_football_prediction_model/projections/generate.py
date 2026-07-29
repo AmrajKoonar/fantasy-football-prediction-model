@@ -52,6 +52,7 @@ class ProjectionBundle:
     rookie_mode: Literal["full", "reduced", "fixture"]
     candidate_pool_size: int
     warnings: list[str]
+    roster_data_as_of: str | None = None
 
 
 def _slugify(name: str) -> str:
@@ -450,6 +451,31 @@ def generate_projections(
     if not registry.list_models():
         logger.warning("No trained models in registry; using mean-reverted prior-season hybrid.")
 
+    roster_as_of: str | None = None
+    txn_by_id: dict[str, dict[str, Any]] = {}
+    if settings.project_config.overrides.apply_offseason_transactions:
+        from fantasy_football_prediction_model.data.transactions import (
+            apply_transactions_to_projection_frame,
+            load_offseason_transactions,
+            transactions_as_of,
+        )
+
+        txn_path = (
+            settings.repo_root / settings.project_config.overrides.offseason_transactions_file
+        )
+        if txn_path.is_file():
+            transactions = load_offseason_transactions(txn_path)
+            frame, txn_report = apply_transactions_to_projection_frame(
+                frame, transactions, target_season=settings.target_season
+            )
+            roster_as_of = txn_report.get("as_of_date") or transactions_as_of(transactions)
+            for row in transactions.filter(
+                pl.col("effective_season") == settings.target_season
+            ).to_dicts():
+                pid = str(row.get("player_id") or "").strip()
+                if pid:
+                    txn_by_id[pid] = row
+
     frame, model_report = apply_registered_models(frame, settings, registry)
     rules = rules_from_preset(settings.scoring, "ppr")
     players_out: list[PlayerProjection] = []
@@ -460,9 +486,37 @@ def generate_projections(
     if "display_name" not in frame.columns and "player_name" not in frame.columns:
         raise ValueError("projection_features.parquet needs display_name or player_name.")
 
+    exclude_unsigned = settings.project_config.overrides.exclude_unsigned_from_rankings
+    skipped_retired = 0
+    skipped_unsigned = 0
+
     for row in frame.to_dicts():
         position = str(row["position"])
         if position not in FANTASY_POSITIONS:
+            continue
+        gsis = str(row["gsis_id"])
+        txn = txn_by_id.get(gsis, {})
+        roster_status = str(
+            row.get("offseason_roster_status") or txn.get("roster_status") or ""
+        ).lower()
+        projection_eligible = row.get("projection_eligible")
+        if projection_eligible is None:
+            projection_eligible = txn.get("projection_eligible", True)
+        if isinstance(projection_eligible, str):
+            projection_eligible = projection_eligible.lower() in {"true", "1", "yes"}
+        if roster_status == "retired" or projection_eligible is False:
+            skipped_retired += 1
+            continue
+        team = str(row.get("projected_team") or row.get("next_team") or row.get("team") or "FA")
+        if team in {"RET", "RETIRED"}:
+            skipped_retired += 1
+            continue
+        if exclude_unsigned and (
+            roster_status == "unsigned"
+            or (team == "FA" and gsis in txn_by_id and txn.get("roster_status") != "active")
+            or (row.get("offseason_active_roster") is False and roster_status == "unsigned")
+        ):
+            skipped_unsigned += 1
             continue
         stats = apply_constraints(stats_from_row(row, position))
         points = score_total(stats, rules)
@@ -486,16 +540,30 @@ def generate_projections(
         conf_score = 0.62 if used_model else 0.48
         if row.get("team_changed") in (1, True):
             conf_score -= 0.08
+        role_unc = str(row.get("role_uncertainty") or txn.get("role_uncertainty") or "").lower()
+        if role_unc == "high":
+            conf_score -= 0.10
+        elif role_unc == "medium":
+            conf_score -= 0.04
+        starter_conf = str(
+            row.get("starter_confidence") or txn.get("starter_confidence") or ""
+        ).lower()
+        if starter_conf == "low":
+            conf_score -= 0.06
+        conf_score = max(0.15, min(0.95, conf_score))
         conf_label: Literal["high", "medium", "low"] = (
             "high" if conf_score >= 0.7 else "medium" if conf_score >= 0.45 else "low"
         )
+        reasons = ["Model + context blend" if used_model else "Mean-reverted prior hybrid"]
+        if txn:
+            reasons.append(f"2026 offseason context ({txn.get('transaction_type', 'patch')})")
         players_out.append(
             PlayerProjection(
-                player_id=str(row["gsis_id"]),
+                player_id=gsis,
                 slug=slug,
                 name=name,
                 short_name=short,
-                team=str(row.get("team") or "FA"),
+                team=team if team not in {"RET", "RETIRED"} else "FA",
                 position=position,  # type: ignore[arg-type]
                 age=float(row["age_at_target_season"])
                 if row.get("age_at_target_season") is not None
@@ -546,9 +614,7 @@ def generate_projections(
                 confidence=ConfidenceBlock(
                     score=conf_score,
                     label=conf_label,
-                    reasons=[
-                        "Model + context blend" if used_model else "Mean-reverted prior hybrid"
-                    ],
+                    reasons=reasons,
                 ),
                 explanation=build_explanation(
                     feature_values={
@@ -767,6 +833,18 @@ def generate_projections(
             f"({model_report['fallback_hits']} hybrid fallbacks)."
         )
 
+    if skipped_retired:
+        rookie_warnings.append(
+            f"Excluded {skipped_retired} retired / projection-ineligible players from rankings."
+        )
+    if skipped_unsigned:
+        rookie_warnings.append(
+            f"Excluded {skipped_unsigned} unsigned free agents from default rankings "
+            "(set overrides.exclude_unsigned_from_rankings=false to include)."
+        )
+    if roster_as_of:
+        rookie_warnings.append(f"Offseason transaction patch as_of_date={roster_as_of}.")
+
     rankable = [
         RankablePlayer(
             player_id=p.player_id,
@@ -813,4 +891,5 @@ def generate_projections(
         rookie_mode=rookie_mode,
         candidate_pool_size=len(players_out),
         warnings=rookie_warnings,
+        roster_data_as_of=roster_as_of,
     )

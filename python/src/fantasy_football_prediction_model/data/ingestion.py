@@ -121,6 +121,8 @@ class IngestedData:
     coverage: list[DatasetStatus] = field(default_factory=list)
     validation: ValidationReport = field(default_factory=ValidationReport)
     data_mode: str = "production"
+    #: Manual offseason transaction patch ``as_of_date`` when applied.
+    offseason_transactions_as_of: str | None = None
 
     def coverage_frame(self) -> pl.DataFrame:
         """The coverage matrix, ready to write to CSV or JSON."""
@@ -369,6 +371,9 @@ def ingest(
 
     normalised_rosters = _normalise_rosters(rosters)
     week1_teams = _week_one_teams(weekly_rosters, normalised_rosters, target_season)
+    week1_teams, offseason_as_of = _apply_offseason_week1_patch(
+        week1_teams, settings, target_season=target_season
+    )
     target_rosters = normalised_rosters.filter(pl.col("season") == target_season)
     if target_rosters.is_empty():
         logger.warning(
@@ -451,7 +456,49 @@ def ingest(
         target_depth=target_depth,
         coverage=coverage,
         validation=report,
+        offseason_transactions_as_of=offseason_as_of,
     )
+
+
+def _apply_offseason_week1_patch(
+    week1_teams: pl.DataFrame | None,
+    settings: Settings,
+    *,
+    target_season: int,
+) -> tuple[pl.DataFrame | None, str | None]:
+    """Apply the manual offseason patch to target-season week-1 teams only."""
+    overrides = settings.project_config.overrides
+    if not getattr(overrides, "apply_offseason_transactions", True):
+        return week1_teams, None
+    rel = getattr(
+        overrides,
+        "offseason_transactions_file",
+        "data/manual/2026_offseason_transactions.csv",
+    )
+    path = settings.repo_root / rel
+    if not path.is_file():
+        logger.info("No offseason transactions file at %s; skipping week-1 patch.", path)
+        return week1_teams, None
+    from fantasy_football_prediction_model.data.transactions import (
+        apply_transactions_to_week1,
+        load_offseason_transactions,
+    )
+
+    transactions = load_offseason_transactions(path)
+    result = apply_transactions_to_week1(
+        week1_teams,
+        transactions,
+        target_season=target_season,
+        prior_season=settings.feature_end_season,
+    )
+    for warning in result.warnings:
+        logger.warning("%s", warning)
+    if not result.unresolved.is_empty():
+        logger.warning(
+            "%d offseason transactions lack player_id and were not applied.",
+            result.unresolved.height,
+        )
+    return result.week1_teams, result.as_of_date
 
 
 def _normalise_rosters(rosters: pl.DataFrame) -> pl.DataFrame:

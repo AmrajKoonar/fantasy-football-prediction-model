@@ -1,0 +1,26 @@
+player_name,position,team,pick,priority,present_in_draft_data
+Fernando Mendoza,QB,LV,1,P1,false
+Jeremiyah Love,RB,ARI,3,P1,false
+Carnell Tate,WR,TEN,4,P1,false
+Jordyn Tyson,WR,NO,8,P1,false
+Ty Simpson,QB,LAR,13,P1,false
+Kenyon Sadiq,TE,NYJ,16,P1,false
+Makai Lemon,WR,PHI,20,P1,false
+KC Concepcion,WR,CLE,24,P1,false
+Omar Cooper Jr.,WR,NYJ,30,P1,false
+Jadarian Price,RB,SEA,32,P1,false
+De'Zhaun Stribling,WR,SF,33,P1,false
+Denzel Boston,WR,CLE,39,P2,false
+Germie Bernard,WR,PIT,47,P1,false
+Eli Stowers,TE,PHI,54,P2,false
+Carson Beck,QB,ARI,65,P1,false
+Sam Roush,TE,BAL,69,P2,false
+Antonio Williams,WR,WAS,71,P1,false
+Oscar Delp,TE,NO,73,P2,false
+Drew Allar,QB,PIT,76,P1,false
+Ja'Kobi Lane,WR,BAL,80,P2,false
+Chris Brazzell II,WR,CAR,83,P2,false
+Kaelon Black,RB,SF,90,P2,false
+Cade Klubnik,QB,NYJ,110,P2,false
+Mike Washington Jr.,RB,LV,122,P2,false
+Nicholas Singleton,RB,TEN,165,P2,false

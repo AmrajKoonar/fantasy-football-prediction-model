@@ -371,6 +371,7 @@ class ExportMetadata(ExportModel):
     pipeline: list[PipelineStageRecord] = Field(default_factory=list)
     limitations: list[str] = Field(default_factory=list)
     package_versions: dict[str, str] = Field(default_factory=dict)
+    roster_data_as_of: str | None = None
 
     @field_validator("data_mode")
     @classmethod
