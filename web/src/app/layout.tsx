@@ -22,8 +22,8 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Field Forecast | NFL Fantasy Projections",
-    template: "%s | Field Forecast",
+    default: "Fantasy Analytics | NFL Fantasy Projections",
+    template: "%s | Fantasy Analytics",
   },
   description:
     "Open, reproducible NFL fantasy football projections for the 2026 season built on free nflverse data.",
@@ -32,14 +32,14 @@ export const metadata: Metadata = {
     shortcut: "/favicon.svg",
   },
   openGraph: {
-    title: "Field Forecast",
+    title: "Fantasy Analytics",
     description: "Open NFL fantasy projections for the 2026 season.",
     type: "website",
     url: siteUrl,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Field Forecast",
+    title: "Fantasy Analytics",
     description: "Open NFL fantasy projections for the 2026 season.",
   },
 };

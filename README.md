@@ -83,6 +83,41 @@ ffpm pipeline status
 
 2026 roster moves live in `data/manual/2026_offseason_transactions.csv` and are applied only to target-season context (not historical 2025 stats). See [docs/USER_ACTIONS.md](docs/USER_ACTIONS.md) § Offseason roster patch.
 
+## Refresh the published rankings
+
+Use this checklist whenever you want the website to use the newest available NFL and rookie data.
+Run it from the repository root in Windows PowerShell.
+
+Before running the commands, review `data/manual/2026_offseason_transactions.csv`, add any
+confirmed roster moves that nflverse does not yet reflect, and change its `as_of_date` values to
+the date through which you verified the transactions. Use that same date in the
+`data transactions --as-of` command below.
+
+```powershell
+git switch main
+git pull origin main
+.\.venv\Scripts\Activate.ps1
+
+# Refresh source data and rebuild model features
+python -m fantasy_football_prediction_model.cli data fetch-nfl --force-refresh
+python -m fantasy_football_prediction_model.cli data fetch-rookies
+python -m fantasy_football_prediction_model.cli data build-dataset
+
+# Replace YYYY-MM-DD with the transaction file's verified as-of date
+python -m fantasy_football_prediction_model.cli data transactions --season 2026 --as-of YYYY-MM-DD
+python -m fantasy_football_prediction_model.cli data audit-rosters --season 2026
+
+# Regenerate and validate the production web export
+python -m fantasy_football_prediction_model.cli project generate
+python -m fantasy_football_prediction_model.cli project validate
+```
+
+Confirm that the audit reports zero post-apply and P1 conflicts. Then review a few known roster
+moves in `web/public/data/rankings.json`, commit the changed source and generated export files,
+push a branch, merge its pull request into `main`, and confirm Vercel created a **Production**
+deployment. The live footer should show the new projection release from `configs/project.yml`.
+Do not publish if metadata says `dataMode: fixture`.
+
 ## Data mode guard
 
 Every export includes `dataMode`:

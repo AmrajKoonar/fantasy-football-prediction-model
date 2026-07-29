@@ -24,7 +24,7 @@ export function SiteHeader() {
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
         <div className="flex items-center gap-6">
           <Link href="/" className="font-[family-name:var(--font-display)] text-xl font-semibold tracking-tight">
-            Field Forecast
+            Fantasy Analytics
           </Link>
           <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">
             {links.map((link) => (

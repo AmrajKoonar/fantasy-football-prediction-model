@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 test("homepage and rankings critical path", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: "Field Forecast" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Fantasy Analytics" })).toBeVisible();
   await page.getByRole("link", { name: "View rankings" }).click();
   await expect(page.getByRole("heading", { name: "Rankings" })).toBeVisible();
   await page.getByLabel("Position").selectOption("RB");

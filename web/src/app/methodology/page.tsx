@@ -8,7 +8,7 @@ export default function MethodologyPage() {
           Methodology
         </h1>
         <p className="text-muted">
-          Field Forecast predicts next-season football statistics from information available through
+          Fantasy Analytics predicts next-season football statistics from information available through
           the completed prior season, then converts those statistics into configurable fantasy
           points and draft rankings.
         </p>
