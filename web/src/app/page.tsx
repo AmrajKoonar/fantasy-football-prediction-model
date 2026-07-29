@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { loadMetadata, loadProjections, loadRankings } from "@/lib/data";
-import { formatPoints } from "@/lib/utils";
+import { cn, formatPoints } from "@/lib/utils";
 import { PositionBadge } from "@/components/position-badge";
+import { RookieBadge } from "@/components/rookie-badge";
 
 export default async function HomePage() {
   const [meta, projections, rankings] = await Promise.all([
@@ -77,15 +78,22 @@ export default async function HomePage() {
         <h2 className="font-[family-name:var(--font-display)] text-2xl font-semibold">
           Top projected players
         </h2>
-        <ol className="divide-y divide-border rounded-lg border border-border bg-card">
-          {top.map((entry) => (
-            <li key={entry.playerId} className="flex items-center justify-between gap-3 px-4 py-3">
+        <ol className="overflow-hidden rounded-lg border border-border bg-card">
+          {top.map((entry, index) => (
+            <li
+              key={entry.playerId}
+              className={cn(
+                "flex items-center justify-between gap-3 px-4 py-3",
+                index % 2 === 1 && "bg-[color:var(--row-band)]",
+              )}
+            >
               <div className="flex items-center gap-3">
                 <span className="w-6 text-sm text-muted">{entry.overallRank}</span>
                 <PositionBadge position={entry.position} />
                 <Link href={`/players/${entry.slug}`} className="font-medium hover:underline">
                   {entry.name}
                 </Link>
+                {entry.rookie ? <RookieBadge /> : null}
                 <span className="text-sm text-muted">{entry.team}</span>
               </div>
               <span className="tabular-nums">{formatPoints(entry.pprPoints)} PPR</span>
@@ -109,6 +117,7 @@ export default async function HomePage() {
                 <div className="mb-2 flex items-center gap-2">
                   <PositionBadge position={entry.position} />
                   <span className="text-sm text-muted">{entry.team}</span>
+                  {entry.rookie ? <RookieBadge /> : null}
                 </div>
                 <p className="font-medium">{entry.name}</p>
                 <p className="text-sm text-muted">{formatPoints(entry.pprPoints)} PPR</p>

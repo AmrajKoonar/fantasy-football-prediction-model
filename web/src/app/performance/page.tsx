@@ -64,7 +64,14 @@ export default async function PerformancePage() {
                   </thead>
                   <tbody>
                     {performance.fantasyMetrics.map((row, index) => (
-                      <tr key={index} className="border-b border-border/60">
+                      <tr
+                        key={index}
+                        className={
+                          index % 2 === 1
+                            ? "border-b border-border/60 bg-[color:var(--row-band)]"
+                            : "border-b border-border/60"
+                        }
+                      >
                         <td className="px-3 py-2">{row.position}</td>
                         <td className="px-3 py-2">{row.model}</td>
                         <td className="px-3 py-2">{row.mae?.toFixed?.(2) ?? "-"}</td>
