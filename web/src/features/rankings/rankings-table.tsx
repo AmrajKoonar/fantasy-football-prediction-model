@@ -4,7 +4,8 @@ import Link from "next/link";
 import { Fragment, useMemo, useState } from "react";
 import type { PlayerProjection, RankingEntry } from "@/lib/schemas";
 import { PositionBadge } from "@/components/position-badge";
-import { formatPoints } from "@/lib/utils";
+import { RookieBadge } from "@/components/rookie-badge";
+import { cn, formatPoints } from "@/lib/utils";
 import { getPreset, scoreStats } from "@/lib/scoring";
 import { DEFAULT_LEAGUE, computeReplacementLevels, vorp, type LeagueSettings } from "@/lib/vorp";
 
@@ -31,9 +32,7 @@ export function RankingsTable({ rankings, players }: Props) {
     const leagueSettings = { ...league, superflex: superflex ? 1 : league.superflex };
     const scored = rankings.map((entry) => {
       const player = byId.get(entry.playerId);
-      const points = player
-        ? scoreStats(player.projectedStats, rules)
-        : entry.pprPoints;
+      const points = player ? scoreStats(player.projectedStats, rules) : entry.pprPoints;
       return { entry, player, points };
     });
     const levels = computeReplacementLevels(
@@ -81,6 +80,7 @@ export function RankingsTable({ rankings, players }: Props) {
         <label className="text-sm">
           <span className="mb-1 block text-muted">Position</span>
           <select
+            aria-label="Position"
             value={position}
             onChange={(e) => setPosition(e.target.value)}
             className="w-full rounded-md border border-border bg-background px-2 py-1.5"
@@ -107,6 +107,7 @@ export function RankingsTable({ rankings, players }: Props) {
         <label className="text-sm">
           <span className="mb-1 block text-muted">Scoring</span>
           <select
+            aria-label="Scoring"
             value={preset}
             onChange={(e) => setPreset(e.target.value)}
             className="w-full rounded-md border border-border bg-background px-2 py-1.5"
@@ -143,7 +144,7 @@ export function RankingsTable({ rankings, players }: Props) {
       <div className="overflow-x-auto rounded-lg border border-border bg-card">
         <table className="min-w-full text-left text-sm">
           <caption className="sr-only">Fantasy football draft rankings</caption>
-          <thead className="sticky top-0 bg-card">
+          <thead className="sticky top-0 z-10 bg-card">
             <tr className="border-b border-border text-muted">
               <th className="px-3 py-2">Rank</th>
               <th className="px-3 py-2">Player</th>
@@ -157,63 +158,83 @@ export function RankingsTable({ rankings, players }: Props) {
             </tr>
           </thead>
           <tbody>
-            {rows.map((row) => (
-              <Fragment key={row.entry.playerId}>
-                <tr className="border-b border-border/70 hover:bg-accent/5">
-                  <td className="px-3 py-2 tabular-nums">{row.displayRank}</td>
-                  <td className="px-3 py-2">
-                    <button
-                      type="button"
-                      className="text-left font-medium hover:underline"
-                      onClick={() =>
-                        setExpanded(expanded === row.entry.playerId ? null : row.entry.playerId)
-                      }
-                    >
-                      {row.entry.name}
-                    </button>
-                    <div className="text-xs text-muted">{row.entry.team}</div>
-                  </td>
-                  <td className="px-3 py-2">
-                    <PositionBadge position={row.entry.position} />
-                    <span className="ml-2 text-xs text-muted">{row.entry.positionRank}</span>
-                  </td>
-                  <td className="px-3 py-2">{row.entry.tier}</td>
-                  <td className="px-3 py-2 tabular-nums">{formatPoints(row.points)}</td>
-                  <td className="px-3 py-2 tabular-nums">{formatPoints(row.ppg)}</td>
-                  <td className="px-3 py-2 tabular-nums">{formatPoints(row.vorp)}</td>
-                  <td className="px-3 py-2 tabular-nums text-xs text-muted">
-                    {formatPoints(row.entry.pprPoints * 0.85)}–
-                    {formatPoints(row.entry.pprPoints * 1.15)}
-                  </td>
-                  <td className="px-3 py-2 capitalize">{row.entry.confidenceLabel}</td>
-                </tr>
-                {expanded === row.entry.playerId && row.player ? (
-                  <tr className="bg-accent/5">
-                    <td colSpan={9} className="px-4 py-3 text-sm">
-                      <div className="flex flex-wrap items-center justify-between gap-3">
-                        <p className="max-w-3xl text-muted">
-                          {row.player.explanation.summary || "No explanation available."}
-                        </p>
-                        <div className="flex gap-2">
-                          <Link
-                            href={`/players/${row.entry.slug}`}
-                            className="rounded-md border border-border px-3 py-1"
-                          >
-                            Player page
-                          </Link>
-                          <Link
-                            href={`/compare?ids=${row.entry.playerId}`}
-                            className="rounded-md border border-border px-3 py-1"
-                          >
-                            Compare
-                          </Link>
-                        </div>
+            {rows.map((row, index) => {
+              const banded = index % 2 === 1;
+              return (
+                <Fragment key={row.entry.playerId}>
+                  <tr
+                    className={cn(
+                      "border-b border-border/60 transition-colors hover:bg-accent/10",
+                      banded ? "bg-[color:var(--row-band)]" : "bg-transparent",
+                    )}
+                  >
+                    <td className="px-3 py-2 tabular-nums">{row.displayRank}</td>
+                    <td className="px-3 py-2">
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          className="text-left font-medium leading-none hover:underline"
+                          onClick={() =>
+                            setExpanded(
+                              expanded === row.entry.playerId ? null : row.entry.playerId,
+                            )
+                          }
+                        >
+                          {row.entry.name}
+                        </button>
+                        {row.entry.rookie ? <RookieBadge /> : null}
+                      </div>
+                      <div className="mt-0.5 flex items-center gap-1.5 text-xs text-muted">
+                        <span>{row.entry.team}</span>
                       </div>
                     </td>
+                    <td className="px-3 py-2">
+                      <PositionBadge position={row.entry.position} />
+                      <span className="ml-2 text-xs text-muted">{row.entry.positionRank}</span>
+                    </td>
+                    <td className="px-3 py-2">{row.entry.tier}</td>
+                    <td className="px-3 py-2 tabular-nums">{formatPoints(row.points)}</td>
+                    <td className="px-3 py-2 tabular-nums">{formatPoints(row.ppg)}</td>
+                    <td className="px-3 py-2 tabular-nums">{formatPoints(row.vorp)}</td>
+                    <td className="px-3 py-2 tabular-nums text-xs text-muted">
+                      {formatPoints(row.entry.pprPoints * 0.85)}-
+                      {formatPoints(row.entry.pprPoints * 1.15)}
+                    </td>
+                    <td className="px-3 py-2 capitalize">{row.entry.confidenceLabel}</td>
                   </tr>
-                ) : null}
-              </Fragment>
-            ))}
+                  {expanded === row.entry.playerId && row.player ? (
+                    <tr
+                      className={cn(
+                        "border-b border-border/60",
+                        banded ? "bg-[color:var(--row-band)]" : "bg-accent/5",
+                      )}
+                    >
+                      <td colSpan={9} className="px-4 py-3 text-sm">
+                        <div className="flex flex-wrap items-center justify-between gap-3">
+                          <p className="max-w-3xl text-muted">
+                            {row.player.explanation.summary || "No explanation available."}
+                          </p>
+                          <div className="flex gap-2">
+                            <Link
+                              href={`/players/${row.entry.slug}`}
+                              className="rounded-md border border-border px-3 py-1"
+                            >
+                              Player page
+                            </Link>
+                            <Link
+                              href={`/compare?ids=${row.entry.playerId}`}
+                              className="rounded-md border border-border px-3 py-1"
+                            >
+                              Compare
+                            </Link>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  ) : null}
+                </Fragment>
+              );
+            })}
           </tbody>
         </table>
       </div>

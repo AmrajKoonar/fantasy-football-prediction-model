@@ -14,6 +14,8 @@
   --rb: #8a4b12;
   --wr: #1f6b4a;
   --te: #6b3fa0;
+  --row-band: #e8eee9;
+  --rookie: #9b6bd6;
 }
 
 .dark {
@@ -30,6 +32,8 @@
   --rb: #f0b27a;
   --wr: #6ee7b7;
   --te: #c4b5fd;
+  --row-band: #141c18;
+  --rookie: #b794f0;
 }
 
 @theme inline {
@@ -42,6 +46,8 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-warning: var(--warning);
   --color-danger: var(--danger);
+  --color-row-band: var(--row-band);
+  --color-rookie: var(--rookie);
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);
 }

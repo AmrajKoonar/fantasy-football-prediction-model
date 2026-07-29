@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { loadPlayerBySlug, loadProjections } from "@/lib/data";
 import { PositionBadge } from "@/components/position-badge";
+import { RookieBadge } from "@/components/rookie-badge";
 import { formatPoints } from "@/lib/utils";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -44,7 +45,7 @@ export default async function PlayerPage({ params }: Props) {
               <div className="flex items-center gap-2 text-sm text-muted">
                 <PositionBadge position={player.position} />
                 <span>{player.team}</span>
-                {player.rookie ? <span>Rookie</span> : null}
+                {player.rookie ? <RookieBadge size="md" /> : null}
               </div>
             </div>
           </div>

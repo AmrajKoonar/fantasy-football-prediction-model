@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { loadProjections } from "@/lib/data";
 import { PositionBadge } from "@/components/position-badge";
-import { formatPoints } from "@/lib/utils";
+import { RookieBadge } from "@/components/rookie-badge";
+import { cn, formatPoints } from "@/lib/utils";
 
 type Props = { searchParams: Promise<{ ids?: string }> };
 
@@ -56,6 +57,7 @@ export default async function ComparePage({ searchParams }: Props) {
                       <Link href={`/players/${player.slug}`} className="hover:underline">
                         {player.name}
                       </Link>
+                      {player.rookie ? <RookieBadge /> : null}
                     </div>
                   </th>
                 ))}
@@ -75,8 +77,14 @@ export default async function ComparePage({ searchParams }: Props) {
                 ["Targets", (p: (typeof selected)[number]) => formatPoints(p.projectedStats.targets ?? null)],
                 ["Carries", (p: (typeof selected)[number]) => formatPoints(p.projectedStats.carries ?? null)],
                 ["Pass attempts", (p: (typeof selected)[number]) => formatPoints(p.projectedStats.passAttempts ?? null)],
-              ].map(([label, getter]) => (
-                <tr key={String(label)} className="border-b border-border/60">
+              ].map(([label, getter], index) => (
+                <tr
+                  key={String(label)}
+                  className={cn(
+                    "border-b border-border/60",
+                    index % 2 === 1 && "bg-[color:var(--row-band)]",
+                  )}
+                >
                   <th className="px-3 py-2 text-left font-medium text-muted">{label as string}</th>
                   {selected.map((player) => (
                     <td key={player.playerId} className="px-3 py-2 tabular-nums">
