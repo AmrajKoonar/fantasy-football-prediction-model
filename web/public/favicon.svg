@@ -1,6 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Fantasy Analytics">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Fantasy Analytics football favicon</title>
   <rect width="64" height="64" rx="12" fill="#1a3a2f"/>
-  <path d="M12 40h40v4H12z" fill="#c6f34a"/>
-  <path d="M18 18h6v22h-6zM40 18h6v22h-6z" fill="#e8f2ec"/>
-  <circle cx="32" cy="24" r="7" fill="#c6f34a"/>
+  <path
+    d="M7 32C13 15 24 9 32 9s19 6 25 23C51 49 40 55 32 55S13 49 7 32Z"
+    fill="#a6532a"
+    stroke="#e8f2ec"
+    stroke-width="3"
+    stroke-linejoin="round"
+  />
+  <text
+    x="32"
+    y="39"
+    fill="#ffffff"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="21"
+    font-weight="800"
+    text-anchor="middle"
+  >FF</text>
 </svg>

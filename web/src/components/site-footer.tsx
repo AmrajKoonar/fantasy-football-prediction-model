@@ -10,7 +10,7 @@ export function SiteFooter({ meta }: { meta: ExportMetadata | null }) {
       <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-6 text-sm text-muted sm:px-6 lg:px-8">
         <p>
           Fantasy Analytics is an independent portfolio project. Not affiliated with the NFL, nflverse,
-          or any fantasy platform.
+          or any fantasy platform. Developed by Amraj with the help of AI.
         </p>
         <p>
           Model {meta?.modelVersion ?? "-"} · Schema {meta?.schemaVersion ?? "-"} · Release{" "}

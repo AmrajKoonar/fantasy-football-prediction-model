@@ -25,7 +25,7 @@ export default async function HomePage() {
           </h1>
           <p className="max-w-2xl text-lg text-muted">
             Reproducible fantasy football projections for the {meta?.projectionSeason ?? 2026}{" "}
-            season, built from free nflverse data through {meta?.sourceSeason ?? 2025}.
+            season, built from free nflverse data through {meta?.sourceSeason ?? 2025}. Developed by Amraj.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link
