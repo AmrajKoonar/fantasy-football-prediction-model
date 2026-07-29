@@ -67,8 +67,8 @@ export default async function PerformancePage() {
                       <tr key={index} className="border-b border-border/60">
                         <td className="px-3 py-2">{row.position}</td>
                         <td className="px-3 py-2">{row.model}</td>
-                        <td className="px-3 py-2">{row.mae?.toFixed?.(2) ?? "—"}</td>
-                        <td className="px-3 py-2">{row.rmse?.toFixed?.(2) ?? "—"}</td>
+                        <td className="px-3 py-2">{row.mae?.toFixed?.(2) ?? "-"}</td>
+                        <td className="px-3 py-2">{row.rmse?.toFixed?.(2) ?? "-"}</td>
                         <td className="px-3 py-2">{row.isSelected ? "yes" : ""}</td>
                       </tr>
                     ))}

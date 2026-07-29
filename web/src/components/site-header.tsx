@@ -12,7 +12,6 @@ const links = [
   { href: "/compare", label: "Compare" },
   { href: "/methodology", label: "Methodology" },
   { href: "/performance", label: "Performance" },
-  { href: "/sources", label: "Sources" },
   { href: "/about", label: "About" },
 ];
 

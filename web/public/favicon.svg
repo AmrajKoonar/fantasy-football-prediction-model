@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Field Forecast">
+  <rect width="64" height="64" rx="12" fill="#1a3a2f"/>
+  <path d="M12 40h40v4H12z" fill="#c6f34a"/>
+  <path d="M18 18h6v22h-6zM40 18h6v22h-6z" fill="#e8f2ec"/>
+  <circle cx="32" cy="24" r="7" fill="#c6f34a"/>
+</svg>

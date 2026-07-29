@@ -27,6 +27,10 @@ export const metadata: Metadata = {
   },
   description:
     "Open, reproducible NFL fantasy football projections for the 2026 season built on free nflverse data.",
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    shortcut: "/favicon.svg",
+  },
   openGraph: {
     title: "Field Forecast",
     description: "Open NFL fantasy projections for the 2026 season.",

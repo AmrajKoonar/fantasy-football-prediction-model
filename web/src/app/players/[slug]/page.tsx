@@ -101,12 +101,12 @@ export default async function PlayerPage({ params }: Props) {
         <div className="rounded-lg border border-border bg-card p-4">
           <h2 className="mb-2 font-semibold">Why the model is optimistic</h2>
           <p className="text-sm text-muted">
-            {player.explanation.optimisticNote || player.explanation.summary || "—"}
+            {player.explanation.optimisticNote || player.explanation.summary || "-"}
           </p>
         </div>
         <div className="rounded-lg border border-border bg-card p-4">
           <h2 className="mb-2 font-semibold">Why the model is cautious</h2>
-          <p className="text-sm text-muted">{player.explanation.cautiousNote || "—"}</p>
+          <p className="text-sm text-muted">{player.explanation.cautiousNote || "-"}</p>
         </div>
       </section>
 
