@@ -6,18 +6,18 @@
   "projectionSeason": 2026,
   "sourceSeason": 2025,
   "dataStartSeason": 2012,
-  "generatedAt": "2026-07-28T20:52:36.619941Z",
-  "gitCommit": "d61cbf0537fbaf7a2afbc86c27c8da9c0246936a",
+  "generatedAt": "2026-07-29T18:47:06.583087Z",
+  "gitCommit": "3be275e53c6a629694d45b4055cfb34623f55aa1",
   "datasetHash": null,
-  "playerCount": 130,
-  "candidatePoolSize": 867,
+  "playerCount": 160,
+  "candidatePoolSize": 947,
   "positions": [
     "QB",
     "RB",
     "WR",
     "TE"
   ],
-  "rookieMode": "reduced",
+  "rookieMode": "full",
   "scoring": {
     "passingYardsPerPoint": 25.0,
     "passingTouchdown": 4.0,

@@ -1,4 +1,4 @@
-# Field Forecast — fantasy-football-prediction-model
+# Fantasy Football Prediction Model
 
 Open, reproducible NFL fantasy football projections for the **2026** season using free public data through the completed **2025** season.
 

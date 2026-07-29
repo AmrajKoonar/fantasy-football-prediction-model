@@ -539,8 +539,190 @@ def generate_projections(
                 ),
                 confidence=ConfidenceBlock(score=0.55, label="medium", reasons=[]),
                 explanation=build_explanation(feature_values={}),
+                model_architecture="direct",
+                rookie_mode="not_applicable",
             )
         )
+
+    # Merge target-season draft rookies (CFBD full or draft/combine reduced).
+    from fantasy_football_prediction_model.features.rookie import (
+        build_rookie_projection_rows,
+        college_fields_present,
+        load_dotenv_file,
+        rookie_stat_priors,
+    )
+
+    load_dotenv_file(settings.repo_root)
+    rookie_mode: Literal["full", "reduced", "fixture"] = "reduced"
+    rookie_warnings: list[str] = []
+    try:
+        rookie_frame, rookie_mode = build_rookie_projection_rows(settings)
+    except FileNotFoundError as exc:
+        rookie_warnings.append(str(exc))
+        rookie_frame = None
+
+    existing_ids = {p.player_id for p in players_out}
+    existing_slugs = {p.slug for p in players_out}
+    rookies_added = 0
+    if rookie_frame is not None and not rookie_frame.is_empty():
+        for row in rookie_frame.to_dicts():
+            position = str(row.get("position") or "")
+            if position not in FANTASY_POSITIONS:
+                continue
+            gsis = row.get("gsis_id")
+            pick = row.get("draft_pick")
+            player_id = (
+                str(gsis)
+                if gsis is not None and str(gsis).strip()
+                else f"rookie-{settings.target_season}-{int(pick or rookies_added)}"
+            )
+            if player_id in existing_ids:
+                continue
+            name = str(row.get("display_name") or player_id)
+            slug = _slugify(name)
+            if slug in existing_slugs:
+                slug = f"{slug}-r{settings.target_season}"
+            has_college = college_fields_present(row)
+            priors = rookie_stat_priors(position, float(pick) if pick else None, row)
+            stats = apply_constraints({k: float(v) for k, v in priors.items()})
+            points = score_total(stats, rules)
+            # Wider band for rookies; slightly tighter when college production is present.
+            band = 0.28 if has_college and rookie_mode == "full" else 0.38
+            low, points, high = enforce_quantile_ordering(
+                points * (1 - band), points, points * (1 + band)
+            )
+            conf_score = 0.48 if has_college and rookie_mode == "full" else 0.32
+            conf_label: Literal["high", "medium", "low"] = (
+                "medium" if conf_score >= 0.45 else "low"
+            )
+            reasons = ["Rookie season — no NFL production history."]
+            if rookie_mode == "full" and has_college:
+                reasons.append("CollegeFootballData final-season production available.")
+            elif rookie_mode == "full":
+                reasons.append("CFBD key present but no college match for this player.")
+            else:
+                reasons.append("Reduced rookie mode — draft capital / landing spot only.")
+            draft_round = row.get("draft_round")
+            players_out.append(
+                PlayerProjection(
+                    player_id=player_id,
+                    slug=slug,
+                    name=name,
+                    short_name=_short_name(name),
+                    team=str(row.get("team") or "FA"),
+                    position=position,  # type: ignore[arg-type]
+                    age=float(row["age"]) if row.get("age") is not None else None,
+                    experience=0,
+                    rookie=True,
+                    draft=DraftInfo(
+                        year=settings.target_season,
+                        round=int(draft_round) if draft_round is not None else None,
+                        pick=int(pick) if pick is not None else None,
+                        team=str(row.get("team")) if row.get("team") else None,
+                        undrafted=False,
+                    ),
+                    projection_season=settings.target_season,
+                    source_season=settings.feature_end_season,
+                    model_version=settings.project_config.project.model_version,
+                    model_architecture="rookie",
+                    rookie_mode=rookie_mode if rookie_mode in ("full", "reduced") else "reduced",
+                    projected_stats=ProjectedStats(
+                        games=float(stats.get("games") or 0),
+                        pass_attempts=stats.get("pass_attempts"),
+                        completions=stats.get("completions"),
+                        passing_yards=stats.get("passing_yards"),
+                        passing_touchdowns=stats.get("passing_tds"),
+                        interceptions=stats.get("interceptions"),
+                        carries=stats.get("carries"),
+                        rushing_yards=stats.get("rushing_yards"),
+                        rushing_touchdowns=stats.get("rushing_tds"),
+                        targets=stats.get("targets"),
+                        receptions=stats.get("receptions"),
+                        receiving_yards=stats.get("receiving_yards"),
+                        receiving_touchdowns=stats.get("receiving_tds"),
+                        fumbles_lost=stats.get("fumbles_lost"),
+                    ),
+                    fantasy=FantasySummary(
+                        default_ppr_points=points,
+                        points_per_game=points / max(float(stats.get("games") or 1), 1),
+                        replacement_value=0.0,
+                        overall_rank=1,
+                        position_rank=1,
+                        tier=1,
+                        points_rank=1,
+                        points_per_game_rank=1,
+                        vorp_rank=1,
+                        risk_adjusted_rank=1,
+                        risk_adjusted_value=0.0,
+                    ),
+                    range=ProjectionRange(
+                        low_ppr_points=low,
+                        median_ppr_points=points,
+                        high_ppr_points=high,
+                        low_quantile=settings.model.uncertainty.low_quantile,
+                        high_quantile=settings.model.uncertainty.high_quantile,
+                    ),
+                    confidence=ConfidenceBlock(
+                        score=conf_score, label=conf_label, reasons=reasons
+                    ),
+                    explanation=build_explanation(
+                        feature_values={
+                            "draft_pick": float(pick) if pick is not None else None,
+                            "college_final_receptions": (
+                                float(row["college_final_receptions"])
+                                if row.get("college_final_receptions") is not None
+                                else None
+                            ),
+                            "college_final_rush_attempts": (
+                                float(row["college_final_rush_attempts"])
+                                if row.get("college_final_rush_attempts") is not None
+                                else None
+                            ),
+                            "college_final_pass_attempts": (
+                                float(row["college_final_pass_attempts"])
+                                if row.get("college_final_pass_attempts") is not None
+                                else None
+                            ),
+                        },
+                        contributions={
+                            "draft_pick": -float(pick) if pick is not None else -180.0,
+                        },
+                        rookie=True,
+                        method="rookie_prior",
+                    ),
+                    warnings=[
+                        PlayerWarning(
+                            code="rookie_prior",
+                            severity="info",
+                            message=(
+                                "Rookie projection uses draft-capital priors"
+                                + (
+                                    " blended with CFBD college production."
+                                    if has_college and rookie_mode == "full"
+                                    else " (reduced mode without college stats)."
+                                )
+                            ),
+                        )
+                    ],
+                    context={
+                        "draft_pick": float(pick) if pick is not None else None,
+                        "draft_round": float(draft_round) if draft_round is not None else None,
+                    },
+                )
+            )
+            existing_ids.add(player_id)
+            existing_slugs.add(slug)
+            rookies_added += 1
+        logger.info(
+            "Added %d draft rookies to projection pool (rookie_mode=%s).",
+            rookies_added,
+            rookie_mode,
+        )
+        if rookie_mode == "reduced":
+            rookie_warnings.append(
+                "Rookie mode is reduced. Set CFBD_API_KEY and run `ffpm data fetch-rookies` "
+                "for college-production enrichment."
+            )
 
     rankable = [
         RankablePlayer(
@@ -585,7 +767,7 @@ def generate_projections(
         projection_release=settings.project_config.project.projection_release,
         players=final,
         generated_at=datetime.now(UTC),
-        rookie_mode="reduced",
+        rookie_mode=rookie_mode,
         candidate_pool_size=len(players_out),
-        warnings=[],
+        warnings=rookie_warnings,
     )

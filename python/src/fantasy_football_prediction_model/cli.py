@@ -9,7 +9,11 @@ from rich.console import Console
 from rich.table import Table
 
 from fantasy_football_prediction_model.config import get_settings, load_settings
+from fantasy_football_prediction_model.features.rookie import load_dotenv_file
 from fantasy_football_prediction_model.logging import configure_logging, get_logger
+
+# Load repo-root `.env` once at import so CFBD_API_KEY is visible without shell export.
+load_dotenv_file()
 
 app = typer.Typer(
     name="ffpm",
@@ -39,7 +43,9 @@ def _settings(
     offline: bool | None,
     log_level: str | None,
 ):
+    load_dotenv_file()
     settings = load_settings(config_dir=str(config) if config else None)
+    load_dotenv_file(settings.repo_root)
     if target_season is not None:
         # Rebuild is heavy; document override via env for production.
         import os
@@ -93,32 +99,46 @@ def data_fetch_nfl(
 @data_app.command("fetch-rookies")
 def data_fetch_rookies(
     offline: bool = typer.Option(False, "--offline"),
+    force_refresh: bool = typer.Option(False, "--force-refresh"),
     config: Path | None = typer.Option(None, "--config"),
     log_level: str | None = typer.Option(None, "--log-level"),
 ) -> None:
-    """Fetch optional CollegeFootballData rookie enrichment."""
+    """Fetch optional CollegeFootballData rookie enrichment and build join tables."""
     settings = _settings(config, None, offline, log_level)
-    from fantasy_football_prediction_model.data_sources.college_football_data import (
-        CollegeFootballDataAdapter,
+    load_dotenv_file(settings.repo_root)
+    from fantasy_football_prediction_model.data_sources.college_football_data import SIGNUP_URL
+    from fantasy_football_prediction_model.features.rookie import (
+        build_rookie_projection_rows,
+        fetch_college_seasons,
     )
-    from fantasy_football_prediction_model.data_sources.local_cache import DataCache
 
-    cache = DataCache(
-        settings.path("cache_dir"),
-        ttl_hours=settings.project_config.ingestion.cache_ttl_hours,
-        offline=settings.project_config.ingestion.offline,
-    )
-    client = CollegeFootballDataAdapter(cache, offline=settings.project_config.ingestion.offline)
-    console.print(f"Rookie data mode: [cyan]{client.mode.value}[/cyan]")
-    if client.enabled:
+    result = fetch_college_seasons(settings, force_refresh=force_refresh)
+    mode = str(result.get("mode", "reduced"))
+    console.print(f"Rookie data mode: [cyan]{mode}[/cyan]")
+    if mode == "full":
+        seasons = result.get("seasons") or []
+        stats = result.get("stats")
+        n_stats = getattr(stats, "height", 0) or 0
         console.print(
-            "[green]CFBD key present — full rookie mode available. "
-            "Requests are cached under data/cache.[/green]"
+            f"[green]Fetched CFBD college data for seasons {seasons} "
+            f"({n_stats} player-season rows). Cached under data/cache/collegefootballdata/.[/green]"
+        )
+        usage = result.get("usage_report") or {}
+        console.print(
+            f"Local CFBD usage this month: {usage.get('current_month_requests', 0)} "
+            f"(machine-local count only)."
         )
     else:
         console.print(
-            "[yellow]No CFBD_API_KEY — reduced rookie mode (nflverse draft/combine only).[/yellow]"
+            f"[yellow]No CFBD_API_KEY — reduced rookie mode (nflverse draft/combine only). "
+            f"Get a free key at {SIGNUP_URL} and put CFBD_API_KEY=... in .env[/yellow]"
         )
+
+    rookies, enrich_mode = build_rookie_projection_rows(settings)
+    console.print(
+        f"Draft rookies for {settings.target_season}: [cyan]{rookies.height}[/cyan] "
+        f"(enrichment mode={enrich_mode}). Wrote data/processed/rookie_enrichment.parquet"
+    )
 
 
 @data_app.command("audit")
@@ -398,6 +418,7 @@ def pipeline_run_all(
         return
     try:
         data_fetch_nfl(config=config, offline=offline, log_level=log_level)
+        data_fetch_rookies(config=config, offline=offline, log_level=log_level)
         data_build_dataset(config=config, offline=offline, log_level=log_level)
         research_features(config=config, log_level=log_level)
         model_backtest(config=config, log_level=log_level)

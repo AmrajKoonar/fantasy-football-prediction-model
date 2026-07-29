@@ -22,7 +22,7 @@ project:
   target_season: 2026
 
   # Number of players published in the headline overall ranking.
-  output_player_count: 130
+  output_player_count: 160
 
   # Offensive positions modelled. Each gets its own veteran and rookie model.
   positions: [QB, RB, WR, TE]
