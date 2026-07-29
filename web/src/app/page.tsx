@@ -44,15 +44,15 @@ export default async function HomePage() {
         <dl className="grid grid-cols-2 gap-3 rounded-lg border border-border bg-card p-4 text-sm">
           <div>
             <dt className="text-muted">Projection season</dt>
-            <dd className="text-xl font-semibold">{meta?.projectionSeason ?? "—"}</dd>
+            <dd className="text-xl font-semibold">{meta?.projectionSeason ?? "-"}</dd>
           </div>
           <div>
             <dt className="text-muted">Data through</dt>
-            <dd className="text-xl font-semibold">{meta?.sourceSeason ?? "—"}</dd>
+            <dd className="text-xl font-semibold">{meta?.sourceSeason ?? "-"}</dd>
           </div>
           <div>
             <dt className="text-muted">Model</dt>
-            <dd className="font-medium">{meta?.modelVersion ?? "—"}</dd>
+            <dd className="font-medium">{meta?.modelVersion ?? "-"}</dd>
           </div>
           <div>
             <dt className="text-muted">Players published</dt>
@@ -61,7 +61,7 @@ export default async function HomePage() {
           <div className="col-span-2">
             <dt className="text-muted">Last updated</dt>
             <dd className="font-medium">
-              {meta?.generatedAt ? new Date(meta.generatedAt).toLocaleString() : "—"}
+              {meta?.generatedAt ? new Date(meta.generatedAt).toLocaleString() : "-"}
             </dd>
           </div>
         </dl>
@@ -122,10 +122,6 @@ export default async function HomePage() {
         Projections are estimates for informational and entertainment use. See{" "}
         <Link href="/about" className="underline">
           About
-        </Link>{" "}
-        and{" "}
-        <Link href="/sources" className="underline">
-          Sources
         </Link>
         .
       </p>
