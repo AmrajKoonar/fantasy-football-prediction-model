@@ -158,6 +158,123 @@ def data_audit(
         console.print(f"[yellow]Coverage audit unavailable:[/yellow] {exc}")
 
 
+@data_app.command("audit-rosters")
+def data_audit_rosters(
+    season: int | None = typer.Option(None, "--season", help="Target season to audit."),
+    config: Path | None = typer.Option(None, "--config"),
+    log_level: str | None = typer.Option(None, "--log-level"),
+    offline: bool = typer.Option(False, "--offline"),
+) -> None:
+    """Validate 2026 roster context against the offseason transaction patch."""
+    settings = _settings(config, season, offline, log_level)
+    target = season or settings.target_season
+    from fantasy_football_prediction_model.data.transactions import (
+        default_transactions_path,
+        run_roster_audit,
+    )
+
+    txn_path = settings.repo_root / settings.project_config.overrides.offseason_transactions_file
+    if not txn_path.is_file():
+        txn_path = default_transactions_path(settings.repo_root)
+    if not txn_path.is_file():
+        console.print(f"[red]Missing transactions file:[/red] {txn_path}")
+        raise typer.Exit(code=1)
+
+    import polars as pl
+
+    processed = settings.path("processed_dir")
+    projection_features = None
+    season_features = None
+    proj_path = processed / "projection_features.parquet"
+    season_path = processed / "season_features.parquet"
+    if proj_path.is_file():
+        projection_features = pl.read_parquet(proj_path)
+    if season_path.is_file():
+        season_features = pl.read_parquet(season_path)
+
+    draft_or_rookies = None
+    rookie_path = settings.path("processed_dir") / "rookie_enrichment.parquet"
+    draft_cache = settings.path("cache_dir") / "draft_picks.parquet"
+    if rookie_path.is_file():
+        draft_or_rookies = pl.read_parquet(rookie_path)
+    elif draft_cache.is_file():
+        draft_or_rookies = pl.read_parquet(draft_cache)
+
+    result = run_roster_audit(
+        transactions_path=txn_path,
+        evaluation_dir=settings.path("evaluation_dir"),
+        target_season=target,
+        feature_end_season=settings.feature_end_season,
+        projection_features=projection_features,
+        season_features=season_features,
+        draft_or_rookies=draft_or_rookies,
+        fail_on_p1_conflict=True,
+    )
+    console.print(result.report_text)
+    if not result.ok:
+        raise typer.Exit(code=1)
+
+
+@data_app.command("transactions")
+def data_transactions(
+    season: int | None = typer.Option(None, "--season"),
+    as_of: str | None = typer.Option(None, "--as-of", help="Filter to this as_of_date."),
+    config: Path | None = typer.Option(None, "--config"),
+    log_level: str | None = typer.Option(None, "--log-level"),
+) -> None:
+    """Show every applied offseason transaction and its source."""
+    import polars as pl
+
+    settings = _settings(config, season, None, log_level)
+    target = season or settings.target_season
+    from fantasy_football_prediction_model.data.transactions import (
+        default_transactions_path,
+        load_offseason_transactions,
+        transactions_as_of,
+    )
+
+    txn_path = settings.repo_root / settings.project_config.overrides.offseason_transactions_file
+    if not txn_path.is_file():
+        txn_path = default_transactions_path(settings.repo_root)
+    if not txn_path.is_file():
+        console.print(f"[red]Missing transactions file:[/red] {txn_path}")
+        raise typer.Exit(code=1)
+
+    frame = load_offseason_transactions(txn_path).filter(pl.col("effective_season") == target)
+    if as_of:
+        frame = frame.filter(pl.col("as_of_date").cast(str) == as_of)
+    file_as_of = transactions_as_of(frame)
+    console.print(
+        f"[bold]Offseason transactions[/bold] season={target} as_of={file_as_of or as_of or 'n/a'} "
+        f"rows={frame.height} file={txn_path}"
+    )
+    show_cols = [
+        c
+        for c in (
+            "priority",
+            "player_name",
+            "position",
+            "old_team",
+            "new_team",
+            "transaction_type",
+            "roster_status",
+            "expected_depth_chart_rank",
+            "starter_confidence",
+            "role_uncertainty",
+            "source",
+            "notes",
+            "player_id",
+        )
+        if c in frame.columns
+    ]
+    if frame.is_empty():
+        console.print("[yellow]No transactions matched.[/yellow]")
+        return
+    preview = frame.select(show_cols).sort(["priority", "position", "player_name"])
+    # Avoid Rich/Windows codepage issues with Polars table glyphs.
+    console.print(preview.write_csv())
+
+
 @data_app.command("build-dataset")
 def data_build_dataset(
     config: Path | None = typer.Option(None, "--config"),
@@ -385,6 +502,33 @@ def project_validate(
             console.print(
                 "[yellow]WARNING: dataMode=fixture. Do not deploy as production.[/yellow]"
             )
+        elif settings.project_config.overrides.apply_offseason_transactions:
+            import polars as pl
+
+            from fantasy_football_prediction_model.data.transactions import run_roster_audit
+
+            txn_path = (
+                settings.repo_root / settings.project_config.overrides.offseason_transactions_file
+            )
+            proj_path = settings.path("processed_dir") / "projection_features.parquet"
+            if txn_path.is_file() and proj_path.is_file():
+                result = run_roster_audit(
+                    transactions_path=txn_path,
+                    evaluation_dir=settings.path("evaluation_dir"),
+                    target_season=settings.target_season,
+                    feature_end_season=settings.feature_end_season,
+                    projection_features=pl.read_parquet(proj_path),
+                    fail_on_p1_conflict=True,
+                )
+                if not result.ok:
+                    console.print("[red]Roster audit failed (P1 conflicts).[/red]")
+                    console.print(result.report_text)
+                    errors += 1
+                else:
+                    console.print(
+                        f"[green]OK[/green] roster audit "
+                        f"(as_of={result.as_of_date}, p1_conflicts=0)"
+                    )
     raise typer.Exit(code=1 if errors else 0)
 
 

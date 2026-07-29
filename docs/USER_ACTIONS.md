@@ -54,6 +54,31 @@ Without a key, rookies still appear in rankings using **reduced** mode (nflverse
 3. Ensure `configs/project.yml` has `overrides.apply_projection_overrides: true`.
 4. Re-run `python -m fantasy_football_prediction_model.cli project generate`.
 
+## Offseason roster patch (2026)
+
+The file `data/manual/2026_offseason_transactions.csv` is a **point-in-time** patch (`as_of_date`). It never rewrites 2025 historical teams; it only drives 2026 week-1 / projection / vacated-opportunity context.
+
+Before publishing rankings after training-camp moves:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+python -m fantasy_football_prediction_model.cli data fetch-nfl --force-refresh
+python -m fantasy_football_prediction_model.cli data build-dataset
+python -m fantasy_football_prediction_model.cli data transactions --season 2026 --as-of 2026-07-29
+python -m fantasy_football_prediction_model.cli data audit-rosters --season 2026
+python -m fantasy_football_prediction_model.cli project generate
+python -m fantasy_football_prediction_model.cli project validate
+```
+
+Checklist:
+
+1. Re-check every player marked `FA` / `unsigned` against a current roster source.
+2. Re-check uncertain QB competitions (MIA, ATL, LV, ARI, etc.).
+3. Re-check every `P1` row in the CSV.
+4. Update `as_of_date` in the CSV when you edit it.
+5. Confirm `web/public/data/metadata.json` includes `rosterDataAsOf` and no player is still on their 2025 team after a confirmed 2026 move.
+6. `audit-rosters` fails the process when a P1 conflict is unresolved — fix the CSV or refresh nflverse data before exporting.
+
 ## 3. Local setup
 
 ### Version checks

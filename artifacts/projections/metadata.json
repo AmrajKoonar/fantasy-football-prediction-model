@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.0.0",
   "modelVersion": "2026.2.0",
-  "projectionRelease": "2026-preseason-2",
+  "projectionRelease": "2026-preseason-3",
   "dataMode": "production",
   "projectionSeason": 2026,
   "sourceSeason": 2025,
   "dataStartSeason": 2012,
-  "generatedAt": "2026-07-29T19:30:31.676145Z",
-  "gitCommit": "2e134da3d88c3ddd54f3778d9f4205884c9e85f6",
+  "generatedAt": "2026-07-29T22:44:46.192598Z",
+  "gitCommit": "34a6deba82939e03bca338af0235753a70cc53b4",
   "datasetHash": null,
   "playerCount": 160,
-  "candidatePoolSize": 947,
+  "candidatePoolSize": 916,
   "positions": [
     "QB",
     "RB",
@@ -56,7 +56,10 @@
     "Projections are estimates, not guarantees.",
     "Injury reports after 2024 are not automatically ingested.",
     "CollegeFootballData enrichment is optional; reduced rookie mode may apply.",
-    "Applied 37 model targets (0 hybrid fallbacks)."
+    "Applied 37 model targets (0 hybrid fallbacks).",
+    "Excluded 2 retired / projection-ineligible players from rankings.",
+    "Excluded 29 unsigned free agents from default rankings (set overrides.exclude_unsigned_from_rankings=false to include).",
+    "Offseason transaction patch as_of_date=2026-07-29."
   ],
   "packageVersions": {
     "fantasy-football-prediction-model": "1.0.0",
@@ -65,5 +68,6 @@
     "scikit-learn": "1.9.0",
     "pydantic": "2.13.4",
     "nflreadpy": "0.1.5"
-  }
+  },
+  "rosterDataAsOf": "2026-07-29"
 }

@@ -68,7 +68,10 @@ cd web && npm install && npm run dev
 
 ```text
 ffpm data fetch-nfl
+ffpm data fetch-rookies
 ffpm data build-dataset
+ffpm data transactions --season 2026 --as-of 2026-07-29
+ffpm data audit-rosters --season 2026
 ffpm research features
 ffpm model backtest
 ffpm model train
@@ -77,6 +80,8 @@ ffpm project validate
 ffpm pipeline run-all [--fixture]
 ffpm pipeline status
 ```
+
+2026 roster moves live in `data/manual/2026_offseason_transactions.csv` and are applied only to target-season context (not historical 2025 stats). See [docs/USER_ACTIONS.md](docs/USER_ACTIONS.md) § Offseason roster patch.
 
 ## Data mode guard
 

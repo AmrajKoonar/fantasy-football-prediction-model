@@ -119,4 +119,5 @@ def build_metadata(
         pipeline=pipeline or [],
         limitations=default_limitations + bundle.warnings,
         package_versions=package_versions(),
+        roster_data_as_of=bundle.roster_data_as_of,
     )

@@ -1,0 +1,18 @@
+Roster audit for season 2026
+Transaction as_of_date: 2026-07-29
+Manual transactions: 134
+Unsigned: 29
+Retired: 2
+Pre-apply drift rows (informational): 0
+Post-apply conflicts: 0
+P1 conflicts (post-apply): 0
+Vacated opportunity teams: 0
+Priority rookies missing: 25
+
+Report files:
+  - retired: C:\Users\amraj\OneDrive\Documents\clones\fantasy-football-prediction-model\artifacts\evaluations\retired-player-audit.csv
+  - rookies: C:\Users\amraj\OneDrive\Documents\clones\fantasy-football-prediction-model\artifacts\evaluations\rookie-roster-audit.csv
+  - unsigned: C:\Users\amraj\OneDrive\Documents\clones\fantasy-football-prediction-model\artifacts\evaluations\unsigned-player-audit.csv
+
+Warnings:
+  - 25 priority rookies missing from draft/enrichment data.
