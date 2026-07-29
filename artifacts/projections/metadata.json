@@ -1,13 +1,13 @@
 {
   "schemaVersion": "1.0.0",
-  "modelVersion": "2026.1.0",
-  "projectionRelease": "2026-preseason-1",
+  "modelVersion": "2026.2.0",
+  "projectionRelease": "2026-preseason-2",
   "dataMode": "production",
   "projectionSeason": 2026,
   "sourceSeason": 2025,
   "dataStartSeason": 2012,
-  "generatedAt": "2026-07-29T18:47:06.583087Z",
-  "gitCommit": "3be275e53c6a629694d45b4055cfb34623f55aa1",
+  "generatedAt": "2026-07-29T19:30:31.676145Z",
+  "gitCommit": "2e134da3d88c3ddd54f3778d9f4205884c9e85f6",
   "datasetHash": null,
   "playerCount": 160,
   "candidatePoolSize": 947,
@@ -55,7 +55,8 @@
   "limitations": [
     "Projections are estimates, not guarantees.",
     "Injury reports after 2024 are not automatically ingested.",
-    "CollegeFootballData enrichment is optional; reduced rookie mode may apply."
+    "CollegeFootballData enrichment is optional; reduced rookie mode may apply.",
+    "Applied 37 model targets (0 hybrid fallbacks)."
   ],
   "packageVersions": {
     "fantasy-football-prediction-model": "1.0.0",

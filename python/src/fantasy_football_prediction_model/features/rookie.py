@@ -368,70 +368,205 @@ def college_fields_present(row: dict) -> bool:
     return any(row.get(k) is not None for k in keys)
 
 
-def rookie_stat_priors(
-    position: str, draft_pick: float | None, college_row: dict
-) -> dict[str, float]:
-    """Transparent opportunity priors for rookies without a trained rookie ML model.
+def _draft_bucket(pick: float) -> int:
+    if pick <= 10:
+        return 1
+    if pick <= 32:
+        return 2
+    if pick <= 64:
+        return 3
+    if pick <= 100:
+        return 4
+    return 5
 
-    Uses draft capital as the primary lever and scales by available college volume.
+
+def load_year1_draft_curves(settings: Settings) -> dict[tuple[str, int], dict[str, float]]:
+    """Empirical year-1 NFL outcomes by position × draft-pick bucket.
+
+    Uses modelling pairs where ``experience_at_target_season == 1`` (first NFL season).
+    """
+    path = settings.path("processed_dir") / "modelling_pairs.parquet"
+    if not path.is_file():
+        return {}
+    pairs = pl.read_parquet(path)
+    if "experience_at_target_season" not in pairs.columns:
+        return {}
+    y1 = pairs.filter(pl.col("experience_at_target_season") == 1)
+    if y1.is_empty():
+        return {}
+    y1 = y1.with_columns(
+        pl.when(pl.col("draft_pick").is_null())
+        .then(pl.lit(5))
+        .when(pl.col("draft_pick") <= 10)
+        .then(pl.lit(1))
+        .when(pl.col("draft_pick") <= 32)
+        .then(pl.lit(2))
+        .when(pl.col("draft_pick") <= 64)
+        .then(pl.lit(3))
+        .when(pl.col("draft_pick") <= 100)
+        .then(pl.lit(4))
+        .otherwise(pl.lit(5))
+        .alias("bucket")
+    )
+    aggs = [
+        pl.len().alias("n"),
+    ]
+    for col, alias in (
+        ("outcome_games", "games"),
+        ("outcome_pass_attempts", "pass_attempts"),
+        ("outcome_completions", "completions"),
+        ("outcome_passing_yards", "passing_yards"),
+        ("outcome_passing_tds", "passing_tds"),
+        ("outcome_interceptions", "interceptions"),
+        ("outcome_carries", "carries"),
+        ("outcome_rushing_yards", "rushing_yards"),
+        ("outcome_rushing_tds", "rushing_tds"),
+        ("outcome_targets", "targets"),
+        ("outcome_receptions", "receptions"),
+        ("outcome_receiving_yards", "receiving_yards"),
+        ("outcome_receiving_tds", "receiving_tds"),
+        ("outcome_fumbles_lost", "fumbles_lost"),
+    ):
+        if col in y1.columns:
+            aggs.append(pl.col(col).mean().alias(alias))
+    summary = y1.group_by(["position", "bucket"]).agg(aggs)
+    curves: dict[tuple[str, int], dict[str, float]] = {}
+    for row in summary.to_dicts():
+        key = (str(row["position"]), int(row["bucket"]))
+        curves[key] = {
+            k: float(v)
+            for k, v in row.items()
+            if k not in {"position", "bucket", "n"} and v is not None
+        }
+        curves[key]["_n"] = float(row.get("n") or 0)
+    return curves
+
+
+def load_team_volume_priors(settings: Settings) -> dict[str, dict[str, float]]:
+    """Team offensive volume from current projection feature rows (landing-spot context)."""
+    path = settings.path("processed_dir") / "projection_features.parquet"
+    if not path.is_file():
+        return {}
+    frame = pl.read_parquet(path)
+    if "team" not in frame.columns:
+        return {}
+    exprs = []
+    for col, alias in (
+        ("own_team_pass_attempts", "team_pass_attempts"),
+        ("pass_attempts", "player_pass_attempts"),
+        ("own_team_rush_attempts", "team_rush_attempts"),
+        ("targets", "player_targets"),
+        ("carries", "player_carries"),
+    ):
+        if col in frame.columns:
+            exprs.append(pl.col(col).mean().alias(alias))
+    if not exprs:
+        return {}
+    summary = frame.group_by("team").agg(exprs)
+    out: dict[str, dict[str, float]] = {}
+    for row in summary.to_dicts():
+        team = str(row["team"])
+        out[team] = {k: float(v) for k, v in row.items() if k != "team" and v is not None}
+    return out
+
+
+def _blend(a: float, b: float | None, weight_b: float) -> float:
+    if b is None:
+        return a
+    return (1.0 - weight_b) * a + weight_b * b
+
+
+def rookie_stat_priors(
+    position: str,
+    draft_pick: float | None,
+    college_row: dict,
+    *,
+    curves: dict[tuple[str, int], dict[str, float]] | None = None,
+    team_volume: dict[str, float] | None = None,
+) -> dict[str, float]:
+    """Year-1 priors from historical draft curves + college + landing-spot volume.
+
     Labelled ``model_architecture=rookie`` in exports.
     """
     pick = float(draft_pick) if draft_pick and draft_pick > 0 else 180.0
-    # Inverse-pick curve: early picks clearly ahead, mid-rounds still usable.
+    bucket = _draft_bucket(pick)
     capital = max(0.18, min(1.0, 1.0 / (1.0 + (pick - 1.0) / 55.0)))
-    games = 15.0 * (0.85 + 0.15 * capital)
+    hist = (curves or {}).get((position, bucket), {})
+    team_volume = team_volume or {}
+
+    # League-average team pass attempts ~560; scale receivers/QBs gently.
+    team_pass = float(
+        team_volume.get("team_pass_attempts") or team_volume.get("player_pass_attempts") or 560.0
+    )
+    team_rush = float(team_volume.get("team_rush_attempts") or 420.0)
+    pass_env = max(0.85, min(1.15, team_pass / 560.0))
+    rush_env = max(0.85, min(1.15, team_rush / 420.0))
+
+    games = float(hist.get("games") or (15.0 * (0.85 + 0.15 * capital)))
 
     if position == "QB":
-        attempts = 450 * capital
+        attempts = float(hist.get("pass_attempts") or (450 * capital))
         college_att = college_row.get("college_final_pass_attempts")
         if college_att:
-            attempts = 0.6 * attempts + 0.4 * min(float(college_att), 600.0)
-        ypa = float(college_row.get("college_final_yards_per_attempt") or 7.2)
-        ypa = max(5.5, min(9.5, ypa))
+            attempts = _blend(attempts, min(float(college_att), 600.0), 0.35)
+        attempts *= pass_env
+        comps = float(hist.get("completions") or attempts * 0.64)
+        yards = float(hist.get("passing_yards") or attempts * 7.1)
+        tds = float(hist.get("passing_tds") or attempts * 0.045)
+        ints = float(hist.get("interceptions") or attempts * 0.022)
+        carries = float(hist.get("carries") or (30 * capital))
         return {
             "games": games,
             "pass_attempts": attempts,
-            "completions": attempts * 0.64,
-            "passing_yards": attempts * ypa,
-            "passing_tds": attempts * 0.045,
-            "interceptions": attempts * 0.022,
-            "carries": 30 * capital,
-            "rushing_yards": 140 * capital,
-            "rushing_tds": 1.5 * capital,
-            "fumbles_lost": 0.6,
+            "completions": comps,
+            "passing_yards": yards,
+            "passing_tds": tds,
+            "interceptions": ints,
+            "carries": carries,
+            "rushing_yards": float(hist.get("rushing_yards") or carries * 4.5),
+            "rushing_tds": float(hist.get("rushing_tds") or 1.5 * capital),
+            "fumbles_lost": float(hist.get("fumbles_lost") or 0.6),
         }
+
     if position == "RB":
-        carries = 180 * capital
-        targets = 35 * capital
+        carries = float(hist.get("carries") or (180 * capital))
+        targets = float(hist.get("targets") or (35 * capital))
         college_rush = college_row.get("college_final_rush_attempts")
         if college_rush:
-            carries = 0.55 * carries + 0.45 * min(float(college_rush) * 0.7, 280.0)
+            carries = _blend(carries, min(float(college_rush) * 0.65, 280.0), 0.35)
+        carries *= rush_env
+        targets *= pass_env
         return {
             "games": games,
             "carries": carries,
-            "rushing_yards": carries * 4.2,
-            "rushing_tds": 6 * capital,
+            "rushing_yards": float(hist.get("rushing_yards") or carries * 4.2),
+            "rushing_tds": float(hist.get("rushing_tds") or 6 * capital),
             "targets": targets,
-            "receptions": targets * 0.72,
-            "receiving_yards": targets * 7.5,
-            "receiving_tds": 1.5 * capital,
-            "fumbles_lost": 0.7,
+            "receptions": float(hist.get("receptions") or targets * 0.72),
+            "receiving_yards": float(hist.get("receiving_yards") or targets * 7.5),
+            "receiving_tds": float(hist.get("receiving_tds") or 1.5 * capital),
+            "fumbles_lost": float(hist.get("fumbles_lost") or 0.7),
         }
+
     # WR / TE
-    base_targets = (110 if position == "WR" else 70) * capital
+    base_targets = float(hist.get("targets") or ((110 if position == "WR" else 70) * capital))
     college_rec = college_row.get("college_final_receptions")
     if college_rec:
-        base_targets = 0.55 * base_targets + 0.45 * min(float(college_rec) * 1.1, 160.0)
+        base_targets = _blend(base_targets, min(float(college_rec) * 1.05, 160.0), 0.35)
+    base_targets *= pass_env
     ypt = 12.0 if position == "WR" else 10.0
     return {
         "games": games,
         "targets": base_targets,
-        "receptions": base_targets * (0.62 if position == "WR" else 0.68),
-        "receiving_yards": base_targets * ypt,
-        "receiving_touchdowns": (6 if position == "WR" else 4) * capital,
-        "receiving_tds": (6 if position == "WR" else 4) * capital,
-        "carries": 2 * capital,
-        "rushing_yards": 10 * capital,
-        "rushing_tds": 0.1,
-        "fumbles_lost": 0.4,
+        "receptions": float(
+            hist.get("receptions") or base_targets * (0.62 if position == "WR" else 0.68)
+        ),
+        "receiving_yards": float(hist.get("receiving_yards") or base_targets * ypt),
+        "receiving_tds": float(
+            hist.get("receiving_tds") or ((6 if position == "WR" else 4) * capital)
+        ),
+        "carries": float(hist.get("carries") or (2 * capital)),
+        "rushing_yards": float(hist.get("rushing_yards") or 10 * capital),
+        "rushing_tds": float(hist.get("rushing_tds") or 0.1),
+        "fumbles_lost": float(hist.get("fumbles_lost") or 0.4),
     }

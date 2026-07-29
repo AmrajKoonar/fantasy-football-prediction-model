@@ -272,10 +272,12 @@ def model_train(
             always_keep=settings.features.selection.always_keep,
             max_features=settings.features.selection.max_features_per_model,
         )
-        for target in list(PROJECTION_TARGETS.get(pos, ()))[:3]:
+        for target in list(PROJECTION_TARGETS.get(pos, ())):
             col = f"outcome_{target}"
             if col not in frame.columns or not features:
+                console.print(f"[yellow]Skip {pos}/{target}: missing column or features[/yellow]")
                 continue
+            console.print(f"Training {pos}/{target}...")
             model = train_position_target(
                 frame,
                 position=pos,

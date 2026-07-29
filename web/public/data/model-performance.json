@@ -1,8 +1,8 @@
 {
   "schemaVersion": "1.0.0",
   "dataMode": "production",
-  "generatedAt": "2026-07-29T18:47:06.686252Z",
-  "modelVersion": "2026.1.0",
+  "generatedAt": "2026-07-29T19:30:31.723426Z",
+  "modelVersion": "2026.2.0",
   "backtestSeasons": [],
   "statMetrics": [],
   "fantasyMetrics": [],
