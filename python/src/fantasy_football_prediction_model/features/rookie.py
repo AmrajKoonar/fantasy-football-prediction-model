@@ -109,7 +109,12 @@ def fetch_college_seasons(
         logger.warning(
             "CFBD_API_KEY missing or offline — fetch-rookies will only report reduced mode."
         )
-        return {"mode": "reduced", "stats": None, "usage": None, "usage_report": adapter.usage_report()}
+        return {
+            "mode": "reduced",
+            "stats": None,
+            "usage": None,
+            "usage_report": adapter.usage_report(),
+        }
 
     stats_frames: list[pl.DataFrame] = []
     usage_frames: list[pl.DataFrame] = []
@@ -198,9 +203,9 @@ def build_college_feature_lookup(settings: Settings) -> pl.DataFrame | None:
         frame = frame.unique(subset=[name_col], keep="first")
 
     frame = frame.with_columns(
-        pl.col(name_col).map_elements(_normalise_name, return_dtype=pl.Utf8).alias(
-            "college_name_key"
-        )
+        pl.col(name_col)
+        .map_elements(_normalise_name, return_dtype=pl.Utf8)
+        .alias("college_name_key")
     )
 
     tier_path = settings.path("processed_dir") / "college_conference_tiers.parquet"

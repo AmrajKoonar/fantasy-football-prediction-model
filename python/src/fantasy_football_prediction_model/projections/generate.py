@@ -592,9 +592,7 @@ def generate_projections(
                 points * (1 - band), points, points * (1 + band)
             )
             conf_score = 0.48 if has_college and rookie_mode == "full" else 0.32
-            conf_label: Literal["high", "medium", "low"] = (
-                "medium" if conf_score >= 0.45 else "low"
-            )
+            conf_label: Literal["high", "medium", "low"] = "medium" if conf_score >= 0.45 else "low"
             reasons = ["Rookie season — no NFL production history."]
             if rookie_mode == "full" and has_college:
                 reasons.append("CollegeFootballData final-season production available.")
@@ -662,9 +660,7 @@ def generate_projections(
                         low_quantile=settings.model.uncertainty.low_quantile,
                         high_quantile=settings.model.uncertainty.high_quantile,
                     ),
-                    confidence=ConfidenceBlock(
-                        score=conf_score, label=conf_label, reasons=reasons
-                    ),
+                    confidence=ConfidenceBlock(score=conf_score, label=conf_label, reasons=reasons),
                     explanation=build_explanation(
                         feature_values={
                             "draft_pick": float(pick) if pick is not None else None,
