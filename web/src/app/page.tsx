@@ -21,7 +21,7 @@ export default async function HomePage() {
         <div className="space-y-4">
           <p className="text-sm uppercase tracking-[0.2em] text-muted">Open NFL analytics</p>
           <h1 className="font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight sm:text-5xl">
-            Field Forecast
+            Fantasy Analytics
           </h1>
           <p className="max-w-2xl text-lg text-muted">
             Reproducible fantasy football projections for the {meta?.projectionSeason ?? 2026}{" "}

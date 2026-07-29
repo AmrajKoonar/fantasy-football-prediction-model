@@ -21,7 +21,7 @@ export default function AboutPage() {
       <div className="space-y-4">
         <h1 className="font-[family-name:var(--font-display)] text-3xl font-semibold">About</h1>
         <p className="text-muted">
-          Field Forecast is an independent, open portfolio project for season-long fantasy football
+          Fantasy Analytics is an independent, open portfolio project for season-long fantasy football
           draft preparation. It is not affiliated with or endorsed by the NFL, nflverse,
           CollegeFootballData, or any fantasy platform.
         </p>
