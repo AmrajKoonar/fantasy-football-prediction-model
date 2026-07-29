@@ -13,7 +13,6 @@ from fantasy_football_prediction_model.constants import (
     DATA_MODE_FIXTURE,
     DATA_MODE_PRODUCTION,
     FANTASY_POSITIONS,
-    PROJECTION_TARGETS,
 )
 from fantasy_football_prediction_model.logging import get_logger
 from fantasy_football_prediction_model.projections.constraints import (
@@ -425,24 +424,35 @@ def generate_projections(
             "Run the data/feature pipeline first, or pass fixture=True for sample data."
         )
 
-    # Lightweight production fallback: score prior-season PPR with mild age regression
-    # when trained model bundles are not yet registered. This still uses real processed
-    # features and is labelled production only when real data backs it.
     import polars as pl
 
+    from fantasy_football_prediction_model.features.rookie import (
+        build_rookie_projection_rows,
+        college_fields_present,
+        load_dotenv_file,
+        load_team_volume_priors,
+        load_year1_draft_curves,
+        rookie_stat_priors,
+    )
     from fantasy_football_prediction_model.models.registry import LocalModelRegistry
+    from fantasy_football_prediction_model.projections.overrides import (
+        apply_overrides_to_players,
+        load_projection_overrides,
+        rescore_after_overrides,
+    )
+    from fantasy_football_prediction_model.projections.predict import (
+        apply_registered_models,
+        stats_from_row,
+    )
 
     frame = pl.read_parquet(processed)
     registry = LocalModelRegistry(settings.path("model_dir"))
-    has_models = bool(registry.list_models())
-    if not has_models:
-        logger.warning(
-            "No trained models in registry; using transparent prior-season baseline "
-            "for production projection generation."
-        )
+    if not registry.list_models():
+        logger.warning("No trained models in registry; using mean-reverted prior-season hybrid.")
+
+    frame, model_report = apply_registered_models(frame, settings, registry)
     rules = rules_from_preset(settings.scoring, "ppr")
     players_out: list[PlayerProjection] = []
-    # Feature tables use display_name / short_name / slug from the identity layer.
     required = {"gsis_id", "position", "team"}
     missing = required - set(frame.columns)
     if missing:
@@ -454,27 +464,17 @@ def generate_projections(
         position = str(row["position"])
         if position not in FANTASY_POSITIONS:
             continue
-        stats: dict[str, float | None] = {"games": float(row.get("games") or 15.0)}
-        for stat in PROJECTION_TARGETS.get(position, ()):
-            if stat == "games":
-                continue
-            # Prefer model prediction column when present.
-            pred_key = f"pred_{stat}"
-            raw_val = row.get(pred_key, row.get(stat))
-            if raw_val is None and stat == "fumbles_lost":
-                raw_val = row.get(
-                    "pred_fumbles_lost",
-                    row.get(
-                        "fumbles_lost",
-                        (row.get("rushing_fumbles_lost") or 0)
-                        + (row.get("receiving_fumbles_lost") or 0)
-                        + (row.get("sack_fumbles_lost") or 0),
-                    ),
-                )
-            stats[stat] = float(raw_val) if raw_val is not None else 0.0
-        stats = apply_constraints(stats)
+        stats = apply_constraints(stats_from_row(row, position))
         points = score_total(stats, rules)
-        low, points, high = enforce_quantile_ordering(points * 0.8, points, points * 1.2)
+        used_model = any(
+            (tag := model_report.get("by_target", {}).get(f"{position}:{stat}"))
+            and "fallback" not in str(tag)
+            for stat in ("targets", "carries", "pass_attempts", "games")
+        )
+        band = 0.18 if used_model else 0.22
+        low, points, high = enforce_quantile_ordering(
+            points * (1 - band), points, points * (1 + band)
+        )
         name = str(
             row.get("display_name")
             or row.get("player_name")
@@ -483,6 +483,12 @@ def generate_projections(
         )
         slug = str(row.get("slug") or _slugify(name))
         short = str(row.get("short_name") or _short_name(name))
+        conf_score = 0.62 if used_model else 0.48
+        if row.get("team_changed") in (1, True):
+            conf_score -= 0.08
+        conf_label: Literal["high", "medium", "low"] = (
+            "high" if conf_score >= 0.7 else "medium" if conf_score >= 0.45 else "low"
+        )
         players_out.append(
             PlayerProjection(
                 player_id=str(row["gsis_id"]),
@@ -537,24 +543,37 @@ def generate_projections(
                     low_quantile=settings.model.uncertainty.low_quantile,
                     high_quantile=settings.model.uncertainty.high_quantile,
                 ),
-                confidence=ConfidenceBlock(score=0.55, label="medium", reasons=[]),
-                explanation=build_explanation(feature_values={}),
+                confidence=ConfidenceBlock(
+                    score=conf_score,
+                    label=conf_label,
+                    reasons=[
+                        "Model + context blend" if used_model else "Mean-reverted prior hybrid"
+                    ],
+                ),
+                explanation=build_explanation(
+                    feature_values={
+                        "targets": stats.get("targets"),
+                        "carries": stats.get("carries"),
+                        "pass_attempts": stats.get("pass_attempts"),
+                        "age_at_target_season": row.get("age_at_target_season"),
+                    }
+                ),
                 model_architecture="direct",
                 rookie_mode="not_applicable",
+                context={
+                    "targets": stats.get("targets"),
+                    "carries": stats.get("carries"),
+                    "pass_attempts": stats.get("pass_attempts"),
+                },
             )
         )
 
-    # Merge target-season draft rookies (CFBD full or draft/combine reduced).
-    from fantasy_football_prediction_model.features.rookie import (
-        build_rookie_projection_rows,
-        college_fields_present,
-        load_dotenv_file,
-        rookie_stat_priors,
-    )
-
+    # Merge target-season draft rookies (historical curves + CFBD + landing spot).
     load_dotenv_file(settings.repo_root)
     rookie_mode: Literal["full", "reduced", "fixture"] = "reduced"
     rookie_warnings: list[str] = []
+    year1_curves = load_year1_draft_curves(settings)
+    team_volumes = load_team_volume_priors(settings)
     try:
         rookie_frame, rookie_mode = build_rookie_projection_rows(settings)
     except FileNotFoundError as exc:
@@ -583,17 +602,24 @@ def generate_projections(
             if slug in existing_slugs:
                 slug = f"{slug}-r{settings.target_season}"
             has_college = college_fields_present(row)
-            priors = rookie_stat_priors(position, float(pick) if pick else None, row)
+            team = str(row.get("team") or "FA")
+            priors = rookie_stat_priors(
+                position,
+                float(pick) if pick else None,
+                row,
+                curves=year1_curves,
+                team_volume=team_volumes.get(team),
+            )
             stats = apply_constraints({k: float(v) for k, v in priors.items()})
             points = score_total(stats, rules)
             # Wider band for rookies; slightly tighter when college production is present.
-            band = 0.28 if has_college and rookie_mode == "full" else 0.38
+            band = 0.28 if has_college and rookie_mode == "full" else 0.36
             low, points, high = enforce_quantile_ordering(
                 points * (1 - band), points, points * (1 + band)
             )
-            conf_score = 0.48 if has_college and rookie_mode == "full" else 0.32
+            conf_score = 0.50 if has_college and rookie_mode == "full" else 0.34
             conf_label: Literal["high", "medium", "low"] = "medium" if conf_score >= 0.45 else "low"
-            reasons = ["Rookie season — no NFL production history."]
+            reasons = ["Rookie season — historical year-1 draft curves + landing-spot volume."]
             if rookie_mode == "full" and has_college:
                 reasons.append("CollegeFootballData final-season production available.")
             elif rookie_mode == "full":
@@ -607,7 +633,7 @@ def generate_projections(
                     slug=slug,
                     name=name,
                     short_name=_short_name(name),
-                    team=str(row.get("team") or "FA"),
+                    team=team,
                     position=position,  # type: ignore[arg-type]
                     age=float(row["age"]) if row.get("age") is not None else None,
                     experience=0,
@@ -684,18 +710,17 @@ def generate_projections(
                             "draft_pick": -float(pick) if pick is not None else -180.0,
                         },
                         rookie=True,
-                        method="rookie_prior",
                     ),
                     warnings=[
                         PlayerWarning(
                             code="rookie_prior",
                             severity="info",
                             message=(
-                                "Rookie projection uses draft-capital priors"
+                                "Rookie projection uses historical year-1 draft curves"
                                 + (
                                     " blended with CFBD college production."
                                     if has_college and rookie_mode == "full"
-                                    else " (reduced mode without college stats)."
+                                    else " and landing-spot volume."
                                 )
                             ),
                         )
@@ -719,6 +744,28 @@ def generate_projections(
                 "Rookie mode is reduced. Set CFBD_API_KEY and run `ffpm data fetch-rookies` "
                 "for college-production enrichment."
             )
+
+    override_path = settings.repo_root / settings.project_config.overrides.projection_overrides_file
+    if settings.project_config.overrides.apply_projection_overrides:
+        overrides = load_projection_overrides(override_path)
+        apply_overrides_to_players(players_out, overrides)
+        rescore_after_overrides(players_out, lambda s: score_total(s, rules))
+    elif override_path.is_file():
+        rookie_warnings.append(
+            "projection-overrides.csv present but apply_projection_overrides is false "
+            "in configs/project.yml."
+        )
+
+    if model_report["model_hits"] == 0:
+        rookie_warnings.append(
+            "No model predictions applied; ranks used hybrid prior fallbacks. "
+            "Run `ffpm model train` covering all projection targets."
+        )
+    else:
+        rookie_warnings.append(
+            f"Applied {model_report['model_hits']} model targets "
+            f"({model_report['fallback_hits']} hybrid fallbacks)."
+        )
 
     rankable = [
         RankablePlayer(

@@ -47,6 +47,13 @@ Without a key, rookies still appear in rankings using **reduced** mode (nflverse
 8. Confirm `web/public/data/metadata.json` shows `"rookieMode": "full"` (or `"reduced"` if the key/fetch failed).
 9. Without a key, step 7 still works in reduced mode after you have already run `data fetch-nfl` (draft picks required).
 
+## Manual projection overrides
+
+1. Copy `data/manual/projection-overrides.example.csv` to `data/manual/projection-overrides.csv` (gitignored).
+2. Add rows with real `player_id` (gsis id), `field` (e.g. `targets`, `games`, `role_multiplier`), and `new_value`.
+3. Ensure `configs/project.yml` has `overrides.apply_projection_overrides: true`.
+4. Re-run `python -m fantasy_football_prediction_model.cli project generate`.
+
 ## 3. Local setup
 
 ### Version checks
