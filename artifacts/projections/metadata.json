@@ -6,11 +6,11 @@
   "projectionSeason": 2026,
   "sourceSeason": 2025,
   "dataStartSeason": 2012,
-  "generatedAt": "2026-07-29T22:44:46.192598Z",
-  "gitCommit": "34a6deba82939e03bca338af0235753a70cc53b4",
+  "generatedAt": "2026-07-30T01:08:54.049879Z",
+  "gitCommit": "713a4636ad005cf14f6b4496d9f569fb3756aeeb",
   "datasetHash": null,
-  "playerCount": 160,
-  "candidatePoolSize": 916,
+  "playerCount": 181,
+  "candidatePoolSize": 917,
   "positions": [
     "QB",
     "RB",
@@ -58,8 +58,9 @@
     "CollegeFootballData enrichment is optional; reduced rookie mode may apply.",
     "Applied 37 model targets (0 hybrid fallbacks).",
     "Excluded 2 retired / projection-ineligible players from rankings.",
-    "Excluded 29 unsigned free agents from default rankings (set overrides.exclude_unsigned_from_rankings=false to include).",
-    "Offseason transaction patch as_of_date=2026-07-29."
+    "Excluded 28 unsigned free agents from default rankings (set overrides.exclude_unsigned_from_rankings=false to include).",
+    "Offseason transaction patch as_of_date=2026-07-29.",
+    "Published 21 manual ranking coverage inclusion(s) outside the model top-160; full-pool model ranks are preserved in player context."
   ],
   "packageVersions": {
     "fantasy-football-prediction-model": "1.0.0",

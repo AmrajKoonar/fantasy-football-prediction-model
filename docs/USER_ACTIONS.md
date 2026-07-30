@@ -54,6 +54,19 @@ Without a key, rookies still appear in rankings using **reduced** mode (nflverse
 3. Ensure `configs/project.yml` has `overrides.apply_projection_overrides: true`.
 4. Re-run `python -m fantasy_football_prediction_model.cli project generate`.
 
+## Ranking coverage audit
+
+`data/manual/ranking-inclusions.csv` contains reviewed visibility exceptions for recognizable
+fantasy players who fall below the model's normal publication cutoff. Review it whenever you
+refresh rankings:
+
+1. Compare the current PPR consensus top-player list with `web/public/data/rankings.json`.
+2. Remove an inclusion when the player naturally returns to the model top-N.
+3. Add a player only with their canonical `gsis_id`, a dated reason, and a source note.
+4. Set `allow_unsigned=true` only when an unsigned player is intentionally useful to show.
+5. Re-run `project generate` and `project validate`; forced players retain their full-pool
+   model rank in `context.modelOverallRank` and carry a machine-readable warning.
+
 ## Offseason roster patch (2026)
 
 The file `data/manual/2026_offseason_transactions.csv` is a **point-in-time** patch (`as_of_date`). It never rewrites 2025 historical teams; it only drives 2026 week-1 / projection / vacated-opportunity context.

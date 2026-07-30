@@ -68,3 +68,13 @@ When enabled, an override never replaces the model value: the export carries bot
 
 Committed, because identifier corrections are facts about the data rather than opinions
 about players. Used by the identity resolver.
+
+### `ranking-inclusions.csv` - ranking coverage exceptions
+
+Committed and audited. This file keeps a small set of fantasy-relevant players visible when
+recent injuries, short seasons, or free-agent status push their honest model rank below the
+normal publication cutoff. It does not alter projected statistics or pretend that the
+reference rank came from this model. The exported display ranks remain dense; each player's
+full-pool model rank is retained in `context.modelOverallRank`, and forced rows receive a
+`ranking_coverage_inclusion` warning. `allow_unsigned` must be explicitly true to publish a
+listed free agent.
