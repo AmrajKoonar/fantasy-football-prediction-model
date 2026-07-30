@@ -14,8 +14,20 @@ export function getSupabase(): SupabaseClient {
   if (!supabaseConfigured()) {
     throw new Error("Supabase environment variables are not configured.");
   }
+  const projectUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  let parsedUrl: URL;
+  try {
+    parsedUrl = new URL(projectUrl);
+  } catch {
+    throw new Error("NEXT_PUBLIC_SUPABASE_URL must be a valid Supabase project URL.");
+  }
+  if (parsedUrl.pathname !== "/" && parsedUrl.pathname !== "") {
+    throw new Error(
+      "NEXT_PUBLIC_SUPABASE_URL must be the project base URL without /rest/v1 or another path.",
+    );
+  }
   singleton ??= createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    projectUrl.replace(/\/$/, ""),
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
     {
       auth: {
@@ -51,4 +63,3 @@ export function getDisplayName(): string {
 export function setDisplayName(name: string) {
   window.localStorage.setItem("fantasy-analytics-display-name", name.trim().slice(0, 30));
 }
-

@@ -11,6 +11,8 @@ These are the only manual infrastructure steps.
    `supabase/migrations/202607290001_mock_draft_v5.sql`, and run it once.
 4. Open **Project Settings → API** and copy the Project URL and Publishable key.
    Older projects may label the latter the public `anon` key.
+   The URL must look like `https://your-project-ref.supabase.co` with no
+   `/rest/v1`, `/auth/v1`, or other path appended.
 5. In Vercel **Project Settings → Environment Variables**, add:
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
@@ -40,4 +42,3 @@ npm run dev
 
 Open `http://localhost:3000/mock-drafts`. Test multiplayer with two separate browser
 profiles so each has a different anonymous identity.
-
