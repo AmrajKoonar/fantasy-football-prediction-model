@@ -456,7 +456,17 @@ def project_generate(
     # Keep in-memory path for chained commands via temp json
     from fantasy_football_prediction_model.exports.web import export_web_data
 
-    export_web_data(bundle, settings, allow_fixture=True)
+    mock_draft_bundle = (
+        generate_projections(settings, fixture=False, output_count=520)
+        if not fixture
+        else generate_projections(settings, fixture=True, output_count=520)
+    )
+    export_web_data(
+        bundle,
+        settings,
+        mock_draft_bundle=mock_draft_bundle,
+        allow_fixture=True,
+    )
     mode_colour = "yellow" if fixture else "green"
     console.print(
         f"[{mode_colour}]Generated {len(bundle.players)} projections "
@@ -473,6 +483,7 @@ def project_validate(
     settings = _settings(config, None, None, log_level)
     from fantasy_football_prediction_model.schemas import (
         ExportMetadata,
+        MockDraftPlayerPoolFile,
         ProjectionsFile,
         RankingsFile,
     )
@@ -483,6 +494,7 @@ def project_validate(
         ("metadata.json", ExportMetadata),
         ("projections.json", ProjectionsFile),
         ("rankings.json", RankingsFile),
+        ("mock-draft-player-pool.json", MockDraftPlayerPoolFile),
     ):
         path = web / name
         if not path.is_file():
