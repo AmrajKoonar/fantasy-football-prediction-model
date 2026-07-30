@@ -13,10 +13,38 @@ from fantasy_football_prediction_model.config import Settings
 from fantasy_football_prediction_model.projections.generate import ProjectionBundle
 
 NFL_TEAMS = [
-    "ARI", "ATL", "BAL", "BUF", "CAR", "CHI", "CIN", "CLE",
-    "DAL", "DEN", "DET", "GB", "HOU", "IND", "JAX", "KC",
-    "LV", "LAC", "LA", "MIA", "MIN", "NE", "NO", "NYG",
-    "NYJ", "PHI", "PIT", "SEA", "SF", "TB", "TEN", "WAS",
+    "ARI",
+    "ATL",
+    "BAL",
+    "BUF",
+    "CAR",
+    "CHI",
+    "CIN",
+    "CLE",
+    "DAL",
+    "DEN",
+    "DET",
+    "GB",
+    "HOU",
+    "IND",
+    "JAX",
+    "KC",
+    "LV",
+    "LAC",
+    "LA",
+    "MIA",
+    "MIN",
+    "NE",
+    "NO",
+    "NYG",
+    "NYJ",
+    "PHI",
+    "PIT",
+    "SEA",
+    "SF",
+    "TB",
+    "TEN",
+    "WAS",
 ]
 BASELINE_POSITIONS = {"K", "DL", "LB", "DB"}
 
@@ -113,10 +141,19 @@ def build_mock_draft_pool(bundle: ProjectionBundle, settings: Settings) -> dict[
         stats_by_id: dict[str, dict[str, Any]] = {}
         if stats_path:
             stat_columns = [
-                "fg_made", "fg_made_50_59", "fg_made_60_", "pat_made",
-                "def_tackles_solo", "def_tackle_assists", "def_sacks",
-                "def_interceptions", "def_fumbles_forced", "def_fumbles",
-                "def_pass_defended", "def_tds", "def_safeties",
+                "fg_made",
+                "fg_made_50_59",
+                "fg_made_60_",
+                "pat_made",
+                "def_tackles_solo",
+                "def_tackle_assists",
+                "def_sacks",
+                "def_interceptions",
+                "def_fumbles_forced",
+                "def_fumbles",
+                "def_pass_defended",
+                "def_tds",
+                "def_safeties",
             ]
             stats = (
                 pl.read_parquet(stats_path)
