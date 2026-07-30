@@ -24,3 +24,8 @@ the roster are invalid. A fixed seed makes behavior reproducible.
 The SQL expression is intentionally smaller and auditable. A future edge worker may
 share richer strategy code, but must still submit through an atomic database function.
 
+In auctions, CPUs nominate the best roster-valid available value, then make at most
+one counter-bid per second. Their maximum price scales with projected points, while
+the database reserves the minimum bid needed for every remaining roster slot. Seeded
+slot ordering keeps simultaneous CPU interest reproducible, and normal anti-sniping
+deadline extensions apply.

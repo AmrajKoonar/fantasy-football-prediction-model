@@ -474,6 +474,7 @@ create or replace function public.advance_mock_draft(target_draft uuid)
 returns text language plpgsql security definer set search_path = public, pg_temp as $$
 declare d public.drafts%rowtype; slot_no integer; chosen text; cpu_slot boolean; queue_pick text;
 declare open_auction public.draft_auctions%rowtype; min_bid integer;
+declare cpu_bid_slot integer; cpu_bid_amount integer; last_bid_at timestamptz;
 begin
   select * into d from public.drafts where id=target_draft for update;
   if d.status <> 'active' then return null; end if;
@@ -484,6 +485,41 @@ begin
       if open_auction.deadline_at <= now() then
         perform public.settle_auction(open_auction.id);
         return open_auction.player_id;
+      end if;
+      min_bid := coalesce((d.settings->>'minimumBid')::integer,1);
+      select max(created_at) into last_bid_at from public.draft_bids
+        where auction_id=open_auction.id;
+      if last_bid_at is null or last_bid_at <= now()-interval '1 second' then
+        cpu_bid_amount := open_auction.current_bid+min_bid;
+        select s.slot_number into cpu_bid_slot
+        from public.draft_slots s
+        join public.draft_player_snapshots p
+          on p.draft_id=s.draft_id and p.player_id=open_auction.player_id
+        where s.draft_id=target_draft and s.is_cpu
+          and s.slot_number<>open_auction.highest_bidder_slot
+          and public.draft_player_fits(target_draft,s.slot_number,open_auction.player_id)
+          and cpu_bid_amount <= s.budget_remaining
+            - greatest(0,d.rounds-(select count(*) from public.draft_picks x
+              where x.draft_id=target_draft and x.slot_number=s.slot_number)-1)*min_bid
+          and cpu_bid_amount <= greatest(
+            min_bid,
+            round(coalesce((d.settings->>'auctionBudget')::numeric,200)
+              * least(0.42,greatest(0.015,p.projected_points/900.0)))
+          )
+        order by abs(hashtextextended(
+          s.slot_number::text||':'||open_auction.player_id,
+          d.seed+d.current_pick_number+open_auction.current_bid
+        )) limit 1;
+        if cpu_bid_slot is not null then
+          update public.draft_auctions set current_bid=cpu_bid_amount,
+            highest_bidder_slot=cpu_bid_slot,
+            deadline_at=case when deadline_at-now()<interval '10 seconds'
+              then now()+interval '10 seconds' else deadline_at end
+            where id=open_auction.id;
+          insert into public.draft_bids(auction_id,draft_id,slot_number,amount)
+            values(open_auction.id,target_draft,cpu_bid_slot,cpu_bid_amount);
+          return open_auction.player_id;
+        end if;
       end if;
       return null;
     end if;

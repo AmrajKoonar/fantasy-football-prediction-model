@@ -32,12 +32,11 @@ Use two private browser profiles:
 3. Start and confirm open seats become CPUs.
 4. Confirm only the on-clock user can pick and double-click creates one pick.
 5. Confirm timeout queue, pause/resume, and reconnect state recovery.
-6. Confirm auction bid limits, anti-sniping extension, one settlement, budget
-   deduction, and nomination rotation.
+6. Confirm auction bid limits, CPU counter-bids, anti-sniping extension, one
+   settlement, budget deduction, and nomination rotation.
 7. Confirm completion, history, and copyable public results.
 8. Check keyboard focus, mobile board scrolling, reduced motion, sounds, and
    notification permission.
 
 Also test offline/reconnect, three tabs advancing one deadline, direct REST pick
 inserts rejected by RLS, and missing Supabase env rendering the setup panel.
-
