@@ -23,7 +23,7 @@ export default function AboutPage() {
         <p className="text-muted">
           Fantasy Analytics is an independent, open portfolio project for season-long fantasy football
           draft preparation. It is not affiliated with or endorsed by the NFL, nflverse,
-          CollegeFootballData, or any fantasy platform.
+          CollegeFootballData, or any fantasy platform. Developed by Amraj for fun.
         </p>
         <p className="text-muted">
           Projections are estimates. Source data can contain errors. Rankings are for informational
