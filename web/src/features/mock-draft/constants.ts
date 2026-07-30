@@ -46,7 +46,7 @@ export const DEFAULT_SETTINGS: DraftSettings = {
   scoringPreset: "ppr",
   teamCount: 12,
   rounds: 15,
-  pickTimerSeconds: 60,
+  pickTimerSeconds: 30,
   cpuAutopick: true,
   playerPool: "all",
   thirdRoundReversal: false,
@@ -56,4 +56,3 @@ export const DEFAULT_SETTINGS: DraftSettings = {
   auctionBudget: 200,
   minimumBid: 1,
 };
-

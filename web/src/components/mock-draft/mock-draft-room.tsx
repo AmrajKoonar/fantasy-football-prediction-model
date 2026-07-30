@@ -33,7 +33,7 @@ type DbAuction = {
   deadline_at: string; status: string; nominating_slot: number;
 };
 type PublicRoom = { draft: DbDraft; slots: DbSlot[] };
-type Tab = "roster" | "queue" | "chat";
+type Tab = "roster" | "queue" | "watchlist" | "chat";
 
 const inputClass = "rounded-md border border-border bg-background px-3 py-2 text-sm";
 
@@ -58,6 +58,7 @@ export function MockDraftRoom({ draftKey }: { draftKey: string }) {
   const [picks, setPicks] = useState<DbPick[]>([]);
   const [messages, setMessages] = useState<DbMessage[]>([]);
   const [queue, setQueue] = useState<string[]>([]);
+  const [watchlist, setWatchlist] = useState<string[]>([]);
   const [auction, setAuction] = useState<DbAuction | null>(null);
   const [search, setSearch] = useState("");
   const [position, setPosition] = useState("ALL");
@@ -82,11 +83,12 @@ export function MockDraftRoom({ draftKey }: { draftKey: string }) {
       || publicRoom.draft.host_user_id === user?.id
       || publicRoom.draft.status === "completed";
     if (participant) {
-      const [snapshotResult, pickResult, messageResult, queueResult, auctionResult] = await Promise.all([
+      const [snapshotResult, pickResult, messageResult, queueResult, watchlistResult, auctionResult] = await Promise.all([
         client.from("draft_player_snapshots").select("*").eq("draft_id", publicRoom.draft.id).order("overall_rank"),
         client.from("draft_picks").select("*").eq("draft_id", publicRoom.draft.id).order("pick_number"),
         client.from("draft_messages").select("*").eq("draft_id", publicRoom.draft.id).order("created_at").limit(150),
         user ? client.from("draft_queues").select("player_id").eq("draft_id", publicRoom.draft.id).eq("user_id", user.id).order("priority") : Promise.resolve({ data: [], error: null }),
+        user ? client.from("draft_watchlists").select("player_id").eq("draft_id", publicRoom.draft.id).eq("user_id", user.id).order("created_at") : Promise.resolve({ data: [], error: null }),
         client.from("draft_auctions").select("*").eq("draft_id", publicRoom.draft.id).eq("status", "open").maybeSingle(),
       ]);
       if (snapshotResult.error) throw snapshotResult.error;
@@ -94,9 +96,10 @@ export function MockDraftRoom({ draftKey }: { draftKey: string }) {
       setPicks((pickResult.data ?? []) as DbPick[]);
       setMessages((messageResult.data ?? []) as DbMessage[]);
       setQueue((queueResult.data ?? []).map((row) => String(row.player_id)));
+      setWatchlist((watchlistResult.data ?? []).map((row) => String(row.player_id)));
       setAuction((auctionResult.data as DbAuction | null) ?? null);
     }
-  }, [draftKey, user?.id]);
+  }, [draftKey, user]);
 
   useEffect(() => {
     let cancelled = false;
@@ -200,6 +203,19 @@ export function MockDraftRoom({ draftKey }: { draftKey: string }) {
     } else {
       await client.from("draft_queues").insert({
         draft_id: draft.id, user_id: user.id, player_id: playerId, priority: queue.length,
+      });
+    }
+    await reload();
+  }
+
+  async function toggleWatchlist(playerId: string) {
+    if (!draft || !user) return;
+    const client = getSupabase();
+    if (watchlist.includes(playerId)) {
+      await client.from("draft_watchlists").delete().eq("draft_id", draft.id).eq("user_id", user.id).eq("player_id", playerId);
+    } else {
+      await client.from("draft_watchlists").insert({
+        draft_id: draft.id, user_id: user.id, player_id: playerId,
       });
     }
     await reload();
@@ -322,6 +338,9 @@ export function MockDraftRoom({ draftKey }: { draftKey: string }) {
                         className="rounded bg-accent px-2 py-1 text-xs text-accent-foreground disabled:opacity-30">Draft</button>}
                     <button onClick={() => toggleQueue(player.playerId)}
                       className="rounded border border-border px-2 py-1 text-xs">{queue.includes(player.playerId) ? "Queued" : "+ Queue"}</button>
+                    <button aria-label={watchlist.includes(player.playerId) ? "Remove from watchlist" : "Add to watchlist"}
+                      onClick={() => toggleWatchlist(player.playerId)}
+                      className="rounded border border-border px-2 py-1 text-xs">{watchlist.includes(player.playerId) ? "★" : "☆"}</button>
                   </div></td>
                 </tr>;
               })}</tbody>
@@ -330,8 +349,8 @@ export function MockDraftRoom({ draftKey }: { draftKey: string }) {
         </section>
 
         <aside className="rounded-xl border border-border bg-card">
-          <div className="grid grid-cols-3 border-b border-border">
-            {(["roster","queue","chat"] as Tab[]).map((value) => <button key={value} onClick={() => setTab(value)}
+          <div className="grid grid-cols-4 border-b border-border">
+            {(["roster","queue","watchlist","chat"] as Tab[]).map((value) => <button key={value} onClick={() => setTab(value)}
               className={`px-2 py-3 text-sm capitalize ${tab === value ? "border-b-2 border-accent text-accent" : "text-muted"}`}>{value}</button>)}
           </div>
           <div className="max-h-[520px] overflow-auto p-3">
@@ -340,6 +359,12 @@ export function MockDraftRoom({ draftKey }: { draftKey: string }) {
               const player = players.find((item) => item.playerId === id);
               return player ? <li key={id} className="flex items-center justify-between rounded-md border border-border p-2 text-sm">
                 <span>{index + 1}. {player.name}</span><button onClick={() => toggleQueue(id)} className="text-danger">×</button>
+              </li> : null;
+            })}</ol> : null}
+            {tab === "watchlist" ? <ol className="space-y-2">{watchlist.map((id) => {
+              const player = players.find((item) => item.playerId === id);
+              return player ? <li key={id} className="flex items-center justify-between rounded-md border border-border p-2 text-sm">
+                <span>{player.name}</span><button onClick={() => toggleWatchlist(id)} className="text-danger">×</button>
               </li> : null;
             })}</ol> : null}
             {tab === "chat" ? <div className="space-y-3">

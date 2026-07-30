@@ -4,6 +4,7 @@ import { chooseCpuPlayer, cpuScore } from "@/features/mock-draft/cpu";
 import { canAddPlayer, slotAccepts } from "@/features/mock-draft/roster";
 import { formatTimer, remainingSeconds } from "@/features/mock-draft/timer";
 import type { DraftPlayer, RosterSlot } from "@/features/mock-draft/types";
+import { DEFAULT_SETTINGS } from "@/features/mock-draft/constants";
 
 const player = (id: string, position: DraftPlayer["primaryPosition"], rank: number, age = 25): DraftPlayer => ({
   playerId: id, name: id, team: "FA", primaryPosition: position, eligiblePositions: [position],
@@ -51,6 +52,9 @@ describe("seeded CPU strategy", () => {
 });
 
 describe("auction and timer rules", () => {
+  it("defaults new rooms to a 30-second timer", () => {
+    expect(DEFAULT_SETTINGS.pickTimerSeconds).toBe(30);
+  });
   it("reserves minimum money for every empty roster slot", () => {
     expect(maxAuctionBid(40, 5, 1)).toBe(36);
     expect(validateBid(37, { currentBid: 20, minimumBid: 1, highestBidderSlot: 2 }, 40, 5).valid).toBe(false);
@@ -64,4 +68,3 @@ describe("auction and timer rules", () => {
     expect(remainingSeconds(new Date(10_000).toISOString(), 8_100)).toBe(2);
   });
 });
-

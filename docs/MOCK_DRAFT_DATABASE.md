@@ -11,6 +11,7 @@ The canonical schema is
 | `draft_player_snapshots` | immutable pool | unique player per draft |
 | `draft_picks` | all results | unique player and pick number |
 | `draft_queues` | private queue | owner-only RLS |
+| `draft_watchlists` | private starred players | owner-only RLS |
 | `draft_messages` | participant chat | participant-only |
 | `draft_auctions` | nomination/current bid | locked settlement |
 | `draft_bids` | append-only bids | complete bid trace |
@@ -28,4 +29,3 @@ https://supabase.com/docs/guides/database/postgres/row-level-security
 
 If storage approaches plan limits, export old completed results and delete selected
 `drafts` rows in a controlled migration; dependent rows cascade.
-

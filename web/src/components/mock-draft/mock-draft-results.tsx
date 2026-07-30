@@ -2,7 +2,8 @@
 
 import { Clipboard } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { ensureAnonymousUser, getSupabase } from "@/lib/supabase";
+import { useRouter } from "next/navigation";
+import { ensureAnonymousUser, getDisplayName, getSupabase } from "@/lib/supabase";
 
 type ResultDraft = {
   id: string; name: string; status: string; format: string; scoring_preset: string;
@@ -13,6 +14,7 @@ type ResultPick = { id: string; player_id: string; slot_number: number; round: n
 type ResultPlayer = { player_id: string; name: string; team: string; primary_position: string };
 
 export function MockDraftResults({ draftKey }: { draftKey: string }) {
+  const router = useRouter();
   const [draft, setDraft] = useState<ResultDraft | null>(null);
   const [slots, setSlots] = useState<ResultSlot[]>([]);
   const [picks, setPicks] = useState<ResultPick[]>([]);
@@ -59,6 +61,15 @@ export function MockDraftResults({ draftKey }: { draftKey: string }) {
     void navigator.clipboard.writeText(lines.join("\n"));
   }
 
+  async function createCopy() {
+    if (!draft) return;
+    const result = await getSupabase().rpc("copy_mock_draft", {
+      source_draft: draft.id, display_name: getDisplayName(),
+    });
+    if (result.error) setError(result.error.message);
+    else router.push(`/mock-drafts/${result.data}`);
+  }
+
   if (error) return <p role="alert" className="rounded-md bg-danger/10 p-4">{error}</p>;
   if (!draft) return <p className="text-muted">Loading public results…</p>;
   return <div className="space-y-6">
@@ -68,6 +79,9 @@ export function MockDraftResults({ draftKey }: { draftKey: string }) {
         <p className="mt-2 capitalize text-muted">{draft.format} · {draft.scoring_preset.replaceAll("_"," ")} · {draft.team_count} teams</p></div>
       <button onClick={copySummary} className="inline-flex items-center gap-2 rounded-md border border-border px-4 py-2 text-sm">
         <Clipboard className="h-4 w-4" /> Copy summary
+      </button>
+      <button onClick={createCopy} className="rounded-md bg-accent px-4 py-2 text-sm font-medium text-accent-foreground">
+        Create a Copy
       </button>
     </header>
     <section className="overflow-x-auto rounded-xl border border-border bg-card">
@@ -100,4 +114,3 @@ export function MockDraftResults({ draftKey }: { draftKey: string }) {
     </section>
   </div>;
 }
-

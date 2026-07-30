@@ -101,6 +101,14 @@ create table public.draft_queues (
   unique (draft_id, user_id, priority)
 );
 
+create table public.draft_watchlists (
+  draft_id uuid not null references public.drafts(id) on delete cascade,
+  user_id uuid not null references auth.users(id) on delete cascade,
+  player_id text not null,
+  created_at timestamptz not null default now(),
+  primary key (draft_id, user_id, player_id)
+);
+
 create table public.draft_messages (
   id bigint generated always as identity primary key,
   draft_id uuid not null references public.drafts(id) on delete cascade,
@@ -173,6 +181,7 @@ alter table public.draft_slots enable row level security;
 alter table public.draft_player_snapshots enable row level security;
 alter table public.draft_picks enable row level security;
 alter table public.draft_queues enable row level security;
+alter table public.draft_watchlists enable row level security;
 alter table public.draft_messages enable row level security;
 alter table public.draft_auctions enable row level security;
 alter table public.draft_bids enable row level security;
@@ -195,6 +204,9 @@ create policy picks_read on public.draft_picks for select to authenticated
     select 1 from public.drafts where id = draft_id and status = 'completed'
   ));
 create policy queues_owner_all on public.draft_queues for all to authenticated
+  using (user_id = auth.uid() and public.is_draft_participant(draft_id))
+  with check (user_id = auth.uid() and public.is_draft_participant(draft_id));
+create policy watchlists_owner_all on public.draft_watchlists for all to authenticated
   using (user_id = auth.uid() and public.is_draft_participant(draft_id))
   with check (user_id = auth.uid() and public.is_draft_participant(draft_id));
 create policy messages_participant_read on public.draft_messages for select to authenticated
@@ -314,6 +326,38 @@ begin
     display_name=left(display_name,30), team_name=left(coalesce(nullif(team_name,''),display_name),30)
   where draft_id=target_draft and slot_number=target_slot and user_id is null;
   if not found then raise exception 'That slot is no longer available'; end if;
+end;
+$$;
+
+create or replace function public.copy_mock_draft(
+  source_draft uuid, display_name text
+) returns uuid language plpgsql security definer set search_path = public, pg_temp as $$
+declare source public.drafts%rowtype; new_id uuid;
+begin
+  if auth.uid() is null then raise exception 'Authentication required'; end if;
+  select * into source from public.drafts where id=source_draft and status='completed';
+  if source.id is null then raise exception 'Only completed drafts can be copied'; end if;
+  insert into public.profiles(id,display_name) values(auth.uid(),left(display_name,30))
+    on conflict(id) do update set display_name=excluded.display_name,updated_at=now();
+  insert into public.drafts(
+    name,host_user_id,format,scoring_preset,team_count,rounds,pick_timer_seconds,settings,seed
+  ) values(
+    left('Copy of '||source.name,80),auth.uid(),source.format,source.scoring_preset,
+    source.team_count,source.rounds,source.pick_timer_seconds,source.settings,
+    floor(random()*2147483647)::integer
+  ) returning id into new_id;
+  insert into public.draft_slots(draft_id,slot_number,budget_remaining)
+    select new_id,value,coalesce((source.settings->>'auctionBudget')::integer,200)
+    from generate_series(1,source.team_count) value;
+  update public.draft_slots set user_id=auth.uid(),display_name=left(display_name,30),
+    team_name=left(display_name,30) where draft_id=new_id and slot_number=1;
+  insert into public.draft_player_snapshots(
+    draft_id,player_id,name,team,primary_position,eligible_positions,rookie,age,
+    overall_rank,position_rank,tier,projected_points,points_per_game,adp,source
+  ) select new_id,player_id,name,team,primary_position,eligible_positions,rookie,age,
+    overall_rank,position_rank,tier,projected_points,points_per_game,adp,source
+    from public.draft_player_snapshots where draft_id=source_draft;
+  return new_id;
 end;
 $$;
 
@@ -593,6 +637,7 @@ grant execute on function public.get_draft_by_slug(text) to authenticated;
 grant execute on function public.list_completed_drafts(integer,integer,text,text) to authenticated;
 grant execute on function public.create_mock_draft(jsonb,jsonb,text) to authenticated;
 grant execute on function public.claim_draft_slot(uuid,integer,text,text) to authenticated;
+grant execute on function public.copy_mock_draft(uuid,text) to authenticated;
 grant execute on function public.release_draft_slot(uuid) to authenticated;
 grant execute on function public.start_mock_draft(uuid) to authenticated;
 grant execute on function public.pause_mock_draft(uuid) to authenticated;
@@ -605,10 +650,10 @@ grant execute on function public.place_auction_bid(uuid,integer) to authenticate
 grant execute on function public.settle_auction(uuid) to authenticated;
 
 grant select on public.drafts, public.draft_slots, public.draft_player_snapshots,
-  public.draft_picks, public.draft_messages, public.draft_queues,
+  public.draft_picks, public.draft_messages, public.draft_queues, public.draft_watchlists,
   public.draft_auctions, public.draft_bids, public.profiles to authenticated;
-grant insert on public.draft_messages, public.draft_queues to authenticated;
-grant update, delete on public.draft_queues to authenticated;
+grant insert on public.draft_messages, public.draft_queues, public.draft_watchlists to authenticated;
+grant update, delete on public.draft_queues, public.draft_watchlists to authenticated;
 grant usage, select on all sequences in schema public to authenticated;
 
 alter publication supabase_realtime add table public.drafts;
