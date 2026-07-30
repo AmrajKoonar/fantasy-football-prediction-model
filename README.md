@@ -30,6 +30,13 @@ External data (nflverse, optional CFBD)
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
+Mock drafts: [feature guide](docs/MOCK_DRAFT.md) ·
+[architecture](docs/MOCK_DRAFT_ARCHITECTURE.md) ·
+[Supabase/Vercel setup](docs/MOCK_DRAFT_SETUP.md) ·
+[CPU logic](docs/MOCK_DRAFT_CPU_LOGIC.md) ·
+[database/RLS](docs/MOCK_DRAFT_DATABASE.md) ·
+[testing](docs/MOCK_DRAFT_TESTING.md).
+
 ## Quick start
 
 ### Windows PowerShell

@@ -27,6 +27,7 @@ from fantasy_football_prediction_model.constants import (
 DataMode = Literal["production", "fixture"]
 ConfidenceLabel = Literal["low", "medium", "high"]
 Position = Literal["QB", "RB", "WR", "TE"]
+DraftPosition = Literal["QB", "RB", "WR", "TE", "K", "DEF", "DL", "LB", "DB"]
 
 NonNegative = Annotated[float, Field(ge=0)]
 
@@ -40,6 +41,33 @@ class ExportModel(BaseModel):
         extra="forbid",
         ser_json_timedelta="iso8601",
     )
+
+
+class MockDraftPlayer(ExportModel):
+    """Broad draftable entity; K/DEF/IDP may use transparent baseline values."""
+
+    player_id: str
+    name: str
+    team: str
+    primary_position: DraftPosition
+    eligible_positions: list[DraftPosition]
+    rookie: bool
+    age: float | None
+    overall_rank: Annotated[int, Field(gt=0)]
+    position_rank: Annotated[int, Field(gt=0)]
+    tier: Annotated[int, Field(gt=0)]
+    projected_points: float
+    points_per_game: float
+    adp: Annotated[float, Field(gt=0)]
+    source: Literal["projection", "roster-baseline", "team-defense"]
+
+
+class MockDraftPlayerPoolFile(ExportModel):
+    schema_version: str
+    generated_at: datetime
+    projection_season: int
+    source: str
+    players: Annotated[list[MockDraftPlayer], Field(min_length=450)]
 
 
 # ---------------------------------------------------------------------------

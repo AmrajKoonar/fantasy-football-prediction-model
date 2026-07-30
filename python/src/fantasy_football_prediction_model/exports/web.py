@@ -55,6 +55,7 @@ def export_web_data(
     bundle: ProjectionBundle,
     settings: Settings,
     *,
+    mock_draft_bundle: ProjectionBundle | None = None,
     performance: ModelPerformanceFile | None = None,
     feature_importance: FeatureImportanceFile | None = None,
     coverage: DataCoverageFile | None = None,
@@ -167,6 +168,7 @@ def export_web_data(
         "model_performance": web_dir / "model-performance.json",
         "feature_importance": web_dir / "feature-importance.json",
         "data_coverage": web_dir / "data-coverage.json",
+        "mock_draft_player_pool": web_dir / "mock-draft-player-pool.json",
     }
     _atomic_write_json(written["projections"], projections.model_dump(by_alias=True, mode="json"))
     _atomic_write_json(written["rankings"], rankings.model_dump(by_alias=True, mode="json"))
@@ -179,6 +181,12 @@ def export_web_data(
         written["feature_importance"], feature_importance.model_dump(by_alias=True, mode="json")
     )
     _atomic_write_json(written["data_coverage"], coverage.model_dump(by_alias=True, mode="json"))
+    from fantasy_football_prediction_model.exports.mock_draft import build_mock_draft_pool
+
+    _atomic_write_json(
+        written["mock_draft_player_pool"],
+        build_mock_draft_pool(mock_draft_bundle or bundle, settings),
+    )
 
     # Also mirror under artifacts/projections for downloads.
     art = settings.path("projection_dir")
