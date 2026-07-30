@@ -163,6 +163,7 @@ class OverrideSettings(_Base):
     projection_overrides_file: str
     id_corrections_file: str
     offseason_transactions_file: str = "data/manual/2026_offseason_transactions.csv"
+    ranking_inclusions_file: str = "data/manual/ranking-inclusions.csv"
 
 
 class ProjectConfig(_Base):

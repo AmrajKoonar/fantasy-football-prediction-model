@@ -126,3 +126,5 @@ overrides:
   projection_overrides_file: data/manual/projection-overrides.csv
   id_corrections_file: data/manual/player-id-corrections.csv
   offseason_transactions_file: data/manual/2026_offseason_transactions.csv
+  # Audited visibility exceptions retain their honest model rank and warning.
+  ranking_inclusions_file: data/manual/ranking-inclusions.csv

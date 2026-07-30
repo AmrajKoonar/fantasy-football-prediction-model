@@ -445,11 +445,19 @@ def generate_projections(
         apply_registered_models,
         stats_from_row,
     )
+    from fantasy_football_prediction_model.projections.ranking_inclusions import (
+        load_ranking_inclusions,
+        select_published_players,
+    )
 
     frame = pl.read_parquet(processed)
     registry = LocalModelRegistry(settings.path("model_dir"))
     if not registry.list_models():
         logger.warning("No trained models in registry; using mean-reverted prior-season hybrid.")
+
+    inclusion_path = settings.repo_root / settings.project_config.overrides.ranking_inclusions_file
+    ranking_inclusions = load_ranking_inclusions(inclusion_path)
+    inclusion_by_id = {item.player_id: item for item in ranking_inclusions}
 
     roster_as_of: str | None = None
     txn_by_id: dict[str, dict[str, Any]] = {}
@@ -511,10 +519,16 @@ def generate_projections(
         if team in {"RET", "RETIRED"}:
             skipped_retired += 1
             continue
-        if exclude_unsigned and (
-            roster_status == "unsigned"
-            or (team == "FA" and gsis in txn_by_id and txn.get("roster_status") != "active")
-            or (row.get("offseason_active_roster") is False and roster_status == "unsigned")
+        if (
+            exclude_unsigned
+            and (
+                roster_status == "unsigned"
+                or (team == "FA" and gsis in txn_by_id and txn.get("roster_status") != "active")
+                or (row.get("offseason_active_roster") is False and roster_status == "unsigned")
+            )
+            and not (
+                (inclusion := inclusion_by_id.get(gsis)) is not None and inclusion.allow_unsigned
+            )
         ):
             skipped_unsigned += 1
             continue
@@ -878,7 +892,12 @@ def generate_projections(
         final.append(player)
     final.sort(key=lambda p: p.fantasy.overall_rank)
     limit = output_count or settings.project_config.project.output_player_count
-    final = final[:limit]
+    final, inclusion_warnings = select_published_players(
+        final,
+        ranking_inclusions,
+        limit=limit,
+    )
+    rookie_warnings.extend(inclusion_warnings)
     return ProjectionBundle(
         data_mode=DATA_MODE_PRODUCTION,  # type: ignore[arg-type]
         projection_season=settings.target_season,

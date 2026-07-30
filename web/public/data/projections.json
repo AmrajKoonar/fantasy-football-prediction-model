@@ -2,7 +2,7 @@
   "schemaVersion": "1.0.0",
   "dataMode": "production",
   "projectionSeason": 2026,
-  "generatedAt": "2026-07-29T22:44:46.192598Z",
+  "generatedAt": "2026-07-30T01:08:54.049879Z",
   "players": [
     {
       "playerId": "00-0039139",
@@ -108,7 +108,8 @@
       "context": {
         "targets": 76.77377966111666,
         "carries": 240.53529172531196,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 1.0
       }
     },
     {
@@ -206,7 +207,8 @@
       "context": {
         "targets": 155.85436595323512,
         "carries": 6.046906690455501,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 2.0
       }
     },
     {
@@ -303,7 +305,8 @@
       "context": {
         "targets": 137.03485904931833,
         "carries": 1.635422374141566,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 3.0
       }
     },
     {
@@ -400,7 +403,8 @@
       "context": {
         "targets": 137.80153783536926,
         "carries": 9.367631015879773,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 4.0
       }
     },
     {
@@ -507,7 +511,8 @@
       "context": {
         "targets": 72.05795607911868,
         "carries": 258.51142470850834,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 5.0
       }
     },
     {
@@ -604,7 +609,8 @@
       "context": {
         "targets": 138.94510778855582,
         "carries": 2.7431092667010915,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 6.0
       }
     },
     {
@@ -711,7 +717,8 @@
       "context": {
         "targets": 61.63260958791864,
         "carries": 201.92228708040625,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 7.0
       }
     },
     {
@@ -808,7 +815,8 @@
       "context": {
         "targets": 131.19099403151608,
         "carries": 0.701938571246122,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 8.0
       }
     },
     {
@@ -911,7 +919,8 @@
       "modelProjectedStats": null,
       "context": {
         "draft_pick": 3.0,
-        "draft_round": 1.0
+        "draft_round": 1.0,
+        "modelOverallRank": 9.0
       }
     },
     {
@@ -1009,7 +1018,8 @@
       "context": {
         "targets": 114.38588478736932,
         "carries": 0.5927581857070539,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 10.0
       }
     },
     {
@@ -1116,7 +1126,8 @@
       "context": {
         "targets": null,
         "carries": 91.49159625843492,
-        "pass_attempts": 432.7627791002352
+        "pass_attempts": 432.7627791002352,
+        "modelOverallRank": 11.0
       }
     },
     {
@@ -1223,7 +1234,8 @@
       "context": {
         "targets": null,
         "carries": 98.0558687271917,
-        "pass_attempts": 553.3855673107478
+        "pass_attempts": 553.3855673107478,
+        "modelOverallRank": 12.0
       }
     },
     {
@@ -1330,7 +1342,8 @@
       "context": {
         "targets": 48.3,
         "carries": 206.99999999999997,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 13.0
       }
     },
     {
@@ -1437,7 +1450,8 @@
       "context": {
         "targets": 46.0,
         "carries": 182.8358597813669,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 14.0
       }
     },
     {
@@ -1534,7 +1548,8 @@
       "context": {
         "targets": 126.19171430231866,
         "carries": 8.06920963392703,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 15.0
       }
     },
     {
@@ -1631,7 +1646,8 @@
       "context": {
         "targets": 121.89685558627792,
         "carries": 1.140541522728286,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 16.0
       }
     },
     {
@@ -1739,7 +1755,8 @@
       "context": {
         "targets": 64.09150871769536,
         "carries": 198.8177310553656,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 17.0
       }
     },
     {
@@ -1836,7 +1853,8 @@
       "context": {
         "targets": 112.69999999999999,
         "carries": 0.0,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 18.0
       }
     },
     {
@@ -1944,7 +1962,8 @@
       "context": {
         "targets": 48.07293638155644,
         "carries": 202.7705245296328,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 19.0
       }
     },
     {
@@ -2041,7 +2060,8 @@
       "context": {
         "targets": 98.55959236832001,
         "carries": 2.2242938425222065,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 20.0
       }
     },
     {
@@ -2138,7 +2158,8 @@
       "context": {
         "targets": 121.28886717624947,
         "carries": 0.0,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 21.0
       }
     },
     {
@@ -2236,7 +2257,8 @@
       "context": {
         "targets": 122.39750461621001,
         "carries": 0.777741856940367,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 22.0
       }
     },
     {
@@ -2333,7 +2355,8 @@
       "context": {
         "targets": 109.69435761122558,
         "carries": 0.621313738274248,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 23.0
       }
     },
     {
@@ -2431,7 +2454,8 @@
       "context": {
         "targets": 115.55269467642428,
         "carries": 0.0,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 24.0
       }
     },
     {
@@ -2528,7 +2552,8 @@
       "context": {
         "targets": 106.38102786750053,
         "carries": 0.0,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 25.0
       }
     },
     {
@@ -2626,7 +2651,8 @@
       "context": {
         "targets": 100.80334963189182,
         "carries": 0.7955003739853748,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 26.0
       }
     },
     {
@@ -2733,7 +2759,8 @@
       "context": {
         "targets": null,
         "carries": 66.42980590442241,
-        "pass_attempts": 485.2660689275127
+        "pass_attempts": 485.2660689275127,
+        "modelOverallRank": 27.0
       }
     },
     {
@@ -2830,7 +2857,8 @@
       "context": {
         "targets": 105.87002123044338,
         "carries": 0.701375624708036,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 28.0
       }
     },
     {
@@ -2927,7 +2955,8 @@
       "context": {
         "targets": 19.30087845269593,
         "carries": 197.5042794587278,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 29.0
       }
     },
     {
@@ -3024,7 +3053,8 @@
       "context": {
         "targets": null,
         "carries": 45.868177038638876,
-        "pass_attempts": 522.795695856436
+        "pass_attempts": 522.795695856436,
+        "modelOverallRank": 30.0
       }
     },
     {
@@ -3121,7 +3151,8 @@
       "context": {
         "targets": 127.2179700284466,
         "carries": 0.817208379978476,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 31.0
       }
     },
     {
@@ -3218,7 +3249,8 @@
       "context": {
         "targets": 97.6260382831113,
         "carries": 0.6165997991472846,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 32.0
       }
     },
     {
@@ -3325,7 +3357,8 @@
       "context": {
         "targets": 51.27309299842141,
         "carries": 182.01708413559106,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 33.0
       }
     },
     {
@@ -3432,7 +3465,8 @@
       "context": {
         "targets": 32.89650191304061,
         "carries": 177.196083803075,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 34.0
       }
     },
     {
@@ -3529,7 +3563,8 @@
       "context": {
         "targets": null,
         "carries": 54.1418360494943,
-        "pass_attempts": 487.4377853970476
+        "pass_attempts": 487.4377853970476,
+        "modelOverallRank": 35.0
       }
     },
     {
@@ -3632,7 +3667,8 @@
       "modelProjectedStats": null,
       "context": {
         "draft_pick": 4.0,
-        "draft_round": 1.0
+        "draft_round": 1.0,
+        "modelOverallRank": 36.0
       }
     },
     {
@@ -3735,7 +3771,8 @@
       "modelProjectedStats": null,
       "context": {
         "draft_pick": 8.0,
-        "draft_round": 1.0
+        "draft_round": 1.0,
+        "modelOverallRank": 37.0
       }
     },
     {
@@ -3843,7 +3880,8 @@
       "context": {
         "targets": 42.73507617152983,
         "carries": 180.41641572040405,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 38.0
       }
     },
     {
@@ -3950,7 +3988,8 @@
       "context": {
         "targets": null,
         "carries": 66.16520328814877,
-        "pass_attempts": 510.0301260627357
+        "pass_attempts": 510.0301260627357,
+        "modelOverallRank": 39.0
       }
     },
     {
@@ -4047,7 +4086,8 @@
       "context": {
         "targets": 81.61546114435926,
         "carries": 2.066029911401479,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 40.0
       }
     },
     {
@@ -4144,7 +4184,8 @@
       "context": {
         "targets": null,
         "carries": 21.849999999999998,
-        "pass_attempts": 549.9707779648437
+        "pass_attempts": 549.9707779648437,
+        "modelOverallRank": 41.0
       }
     },
     {
@@ -4251,7 +4292,8 @@
       "context": {
         "targets": 52.914714732975064,
         "carries": 167.89999999999998,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 42.0
       }
     },
     {
@@ -4349,7 +4391,8 @@
       "context": {
         "targets": 99.14885980133843,
         "carries": 3.4499999999999997,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 43.0
       }
     },
     {
@@ -4447,7 +4490,8 @@
       "context": {
         "targets": 92.18247523483953,
         "carries": 0.0,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 44.0
       }
     },
     {
@@ -4554,7 +4598,8 @@
       "context": {
         "targets": null,
         "carries": 115.71901732989602,
-        "pass_attempts": 409.06805457051223
+        "pass_attempts": 409.06805457051223,
+        "modelOverallRank": 45.0
       }
     },
     {
@@ -4657,7 +4702,8 @@
       "modelProjectedStats": null,
       "context": {
         "draft_pick": 32.0,
-        "draft_round": 1.0
+        "draft_round": 1.0,
+        "modelOverallRank": 46.0
       }
     },
     {
@@ -4764,7 +4810,8 @@
       "context": {
         "targets": 39.31818879279674,
         "carries": 180.11855724539893,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 47.0
       }
     },
     {
@@ -4861,7 +4908,8 @@
       "context": {
         "targets": 75.57127761656788,
         "carries": 0.0,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 48.0
       }
     },
     {
@@ -4968,7 +5016,8 @@
       "context": {
         "targets": 40.25,
         "carries": 142.6,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 49.0
       }
     },
     {
@@ -5065,7 +5114,8 @@
       "context": {
         "targets": 85.41067205065666,
         "carries": 2.3,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 50.0
       }
     },
     {
@@ -5163,7 +5213,8 @@
       "context": {
         "targets": 90.49483673439319,
         "carries": 0.017055954281073316,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 51.0
       }
     },
     {
@@ -5270,7 +5321,8 @@
       "context": {
         "targets": 37.835814510166706,
         "carries": 168.80520173011826,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 52.0
       }
     },
     {
@@ -5368,7 +5420,8 @@
       "context": {
         "targets": 82.56487856617169,
         "carries": 0.288277428540705,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 53.0
       }
     },
     {
@@ -5465,7 +5518,8 @@
       "context": {
         "targets": 91.14846025824127,
         "carries": 0.5005181597393605,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 54.0
       }
     },
     {
@@ -5563,7 +5617,8 @@
       "context": {
         "targets": null,
         "carries": 45.97291953742608,
-        "pass_attempts": 394.2619290916434
+        "pass_attempts": 394.2619290916434,
+        "modelOverallRank": 55.0
       }
     },
     {
@@ -5660,7 +5715,8 @@
       "context": {
         "targets": 73.50363771954817,
         "carries": 1.15,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 56.0
       }
     },
     {
@@ -5757,7 +5813,8 @@
       "context": {
         "targets": 100.54585569082961,
         "carries": 0.0,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 57.0
       }
     },
     {
@@ -5864,7 +5921,8 @@
       "context": {
         "targets": null,
         "carries": 84.45175616224196,
-        "pass_attempts": 389.84999999999997
+        "pass_attempts": 389.84999999999997,
+        "modelOverallRank": 58.0
       }
     },
     {
@@ -5962,7 +6020,8 @@
       "context": {
         "targets": 76.17620067185388,
         "carries": 0.5902450969997052,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 59.0
       }
     },
     {
@@ -6059,7 +6118,8 @@
       "context": {
         "targets": 77.46322931724448,
         "carries": 0.0,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 60.0
       }
     },
     {
@@ -6156,7 +6216,8 @@
       "context": {
         "targets": 92.92228337206632,
         "carries": 3.280600936916387,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 61.0
       }
     },
     {
@@ -6264,7 +6325,8 @@
       "context": {
         "targets": 30.047780040578456,
         "carries": 146.7434106815356,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 62.0
       }
     },
     {
@@ -6361,7 +6423,8 @@
       "context": {
         "targets": 89.69999999999999,
         "carries": 3.7454616318413083,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 63.0
       }
     },
     {
@@ -6458,7 +6521,8 @@
       "context": {
         "targets": 80.27997024711473,
         "carries": 0.7322593310375228,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 64.0
       }
     },
     {
@@ -6565,7 +6629,8 @@
       "context": {
         "targets": null,
         "carries": 77.05,
-        "pass_attempts": 347.29999999999995
+        "pass_attempts": 347.29999999999995,
+        "modelOverallRank": 65.0
       }
     },
     {
@@ -6673,7 +6738,8 @@
       "context": {
         "targets": 25.965261099189995,
         "carries": 142.0863331956654,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 66.0
       }
     },
     {
@@ -6776,7 +6842,8 @@
       "modelProjectedStats": null,
       "context": {
         "draft_pick": 1.0,
-        "draft_round": 1.0
+        "draft_round": 1.0,
+        "modelOverallRank": 67.0
       }
     },
     {
@@ -6883,7 +6950,8 @@
       "context": {
         "targets": 28.152255639634298,
         "carries": 163.83134901611282,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 68.0
       }
     },
     {
@@ -6980,7 +7048,8 @@
       "context": {
         "targets": 87.70072483331009,
         "carries": 4.9630630524188515,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 69.0
       }
     },
     {
@@ -7078,7 +7147,8 @@
       "context": {
         "targets": 90.11358311098188,
         "carries": 1.9037347634585866,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 70.0
       }
     },
     {
@@ -7175,7 +7245,8 @@
       "context": {
         "targets": 87.84640897284763,
         "carries": 1.007384975470144,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 71.0
       }
     },
     {
@@ -7278,7 +7349,8 @@
       "modelProjectedStats": null,
       "context": {
         "draft_pick": 30.0,
-        "draft_round": 1.0
+        "draft_round": 1.0,
+        "modelOverallRank": 72.0
       }
     },
     {
@@ -7381,7 +7453,8 @@
       "modelProjectedStats": null,
       "context": {
         "draft_pick": 20.0,
-        "draft_round": 1.0
+        "draft_round": 1.0,
+        "modelOverallRank": 73.0
       }
     },
     {
@@ -7484,7 +7557,8 @@
       "modelProjectedStats": null,
       "context": {
         "draft_pick": 24.0,
-        "draft_round": 1.0
+        "draft_round": 1.0,
+        "modelOverallRank": 74.0
       }
     },
     {
@@ -7581,7 +7655,8 @@
       "context": {
         "targets": 83.94999999999999,
         "carries": 0.26213044158095306,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 75.0
       }
     },
     {
@@ -7678,7 +7753,8 @@
       "context": {
         "targets": 75.00276547256864,
         "carries": 6.8999999999999995,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 76.0
       }
     },
     {
@@ -7775,7 +7851,8 @@
       "context": {
         "targets": 85.81464287969669,
         "carries": 0.5083191040933239,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 77.0
       }
     },
     {
@@ -7872,7 +7949,8 @@
       "context": {
         "targets": 69.0,
         "carries": 6.8999999999999995,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 78.0
       }
     },
     {
@@ -7979,7 +8057,8 @@
       "context": {
         "targets": 25.480817006341702,
         "carries": 126.99998775988917,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 79.0
       }
     },
     {
@@ -8086,7 +8165,8 @@
       "context": {
         "targets": 26.99866466959524,
         "carries": 191.2114551490667,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 80.0
       }
     },
     {
@@ -8193,7 +8273,8 @@
       "context": {
         "targets": 36.8,
         "carries": 116.14999999999999,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 81.0
       }
     },
     {
@@ -8300,7 +8381,8 @@
       "context": {
         "targets": 37.154606524231895,
         "carries": 139.230134158703,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 82.0
       }
     },
     {
@@ -8407,7 +8489,8 @@
       "context": {
         "targets": 70.50066500154675,
         "carries": 11.493081518558984,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 83.0
       }
     },
     {
@@ -8504,7 +8587,8 @@
       "context": {
         "targets": 76.13249643960377,
         "carries": 0.40083226130405253,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 84.0
       }
     },
     {
@@ -8601,7 +8685,8 @@
       "context": {
         "targets": 82.75466357690554,
         "carries": 2.3,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 85.0
       }
     },
     {
@@ -8698,7 +8783,8 @@
       "context": {
         "targets": 79.87610728364291,
         "carries": 0.1372233764736705,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 86.0
       }
     },
     {
@@ -8806,7 +8892,8 @@
       "context": {
         "targets": 31.695685417132047,
         "carries": 119.31037689393945,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 87.0
       }
     },
     {
@@ -8904,7 +8991,8 @@
       "context": {
         "targets": 79.5897881481115,
         "carries": 0.2295046644978993,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 88.0
       }
     },
     {
@@ -9001,7 +9089,8 @@
       "context": {
         "targets": 78.37824830634149,
         "carries": 0.9673168127163876,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 89.0
       }
     },
     {
@@ -9098,7 +9187,8 @@
       "context": {
         "targets": 15.440687859757691,
         "carries": 147.85366566667219,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 90.0
       }
     },
     {
@@ -9196,7 +9286,8 @@
       "context": {
         "targets": 69.0,
         "carries": 0.0,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 91.0
       }
     },
     {
@@ -9293,7 +9384,8 @@
       "context": {
         "targets": 80.28269000073479,
         "carries": 1.6038135296062108,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 92.0
       }
     },
     {
@@ -9390,7 +9482,8 @@
       "context": {
         "targets": 78.19999999999999,
         "carries": 0.8100411012488116,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 93.0
       }
     },
     {
@@ -9487,7 +9580,8 @@
       "context": {
         "targets": 56.349999999999994,
         "carries": 0.4955825121883622,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 94.0
       }
     },
     {
@@ -9584,7 +9678,8 @@
       "context": {
         "targets": 57.557762531226636,
         "carries": 4.028015051525473,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 95.0
       }
     },
     {
@@ -9691,7 +9786,8 @@
       "context": {
         "targets": 30.980180120596373,
         "carries": 150.88917722797902,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 96.0
       }
     },
     {
@@ -9794,7 +9890,8 @@
       "modelProjectedStats": null,
       "context": {
         "draft_pick": 90.0,
-        "draft_round": 3.0
+        "draft_round": 3.0,
+        "modelOverallRank": 97.0
       }
     },
     {
@@ -9891,7 +9988,8 @@
       "context": {
         "targets": 63.24999999999999,
         "carries": 0.804132387401695,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 98.0
       }
     },
     {
@@ -9941,7 +10039,7 @@
         "positionRank": 16,
         "tier": 10,
         "pointsRank": 115,
-        "pointsPerGameRank": 216,
+        "pointsPerGameRank": 217,
         "vorpRank": 99,
         "riskAdjustedRank": 98,
         "riskAdjustedValue": -14.312305374482564
@@ -9989,7 +10087,8 @@
       "context": {
         "targets": 78.13983253480406,
         "carries": 0.0,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 99.0
       }
     },
     {
@@ -10086,7 +10185,8 @@
       "context": {
         "targets": 66.28752790773409,
         "carries": 0.0,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 100.0
       }
     },
     {
@@ -10184,7 +10284,8 @@
       "context": {
         "targets": 68.15845952622819,
         "carries": 5.327493708069461,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 101.0
       }
     },
     {
@@ -10292,7 +10393,8 @@
       "context": {
         "targets": 44.0292719863474,
         "carries": 99.85290684194885,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 102.0
       }
     },
     {
@@ -10399,7 +10501,8 @@
       "context": {
         "targets": 18.4,
         "carries": 144.8183894756183,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 103.0
       }
     },
     {
@@ -10496,7 +10599,8 @@
       "context": {
         "targets": null,
         "carries": 46.04003751752469,
-        "pass_attempts": 463.97785706976816
+        "pass_attempts": 463.97785706976816,
+        "modelOverallRank": 104.0
       }
     },
     {
@@ -10593,7 +10697,8 @@
       "context": {
         "targets": 78.86956643083846,
         "carries": 0.03500984978559147,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 105.0
       }
     },
     {
@@ -10690,7 +10795,8 @@
       "context": {
         "targets": 14.95,
         "carries": 190.3484128434936,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 106.0
       }
     },
     {
@@ -10787,7 +10893,8 @@
       "context": {
         "targets": 56.220606564294464,
         "carries": 0.5635287611725738,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 107.0
       }
     },
     {
@@ -10884,7 +10991,8 @@
       "context": {
         "targets": null,
         "carries": 36.50612654107348,
-        "pass_attempts": 460.32194362917244
+        "pass_attempts": 460.32194362917244,
+        "modelOverallRank": 108.0
       }
     },
     {
@@ -10991,7 +11099,8 @@
       "context": {
         "targets": 26.915422280800367,
         "carries": 130.72386939840254,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 109.0
       }
     },
     {
@@ -11099,7 +11208,8 @@
       "context": {
         "targets": 23.06586874919495,
         "carries": 130.70829207822123,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 110.0
       }
     },
     {
@@ -11149,7 +11259,7 @@
         "positionRank": 19,
         "tier": 10,
         "pointsRank": 131,
-        "pointsPerGameRank": 235,
+        "pointsPerGameRank": 236,
         "vorpRank": 111,
         "riskAdjustedRank": 110,
         "riskAdjustedValue": -25.905335325226154
@@ -11196,7 +11306,8 @@
       "context": {
         "targets": 75.89999999999999,
         "carries": 0.7158537337757696,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 111.0
       }
     },
     {
@@ -11299,7 +11410,8 @@
       "modelProjectedStats": null,
       "context": {
         "draft_pick": 47.0,
-        "draft_round": 2.0
+        "draft_round": 2.0,
+        "modelOverallRank": 112.0
       }
     },
     {
@@ -11402,7 +11514,8 @@
       "modelProjectedStats": null,
       "context": {
         "draft_pick": 39.0,
-        "draft_round": 2.0
+        "draft_round": 2.0,
+        "modelOverallRank": 113.0
       }
     },
     {
@@ -11505,7 +11618,8 @@
       "modelProjectedStats": null,
       "context": {
         "draft_pick": 33.0,
-        "draft_round": 2.0
+        "draft_round": 2.0,
+        "modelOverallRank": 114.0
       }
     },
     {
@@ -11603,7 +11717,8 @@
       "context": {
         "targets": 67.27742989218447,
         "carries": 0.08197935476104658,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 115.0
       }
     },
     {
@@ -11700,7 +11815,8 @@
       "context": {
         "targets": 56.349999999999994,
         "carries": 0.30813608177408386,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 116.0
       }
     },
     {
@@ -11803,7 +11919,8 @@
       "modelProjectedStats": null,
       "context": {
         "draft_pick": 16.0,
-        "draft_round": 1.0
+        "draft_round": 1.0,
+        "modelOverallRank": 117.0
       }
     },
     {
@@ -11853,7 +11970,7 @@
         "positionRank": 34,
         "tier": 10,
         "pointsRank": 136,
-        "pointsPerGameRank": 245,
+        "pointsPerGameRank": 246,
         "vorpRank": 118,
         "riskAdjustedRank": 114,
         "riskAdjustedValue": -28.463215979258138
@@ -11910,7 +12027,8 @@
       "context": {
         "targets": 16.099999999999998,
         "carries": 120.11176252626778,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 118.0
       }
     },
     {
@@ -12008,7 +12126,8 @@
       "context": {
         "targets": 16.099999999999998,
         "carries": 147.48176458396992,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 119.0
       }
     },
     {
@@ -12105,7 +12224,8 @@
       "context": {
         "targets": 67.85,
         "carries": 1.1178456651304545,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 120.0
       }
     },
     {
@@ -12202,7 +12322,8 @@
       "context": {
         "targets": null,
         "carries": 35.97544573825733,
-        "pass_attempts": 387.545306336594
+        "pass_attempts": 387.545306336594,
+        "modelOverallRank": 121.0
       }
     },
     {
@@ -12299,7 +12420,8 @@
       "context": {
         "targets": 53.37396776778233,
         "carries": 0.0,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 122.0
       }
     },
     {
@@ -12396,7 +12518,8 @@
       "context": {
         "targets": 62.099999999999994,
         "carries": 0.23455215821713407,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 123.0
       }
     },
     {
@@ -12446,7 +12569,7 @@
         "positionRank": 36,
         "tier": 10,
         "pointsRank": 143,
-        "pointsPerGameRank": 232,
+        "pointsPerGameRank": 233,
         "vorpRank": 124,
         "riskAdjustedRank": 123,
         "riskAdjustedValue": -32.467712862943806
@@ -12503,7 +12626,8 @@
       "context": {
         "targets": 26.244427937627364,
         "carries": 133.4153328076149,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 124.0
       }
     },
     {
@@ -12600,7 +12724,8 @@
       "context": {
         "targets": 58.82572902981387,
         "carries": 1.9825666853709327,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 125.0
       }
     },
     {
@@ -12707,7 +12832,8 @@
       "context": {
         "targets": 24.250300218074944,
         "carries": 141.12876453634988,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 126.0
       }
     },
     {
@@ -12757,7 +12883,7 @@
         "positionRank": 23,
         "tier": 10,
         "pointsRank": 148,
-        "pointsPerGameRank": 242,
+        "pointsPerGameRank": 243,
         "vorpRank": 127,
         "riskAdjustedRank": 127,
         "riskAdjustedValue": -38.87349613343918
@@ -12804,7 +12930,8 @@
       "context": {
         "targets": 61.19469330794178,
         "carries": 4.523153729722626,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 127.0
       }
     },
     {
@@ -12901,7 +13028,8 @@
       "context": {
         "targets": 67.36338484085736,
         "carries": 0.9242048215274026,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 128.0
       }
     },
     {
@@ -13008,7 +13136,8 @@
       "context": {
         "targets": 25.299962008192963,
         "carries": 66.01315287962167,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 129.0
       }
     },
     {
@@ -13105,7 +13234,8 @@
       "context": {
         "targets": 67.85,
         "carries": 0.7337454326306831,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 130.0
       }
     },
     {
@@ -13203,7 +13333,8 @@
       "context": {
         "targets": 57.63188694885325,
         "carries": 1.1219020074650794,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 131.0
       }
     },
     {
@@ -13300,7 +13431,8 @@
       "context": {
         "targets": null,
         "carries": 34.935226278961764,
-        "pass_attempts": 325.1885903774934
+        "pass_attempts": 325.1885903774934,
+        "modelOverallRank": 132.0
       }
     },
     {
@@ -13397,7 +13529,8 @@
       "context": {
         "targets": 59.8431318866751,
         "carries": 0.3558286113783658,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 133.0
       }
     },
     {
@@ -13446,8 +13579,8 @@
         "overallRank": 134,
         "positionRank": 39,
         "tier": 10,
-        "pointsRank": 166,
-        "pointsPerGameRank": 228,
+        "pointsRank": 167,
+        "pointsPerGameRank": 229,
         "vorpRank": 134,
         "riskAdjustedRank": 133,
         "riskAdjustedValue": -41.65501281672173
@@ -13504,7 +13637,8 @@
       "context": {
         "targets": 40.5146618977147,
         "carries": 82.8,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 134.0
       }
     },
     {
@@ -13601,7 +13735,8 @@
       "context": {
         "targets": 54.58342161373955,
         "carries": 0.2110164645563768,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 135.0
       }
     },
     {
@@ -13698,7 +13833,8 @@
       "context": {
         "targets": 85.64731204650725,
         "carries": 0.635200402588007,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 136.0
       }
     },
     {
@@ -13747,7 +13883,7 @@
         "overallRank": 137,
         "positionRank": 40,
         "tier": 10,
-        "pointsRank": 168,
+        "pointsRank": 169,
         "pointsPerGameRank": 172,
         "vorpRank": 137,
         "riskAdjustedRank": 136,
@@ -13805,7 +13941,8 @@
       "context": {
         "targets": 22.21482769787681,
         "carries": 111.51920856723957,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 137.0
       }
     },
     {
@@ -13854,8 +13991,8 @@
         "overallRank": 138,
         "positionRank": 24,
         "tier": 10,
-        "pointsRank": 165,
-        "pointsPerGameRank": 241,
+        "pointsRank": 166,
+        "pointsPerGameRank": 242,
         "vorpRank": 138,
         "riskAdjustedRank": 139,
         "riskAdjustedValue": -43.47656171321647
@@ -13912,7 +14049,8 @@
       "context": {
         "targets": 46.85617690935498,
         "carries": 7.806134721116053,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 138.0
       }
     },
     {
@@ -13961,7 +14099,7 @@
         "overallRank": 139,
         "positionRank": 41,
         "tier": 10,
-        "pointsRank": 171,
+        "pointsRank": 172,
         "pointsPerGameRank": 203,
         "vorpRank": 139,
         "riskAdjustedRank": 138,
@@ -14020,7 +14158,8 @@
       "context": {
         "targets": 21.814397338676134,
         "carries": 97.2311610713944,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 139.0
       }
     },
     {
@@ -14069,8 +14208,8 @@
         "overallRank": 140,
         "positionRank": 25,
         "tier": 10,
-        "pointsRank": 167,
-        "pointsPerGameRank": 238,
+        "pointsRank": 168,
+        "pointsPerGameRank": 239,
         "vorpRank": 140,
         "riskAdjustedRank": 140,
         "riskAdjustedValue": -44.963143083025244
@@ -14117,7 +14256,8 @@
       "context": {
         "targets": 54.73254333836731,
         "carries": 4.77860602086978,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 140.0
       }
     },
     {
@@ -14214,7 +14354,8 @@
       "context": {
         "targets": 52.393433485862104,
         "carries": 0.04481250339095661,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 141.0
       }
     },
     {
@@ -14311,7 +14452,8 @@
       "context": {
         "targets": 53.03930252956537,
         "carries": 2.3,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 142.0
       }
     },
     {
@@ -14363,7 +14505,7 @@
         "pointsRank": 45,
         "pointsPerGameRank": 49,
         "vorpRank": 143,
-        "riskAdjustedRank": 146,
+        "riskAdjustedRank": 147,
         "riskAdjustedValue": -49.46359968350507
       },
       "range": {
@@ -14409,7 +14551,8 @@
       "context": {
         "targets": null,
         "carries": 18.26423792555117,
-        "pass_attempts": 400.8503403876957
+        "pass_attempts": 400.8503403876957,
+        "modelOverallRank": 143.0
       }
     },
     {
@@ -14506,7 +14649,8 @@
       "context": {
         "targets": 52.9,
         "carries": 0.5208252596416212,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 144.0
       }
     },
     {
@@ -14556,7 +14700,7 @@
         "positionRank": 62,
         "tier": 10,
         "pointsRank": 154,
-        "pointsPerGameRank": 250,
+        "pointsPerGameRank": 251,
         "vorpRank": 145,
         "riskAdjustedRank": 145,
         "riskAdjustedValue": -47.24647468855089
@@ -14613,7 +14757,8 @@
       "context": {
         "targets": 61.74397154313075,
         "carries": 9.830934737049091,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 145.0
       }
     },
     {
@@ -14662,7 +14807,7 @@
         "overallRank": 146,
         "positionRank": 42,
         "tier": 10,
-        "pointsRank": 178,
+        "pointsRank": 179,
         "pointsPerGameRank": 215,
         "vorpRank": 146,
         "riskAdjustedRank": 143,
@@ -14720,7 +14865,107 @@
       "context": {
         "targets": 20.788523506253256,
         "carries": 83.29126360305497,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 146.0
+      }
+    },
+    {
+      "playerId": "00-0031588",
+      "slug": "stefon-diggs",
+      "name": "Stefon Diggs",
+      "shortName": "S. Diggs",
+      "team": "FA",
+      "position": "WR",
+      "age": 32.75564681724846,
+      "experience": 11,
+      "rookie": false,
+      "headshotUrl": null,
+      "draft": {
+        "year": null,
+        "round": null,
+        "pick": null,
+        "team": null,
+        "undrafted": false
+      },
+      "projectionSeason": 2026,
+      "sourceSeason": 2025,
+      "modelVersion": "2026.2.0",
+      "modelArchitecture": "direct",
+      "rookieMode": "not_applicable",
+      "projectedStats": {
+        "games": 12.582022046558569,
+        "passAttempts": null,
+        "completions": null,
+        "passingYards": null,
+        "passingTouchdowns": null,
+        "interceptions": null,
+        "carries": 0.0,
+        "rushingYards": -2.71246997240238,
+        "rushingTouchdowns": 0.0540291526711906,
+        "targets": 61.71500554814596,
+        "receptions": 41.01475512727503,
+        "receivingYards": 384.9734668163016,
+        "receivingTouchdowns": 2.4614162034068485,
+        "fumblesLost": 0.0
+      },
+      "fantasy": {
+        "defaultPprPoints": 94.33352694813318,
+        "pointsPerGame": 7.497485427943219,
+        "replacementValue": -44.945374079424354,
+        "overallRank": 147,
+        "positionRank": 63,
+        "tier": 10,
+        "pointsRank": 156,
+        "pointsPerGameRank": 216,
+        "vorpRank": 147,
+        "riskAdjustedRank": 146,
+        "riskAdjustedValue": -47.91688017829055
+      },
+      "range": {
+        "lowPprPoints": 77.35349209746921,
+        "medianPprPoints": 94.33352694813318,
+        "highPprPoints": 111.31356179879715,
+        "lowQuantile": 0.2,
+        "highQuantile": 0.8
+      },
+      "confidence": {
+        "score": 0.38000000000000006,
+        "label": "low",
+        "reasons": [
+          "Model + context blend",
+          "2026 offseason context (unsigned)"
+        ]
+      },
+      "explanation": {
+        "positiveFactors": [
+          {
+            "feature": "targets",
+            "label": "Targets",
+            "value": 61.71500554814596,
+            "displayValue": "61.72",
+            "percentile": null,
+            "contribution": 61.71500554814596,
+            "direction": "positive",
+            "description": "Targets contributed to the projection (upside signal)."
+          }
+        ],
+        "negativeFactors": [],
+        "summary": "Associated with Targets. Caution associated with role or supporting-cast uncertainty.",
+        "optimisticNote": "Why the model is optimistic: Targets.",
+        "cautiousNote": "Why the model is cautious: role or supporting-cast uncertainty.",
+        "method": "unavailable",
+        "comparableSeasons": []
+      },
+      "history": [],
+      "warnings": [],
+      "isAdjusted": false,
+      "adjustments": [],
+      "modelProjectedStats": null,
+      "context": {
+        "targets": 61.71500554814596,
+        "carries": 0.0,
+        "pass_attempts": null,
+        "modelOverallRank": 147.0
       }
     },
     {
@@ -14766,13 +15011,13 @@
         "defaultPprPoints": 93.56603773584905,
         "pointsPerGame": 7.834123222748815,
         "replacementValue": -45.71286329170849,
-        "overallRank": 147,
-        "positionRank": 63,
+        "overallRank": 148,
+        "positionRank": 64,
         "tier": 10,
-        "pointsRank": 156,
+        "pointsRank": 157,
         "pointsPerGameRank": 190,
-        "vorpRank": 147,
-        "riskAdjustedRank": 149,
+        "vorpRank": 148,
+        "riskAdjustedRank": 150,
         "riskAdjustedValue": -50.29759914076509
       },
       "range": {
@@ -14823,7 +15068,8 @@
       "modelProjectedStats": null,
       "context": {
         "draft_pick": 94.0,
-        "draft_round": 3.0
+        "draft_round": 3.0,
+        "modelOverallRank": 148.0
       }
     },
     {
@@ -14869,13 +15115,13 @@
         "defaultPprPoints": 93.56603773584905,
         "pointsPerGame": 7.834123222748815,
         "replacementValue": -45.71286329170849,
-        "overallRank": 148,
-        "positionRank": 64,
+        "overallRank": 149,
+        "positionRank": 65,
         "tier": 10,
-        "pointsRank": 157,
+        "pointsRank": 158,
         "pointsPerGameRank": 191,
-        "vorpRank": 148,
-        "riskAdjustedRank": 150,
+        "vorpRank": 149,
+        "riskAdjustedRank": 151,
         "riskAdjustedValue": -50.29759914076509
       },
       "range": {
@@ -14926,7 +15172,8 @@
       "modelProjectedStats": null,
       "context": {
         "draft_pick": 79.0,
-        "draft_round": 3.0
+        "draft_round": 3.0,
+        "modelOverallRank": 149.0
       }
     },
     {
@@ -14972,13 +15219,13 @@
         "defaultPprPoints": 93.56603773584905,
         "pointsPerGame": 7.834123222748815,
         "replacementValue": -45.71286329170849,
-        "overallRank": 149,
-        "positionRank": 65,
+        "overallRank": 150,
+        "positionRank": 66,
         "tier": 10,
-        "pointsRank": 158,
+        "pointsRank": 159,
         "pointsPerGameRank": 192,
-        "vorpRank": 149,
-        "riskAdjustedRank": 151,
+        "vorpRank": 150,
+        "riskAdjustedRank": 152,
         "riskAdjustedValue": -50.29759914076509
       },
       "range": {
@@ -15029,7 +15276,8 @@
       "modelProjectedStats": null,
       "context": {
         "draft_pick": 83.0,
-        "draft_round": 3.0
+        "draft_round": 3.0,
+        "modelOverallRank": 150.0
       }
     },
     {
@@ -15075,13 +15323,13 @@
         "defaultPprPoints": 93.56603773584905,
         "pointsPerGame": 7.834123222748815,
         "replacementValue": -45.71286329170849,
-        "overallRank": 150,
-        "positionRank": 66,
+        "overallRank": 151,
+        "positionRank": 67,
         "tier": 10,
-        "pointsRank": 159,
+        "pointsRank": 160,
         "pointsPerGameRank": 193,
-        "vorpRank": 150,
-        "riskAdjustedRank": 152,
+        "vorpRank": 151,
+        "riskAdjustedRank": 153,
         "riskAdjustedValue": -50.29759914076509
       },
       "range": {
@@ -15132,7 +15380,8 @@
       "modelProjectedStats": null,
       "context": {
         "draft_pick": 75.0,
-        "draft_round": 3.0
+        "draft_round": 3.0,
+        "modelOverallRank": 151.0
       }
     },
     {
@@ -15178,13 +15427,13 @@
         "defaultPprPoints": 93.56603773584905,
         "pointsPerGame": 7.834123222748815,
         "replacementValue": -45.71286329170849,
-        "overallRank": 151,
-        "positionRank": 67,
+        "overallRank": 152,
+        "positionRank": 68,
         "tier": 10,
-        "pointsRank": 160,
+        "pointsRank": 161,
         "pointsPerGameRank": 194,
-        "vorpRank": 151,
-        "riskAdjustedRank": 153,
+        "vorpRank": 152,
+        "riskAdjustedRank": 154,
         "riskAdjustedValue": -50.29759914076509
       },
       "range": {
@@ -15235,7 +15484,8 @@
       "modelProjectedStats": null,
       "context": {
         "draft_pick": 74.0,
-        "draft_round": 3.0
+        "draft_round": 3.0,
+        "modelOverallRank": 152.0
       }
     },
     {
@@ -15281,13 +15531,13 @@
         "defaultPprPoints": 93.56603773584905,
         "pointsPerGame": 7.834123222748815,
         "replacementValue": -45.71286329170849,
-        "overallRank": 152,
-        "positionRank": 68,
+        "overallRank": 153,
+        "positionRank": 69,
         "tier": 10,
-        "pointsRank": 161,
+        "pointsRank": 162,
         "pointsPerGameRank": 195,
-        "vorpRank": 152,
-        "riskAdjustedRank": 154,
+        "vorpRank": 153,
+        "riskAdjustedRank": 155,
         "riskAdjustedValue": -50.29759914076509
       },
       "range": {
@@ -15338,7 +15588,8 @@
       "modelProjectedStats": null,
       "context": {
         "draft_pick": 84.0,
-        "draft_round": 3.0
+        "draft_round": 3.0,
+        "modelOverallRank": 153.0
       }
     },
     {
@@ -15384,13 +15635,13 @@
         "defaultPprPoints": 93.56603773584905,
         "pointsPerGame": 7.834123222748815,
         "replacementValue": -45.71286329170849,
-        "overallRank": 153,
-        "positionRank": 69,
+        "overallRank": 154,
+        "positionRank": 70,
         "tier": 10,
-        "pointsRank": 162,
+        "pointsRank": 163,
         "pointsPerGameRank": 196,
-        "vorpRank": 153,
-        "riskAdjustedRank": 155,
+        "vorpRank": 154,
+        "riskAdjustedRank": 156,
         "riskAdjustedValue": -50.29759914076509
       },
       "range": {
@@ -15441,7 +15692,8 @@
       "modelProjectedStats": null,
       "context": {
         "draft_pick": 80.0,
-        "draft_round": 3.0
+        "draft_round": 3.0,
+        "modelOverallRank": 154.0
       }
     },
     {
@@ -15487,13 +15739,13 @@
         "defaultPprPoints": 93.56603773584905,
         "pointsPerGame": 7.834123222748815,
         "replacementValue": -45.71286329170849,
-        "overallRank": 154,
-        "positionRank": 70,
+        "overallRank": 155,
+        "positionRank": 71,
         "tier": 10,
-        "pointsRank": 163,
+        "pointsRank": 164,
         "pointsPerGameRank": 197,
-        "vorpRank": 154,
-        "riskAdjustedRank": 156,
+        "vorpRank": 155,
+        "riskAdjustedRank": 157,
         "riskAdjustedValue": -50.29759914076509
       },
       "range": {
@@ -15544,7 +15796,8 @@
       "modelProjectedStats": null,
       "context": {
         "draft_pick": 89.0,
-        "draft_round": 3.0
+        "draft_round": 3.0,
+        "modelOverallRank": 155.0
       }
     },
     {
@@ -15590,13 +15843,13 @@
         "defaultPprPoints": 93.56603773584905,
         "pointsPerGame": 7.834123222748815,
         "replacementValue": -45.71286329170849,
-        "overallRank": 155,
-        "positionRank": 71,
+        "overallRank": 156,
+        "positionRank": 72,
         "tier": 10,
-        "pointsRank": 164,
+        "pointsRank": 165,
         "pointsPerGameRank": 198,
-        "vorpRank": 155,
-        "riskAdjustedRank": 157,
+        "vorpRank": 156,
+        "riskAdjustedRank": 158,
         "riskAdjustedValue": -50.29759914076509
       },
       "range": {
@@ -15647,7 +15900,8 @@
       "modelProjectedStats": null,
       "context": {
         "draft_pick": 71.0,
-        "draft_round": 3.0
+        "draft_round": 3.0,
+        "modelOverallRank": 156.0
       }
     },
     {
@@ -15693,13 +15947,13 @@
         "defaultPprPoints": 178.27,
         "pointsPerGame": 15.846222222222224,
         "replacementValue": -46.25401166843301,
-        "overallRank": 156,
+        "overallRank": 157,
         "positionRank": 18,
         "tier": 10,
         "pointsRank": 48,
         "pointsPerGameRank": 31,
-        "vorpRank": 156,
-        "riskAdjustedRank": 170,
+        "vorpRank": 157,
+        "riskAdjustedRank": 171,
         "riskAdjustedValue": -54.98924166843301
       },
       "range": {
@@ -15750,7 +16004,8 @@
       "modelProjectedStats": null,
       "context": {
         "draft_pick": 13.0,
-        "draft_round": 1.0
+        "draft_round": 1.0,
+        "modelOverallRank": 157.0
       }
     },
     {
@@ -15796,13 +16051,13 @@
         "defaultPprPoints": 83.94044719908241,
         "pointsPerGame": 7.230133707031234,
         "replacementValue": -47.24169773639038,
-        "overallRank": 157,
+        "overallRank": 158,
         "positionRank": 43,
         "tier": 10,
-        "pointsRank": 184,
-        "pointsPerGameRank": 225,
-        "vorpRank": 157,
-        "riskAdjustedRank": 147,
+        "pointsRank": 185,
+        "pointsPerGameRank": 226,
+        "vorpRank": 158,
+        "riskAdjustedRank": 148,
         "riskAdjustedValue": -49.88582182316147
       },
       "range": {
@@ -15857,7 +16112,8 @@
       "context": {
         "targets": 24.758798766684922,
         "carries": 95.63218932335793,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 158.0
       }
     },
     {
@@ -15903,13 +16159,13 @@
         "defaultPprPoints": 85.58191268661396,
         "pointsPerGame": 7.347029272072465,
         "replacementValue": -47.52361327370552,
-        "overallRank": 158,
+        "overallRank": 159,
         "positionRank": 26,
         "tier": 10,
-        "pointsRank": 179,
-        "pointsPerGameRank": 221,
-        "vorpRank": 158,
-        "riskAdjustedRank": 148,
+        "pointsRank": 180,
+        "pointsPerGameRank": 222,
+        "vorpRank": 159,
+        "riskAdjustedRank": 149,
         "riskAdjustedValue": -50.21944352333386
       },
       "range": {
@@ -15954,7 +16210,8 @@
       "context": {
         "targets": 50.599999999999994,
         "carries": 0.729560164458763,
-        "pass_attempts": null
+        "pass_attempts": null,
+        "modelOverallRank": 159.0
       }
     },
     {
@@ -16000,13 +16257,13 @@
         "defaultPprPoints": 85.17307692307692,
         "pointsPerGame": 7.689236111111111,
         "replacementValue": -47.93244903724256,
-        "overallRank": 159,
+        "overallRank": 160,
         "positionRank": 27,
         "tier": 10,
-        "pointsRank": 180,
+        "pointsRank": 181,
         "pointsPerGameRank": 206,
-        "vorpRank": 159,
-        "riskAdjustedRank": 159,
+        "vorpRank": 160,
+        "riskAdjustedRank": 160,
         "riskAdjustedValue": -52.105929806473334
       },
       "range": {
@@ -16057,65 +16314,398 @@
       "modelProjectedStats": null,
       "context": {
         "draft_pick": 56.0,
-        "draft_round": 2.0
+        "draft_round": 2.0,
+        "modelOverallRank": 160.0
       }
     },
     {
-      "playerId": "KLA269938",
-      "slug": "max-klare",
-      "name": "Max Klare",
-      "shortName": "M. Klare",
-      "team": "LAR",
-      "position": "TE",
-      "age": 23.0,
-      "experience": 0,
-      "rookie": true,
+      "playerId": "00-0033280",
+      "slug": "christian-mccaffrey",
+      "name": "Christian McCaffrey",
+      "shortName": "C. McCaffrey",
+      "team": "SF",
+      "position": "RB",
+      "age": 30.234086242299796,
+      "experience": 9,
+      "rookie": false,
       "headshotUrl": null,
       "draft": {
-        "year": 2026,
-        "round": 2,
-        "pick": 61,
-        "team": "LAR",
+        "year": null,
+        "round": null,
+        "pick": null,
+        "team": null,
         "undrafted": false
       },
       "projectionSeason": 2026,
       "sourceSeason": 2025,
       "modelVersion": "2026.2.0",
-      "modelArchitecture": "rookie",
-      "rookieMode": "full",
+      "modelArchitecture": "direct",
+      "rookieMode": "not_applicable",
       "projectedStats": {
-        "games": 11.076923076923077,
+        "games": 9.474530690084903,
         "passAttempts": null,
         "completions": null,
         "passingYards": null,
         "passingTouchdowns": null,
         "interceptions": null,
-        "carries": 0.11538461538461539,
-        "rushingYards": 0.6153846153846154,
-        "rushingTouchdowns": 0.1,
-        "targets": 47.9025,
-        "receptions": 33.23076923076923,
-        "receivingYards": 366.65384615384613,
-        "receivingTouchdowns": 2.5384615384615383,
-        "fumblesLost": 0.3076923076923077
+        "carries": 71.44060181970258,
+        "rushingYards": 240.85853011173086,
+        "rushingTouchdowns": 2.5355740423170956,
+        "targets": 27.472171654655686,
+        "receptions": 19.56278258139293,
+        "receivingYards": 189.8172177414944,
+        "receivingTouchdowns": 1.1173271193791492,
+        "fumblesLost": 1.0924842521222617
       },
       "fantasy": {
-        "defaultPprPoints": 85.17307692307692,
-        "pointsPerGame": 7.689236111111111,
-        "replacementValue": -47.93244903724256,
-        "overallRank": 160,
-        "positionRank": 28,
+        "defaultPprPoints": 82.3627958326484,
+        "pointsPerGame": 8.693073939677147,
+        "replacementValue": -48.81934910282439,
+        "overallRank": 161,
+        "positionRank": 44,
         "tier": 10,
-        "pointsRank": 181,
-        "pointsPerGameRank": 207,
-        "vorpRank": 160,
-        "riskAdjustedRank": 160,
-        "riskAdjustedValue": -52.105929806473334
+        "pointsRank": 188,
+        "pointsPerGameRank": 165,
+        "vorpRank": 164,
+        "riskAdjustedRank": 159,
+        "riskAdjustedValue": -51.413777171552816
       },
       "range": {
-        "lowPprPoints": 61.32461538461538,
-        "medianPprPoints": 85.17307692307692,
-        "highPprPoints": 109.02153846153846,
+        "lowPprPoints": 67.53749258277169,
+        "medianPprPoints": 82.3627958326484,
+        "highPprPoints": 97.18809908252511,
+        "lowQuantile": 0.2,
+        "highQuantile": 0.8
+      },
+      "confidence": {
+        "score": 0.62,
+        "label": "medium",
+        "reasons": [
+          "Model + context blend"
+        ]
+      },
+      "explanation": {
+        "positiveFactors": [
+          {
+            "feature": "carries",
+            "label": "Carries",
+            "value": 71.44060181970258,
+            "displayValue": "71.44",
+            "percentile": null,
+            "contribution": 71.44060181970258,
+            "direction": "positive",
+            "description": "Carries contributed to the projection (upside signal)."
+          },
+          {
+            "feature": "targets",
+            "label": "Targets",
+            "value": 27.472171654655686,
+            "displayValue": "27.47",
+            "percentile": null,
+            "contribution": 27.472171654655686,
+            "direction": "positive",
+            "description": "Targets contributed to the projection (upside signal)."
+          }
+        ],
+        "negativeFactors": [],
+        "summary": "Associated with Carries, Targets. Caution associated with role or supporting-cast uncertainty.",
+        "optimisticNote": "Why the model is optimistic: Carries, Targets.",
+        "cautiousNote": "Why the model is cautious: role or supporting-cast uncertainty.",
+        "method": "unavailable",
+        "comparableSeasons": []
+      },
+      "history": [],
+      "warnings": [
+        {
+          "code": "ranking_coverage_inclusion",
+          "severity": "warning",
+          "message": "Published outside the model top-160 for coverage. Full-pool model rank: 164. FantasyPros PPR top-135 coverage audit Reference PPR rank: 7."
+        }
+      ],
+      "isAdjusted": false,
+      "adjustments": [],
+      "modelProjectedStats": null,
+      "context": {
+        "targets": 27.472171654655686,
+        "carries": 71.44060181970258,
+        "pass_attempts": null,
+        "modelOverallRank": 164.0
+      }
+    },
+    {
+      "playerId": "00-0036971",
+      "slug": "trevor-lawrence",
+      "name": "Trevor Lawrence",
+      "shortName": "T. Lawrence",
+      "team": "JAX",
+      "position": "QB",
+      "age": 26.90485968514716,
+      "experience": 5,
+      "rookie": false,
+      "headshotUrl": null,
+      "draft": {
+        "year": null,
+        "round": null,
+        "pick": null,
+        "team": null,
+        "undrafted": false
+      },
+      "projectionSeason": 2026,
+      "sourceSeason": 2025,
+      "modelVersion": "2026.2.0",
+      "modelArchitecture": "direct",
+      "rookieMode": "not_applicable",
+      "projectedStats": {
+        "games": 13.136401530415768,
+        "passAttempts": 377.45885539461676,
+        "completions": 260.26940903458825,
+        "passingYards": 2833.591813578603,
+        "passingTouchdowns": 17.118850288482623,
+        "interceptions": 8.800925089622682,
+        "carries": 42.42657710603611,
+        "rushingYards": 126.17843694811232,
+        "rushingTouchdowns": 0.804442636416849,
+        "targets": null,
+        "receptions": null,
+        "receivingYards": null,
+        "receivingTouchdowns": null,
+        "fumblesLost": 3.302991741941405
+      },
+      "fantasy": {
+        "defaultPprPoints": 175.05573954725875,
+        "pointsPerGame": 13.326004015783022,
+        "replacementValue": -49.468272121174266,
+        "overallRank": 162,
+        "positionRank": 19,
+        "tier": 10,
+        "pointsRank": 51,
+        "pointsPerGameRank": 58,
+        "vorpRank": 167,
+        "riskAdjustedRank": 170,
+        "riskAdjustedValue": -54.982527916912915
+      },
+      "range": {
+        "lowPprPoints": 143.5457064287522,
+        "medianPprPoints": 175.05573954725875,
+        "highPprPoints": 206.5657726657653,
+        "lowQuantile": 0.2,
+        "highQuantile": 0.8
+      },
+      "confidence": {
+        "score": 0.62,
+        "label": "medium",
+        "reasons": [
+          "Model + context blend"
+        ]
+      },
+      "explanation": {
+        "positiveFactors": [
+          {
+            "feature": "pass_attempts",
+            "label": "Pass attempts",
+            "value": 377.45885539461676,
+            "displayValue": "377.46",
+            "percentile": null,
+            "contribution": 377.45885539461676,
+            "direction": "positive",
+            "description": "Pass attempts contributed to the projection (upside signal)."
+          }
+        ],
+        "negativeFactors": [],
+        "summary": "Associated with Pass attempts. Caution associated with role or supporting-cast uncertainty.",
+        "optimisticNote": "Why the model is optimistic: Pass attempts.",
+        "cautiousNote": "Why the model is cautious: role or supporting-cast uncertainty.",
+        "method": "unavailable",
+        "comparableSeasons": []
+      },
+      "history": [],
+      "warnings": [
+        {
+          "code": "ranking_coverage_inclusion",
+          "severity": "warning",
+          "message": "Published outside the model top-160 for coverage. Full-pool model rank: 167. FantasyPros PPR top-135 coverage audit Reference PPR rank: 73."
+        }
+      ],
+      "isAdjusted": false,
+      "adjustments": [],
+      "modelProjectedStats": null,
+      "context": {
+        "targets": null,
+        "carries": 42.42657710603611,
+        "pass_attempts": 377.45885539461676,
+        "modelOverallRank": 167.0
+      }
+    },
+    {
+      "playerId": "00-0040667",
+      "slug": "matthew-golden",
+      "name": "Matthew Golden",
+      "shortName": "M. Golden",
+      "team": "GB",
+      "position": "WR",
+      "age": 23.085557837097877,
+      "experience": 1,
+      "rookie": false,
+      "headshotUrl": null,
+      "draft": {
+        "year": null,
+        "round": null,
+        "pick": null,
+        "team": null,
+        "undrafted": false
+      },
+      "projectionSeason": 2026,
+      "sourceSeason": 2025,
+      "modelVersion": "2026.2.0",
+      "modelArchitecture": "direct",
+      "rookieMode": "not_applicable",
+      "projectedStats": {
+        "games": 11.934438714096599,
+        "passAttempts": null,
+        "completions": null,
+        "passingYards": null,
+        "passingTouchdowns": null,
+        "interceptions": null,
+        "carries": 6.865008046094162,
+        "rushingYards": 33.96712965930517,
+        "rushingTouchdowns": 0.2288403506600739,
+        "targets": 50.11878842750266,
+        "receptions": 24.439321537758484,
+        "receivingYards": 409.8515060128506,
+        "receivingTouchdowns": 2.9573325988506154,
+        "fumblesLost": 0.053828302268859374
+      },
+      "fantasy": {
+        "defaultPprPoints": 87.83056619750047,
+        "pointsPerGame": 7.359421611823073,
+        "replacementValue": -51.448334830057064,
+        "overallRank": 163,
+        "positionRank": 73,
+        "tier": 10,
+        "pointsRank": 177,
+        "pointsPerGameRank": 221,
+        "vorpRank": 170,
+        "riskAdjustedRank": 168,
+        "riskAdjustedValue": -54.21499766527833
+      },
+      "range": {
+        "lowPprPoints": 72.02106428195039,
+        "medianPprPoints": 87.83056619750047,
+        "highPprPoints": 103.64006811305056,
+        "lowQuantile": 0.2,
+        "highQuantile": 0.8
+      },
+      "confidence": {
+        "score": 0.62,
+        "label": "medium",
+        "reasons": [
+          "Model + context blend"
+        ]
+      },
+      "explanation": {
+        "positiveFactors": [
+          {
+            "feature": "targets",
+            "label": "Targets",
+            "value": 50.11878842750266,
+            "displayValue": "50.12",
+            "percentile": null,
+            "contribution": 50.11878842750266,
+            "direction": "positive",
+            "description": "Targets contributed to the projection (upside signal)."
+          },
+          {
+            "feature": "carries",
+            "label": "Carries",
+            "value": 6.865008046094162,
+            "displayValue": "6.87",
+            "percentile": null,
+            "contribution": 6.865008046094162,
+            "direction": "positive",
+            "description": "Carries contributed to the projection (upside signal)."
+          }
+        ],
+        "negativeFactors": [],
+        "summary": "Associated with Targets, Carries. Caution associated with role or supporting-cast uncertainty.",
+        "optimisticNote": "Why the model is optimistic: Targets, Carries.",
+        "cautiousNote": "Why the model is cautious: role or supporting-cast uncertainty.",
+        "method": "unavailable",
+        "comparableSeasons": []
+      },
+      "history": [],
+      "warnings": [
+        {
+          "code": "ranking_coverage_inclusion",
+          "severity": "warning",
+          "message": "Published outside the model top-160 for coverage. Full-pool model rank: 170. FantasyPros PPR top-135 coverage audit Reference PPR rank: 132."
+        }
+      ],
+      "isAdjusted": false,
+      "adjustments": [],
+      "modelProjectedStats": null,
+      "context": {
+        "targets": 50.11878842750266,
+        "carries": 6.865008046094162,
+        "pass_attempts": null,
+        "modelOverallRank": 170.0
+      }
+    },
+    {
+      "playerId": "00-0035685",
+      "slug": "david-montgomery",
+      "name": "David Montgomery",
+      "shortName": "D. Montgomery",
+      "team": "HOU",
+      "position": "RB",
+      "age": 29.234770704996578,
+      "experience": 7,
+      "rookie": false,
+      "headshotUrl": null,
+      "draft": {
+        "year": null,
+        "round": null,
+        "pick": null,
+        "team": null,
+        "undrafted": false
+      },
+      "projectionSeason": 2026,
+      "sourceSeason": 2025,
+      "modelVersion": "2026.2.0",
+      "modelArchitecture": "direct",
+      "rookieMode": "not_applicable",
+      "projectedStats": {
+        "games": 11.13641356124167,
+        "passAttempts": null,
+        "completions": null,
+        "passingYards": null,
+        "passingTouchdowns": null,
+        "interceptions": null,
+        "carries": 93.33725244153662,
+        "rushingYards": 390.54773891994313,
+        "rushingTouchdowns": 3.5869183587427718,
+        "targets": 8.833556209684598,
+        "receptions": 7.543046668284976,
+        "receivingYards": 42.81267168904904,
+        "receivingTouchdowns": 0.9895155831562102,
+        "fumblesLost": 0.5800555996453473
+      },
+      "fantasy": {
+        "defaultPprPoints": 77.1775801812874,
+        "pointsPerGame": 6.930200621310473,
+        "replacementValue": -54.004564754185395,
+        "overallRank": 164,
+        "positionRank": 45,
+        "tier": 10,
+        "pointsRank": 195,
+        "pointsPerGameRank": 238,
+        "vorpRank": 174,
+        "riskAdjustedRank": 174,
+        "riskAdjustedValue": -56.435658529895946
+      },
+      "range": {
+        "lowPprPoints": 63.28561574865567,
+        "medianPprPoints": 77.1775801812874,
+        "highPprPoints": 91.06954461391912,
         "lowQuantile": 0.2,
         "highQuantile": 0.8
       },
@@ -16123,44 +16713,1909 @@
         "score": 0.5,
         "label": "medium",
         "reasons": [
-          "Rookie season \u2014 historical year-1 draft curves + landing-spot volume.",
-          "CollegeFootballData final-season production available."
+          "Model + context blend",
+          "2026 offseason context (trade)"
         ]
       },
       "explanation": {
-        "positiveFactors": [],
-        "negativeFactors": [
+        "positiveFactors": [
           {
-            "feature": "draft_pick",
-            "label": "Draft capital",
-            "value": 61.0,
-            "displayValue": "61.00",
+            "feature": "carries",
+            "label": "Carries",
+            "value": 93.33725244153662,
+            "displayValue": "93.34",
             "percentile": null,
-            "contribution": -61.0,
-            "direction": "negative",
-            "description": "Draft capital contributed to the projection (downside signal)."
+            "contribution": 93.33725244153662,
+            "direction": "positive",
+            "description": "Carries contributed to the projection (upside signal)."
           }
         ],
-        "summary": "Associated with stable recent usage. Caution associated with Draft capital.",
-        "optimisticNote": "Why the model is optimistic: stable recent usage.",
-        "cautiousNote": "Why the model is cautious: Draft capital.",
+        "negativeFactors": [],
+        "summary": "Associated with Carries. Caution associated with role or supporting-cast uncertainty.",
+        "optimisticNote": "Why the model is optimistic: Carries.",
+        "cautiousNote": "Why the model is cautious: role or supporting-cast uncertainty.",
         "method": "unavailable",
         "comparableSeasons": []
       },
       "history": [],
       "warnings": [
         {
-          "code": "rookie_prior",
-          "severity": "info",
-          "message": "Rookie projection uses historical year-1 draft curves blended with CFBD college production."
+          "code": "ranking_coverage_inclusion",
+          "severity": "warning",
+          "message": "Published outside the model top-160 for coverage. Full-pool model rank: 174. FantasyPros PPR top-135 coverage audit Reference PPR rank: 63."
         }
       ],
       "isAdjusted": false,
       "adjustments": [],
       "modelProjectedStats": null,
       "context": {
-        "draft_pick": 61.0,
-        "draft_round": 2.0
+        "targets": 8.833556209684598,
+        "carries": 93.33725244153662,
+        "pass_attempts": null,
+        "modelOverallRank": 174.0
+      }
+    },
+    {
+      "playerId": "00-0040719",
+      "slug": "bhayshul-tuten",
+      "name": "Bhayshul Tuten",
+      "shortName": "B. Tuten",
+      "team": "JAX",
+      "position": "RB",
+      "age": 24.54483230663929,
+      "experience": 1,
+      "rookie": false,
+      "headshotUrl": null,
+      "draft": {
+        "year": null,
+        "round": null,
+        "pick": null,
+        "team": null,
+        "undrafted": false
+      },
+      "projectionSeason": 2026,
+      "sourceSeason": 2025,
+      "modelVersion": "2026.2.0",
+      "modelArchitecture": "direct",
+      "rookieMode": "not_applicable",
+      "projectedStats": {
+        "games": 11.712311738791668,
+        "passAttempts": null,
+        "completions": null,
+        "passingYards": null,
+        "passingTouchdowns": null,
+        "interceptions": null,
+        "carries": 91.00913700366371,
+        "rushingYards": 353.04999999999995,
+        "rushingTouchdowns": 2.9339717455154934,
+        "targets": 16.099999999999998,
+        "receptions": 11.5,
+        "receivingYards": 90.85,
+        "receivingTouchdowns": 0.6950413938844924,
+        "fumblesLost": 0.3507345724539317
+      },
+      "fantasy": {
+        "defaultPprPoints": 76.96260969149205,
+        "pointsPerGame": 6.571086170511382,
+        "replacementValue": -54.219535243980744,
+        "overallRank": 165,
+        "positionRank": 46,
+        "tier": 10,
+        "pointsRank": 196,
+        "pointsPerGameRank": 250,
+        "vorpRank": 175,
+        "riskAdjustedRank": 175,
+        "riskAdjustedValue": -56.64385744926274
+      },
+      "range": {
+        "lowPprPoints": 63.109339947023486,
+        "medianPprPoints": 76.96260969149205,
+        "highPprPoints": 90.81587943596061,
+        "lowQuantile": 0.2,
+        "highQuantile": 0.8
+      },
+      "confidence": {
+        "score": 0.62,
+        "label": "medium",
+        "reasons": [
+          "Model + context blend"
+        ]
+      },
+      "explanation": {
+        "positiveFactors": [
+          {
+            "feature": "carries",
+            "label": "Carries",
+            "value": 91.00913700366371,
+            "displayValue": "91.01",
+            "percentile": null,
+            "contribution": 91.00913700366371,
+            "direction": "positive",
+            "description": "Carries contributed to the projection (upside signal)."
+          },
+          {
+            "feature": "targets",
+            "label": "Targets",
+            "value": 16.099999999999998,
+            "displayValue": "16.10",
+            "percentile": null,
+            "contribution": 16.099999999999998,
+            "direction": "positive",
+            "description": "Targets contributed to the projection (upside signal)."
+          }
+        ],
+        "negativeFactors": [],
+        "summary": "Associated with Carries, Targets. Caution associated with role or supporting-cast uncertainty.",
+        "optimisticNote": "Why the model is optimistic: Carries, Targets.",
+        "cautiousNote": "Why the model is cautious: role or supporting-cast uncertainty.",
+        "method": "unavailable",
+        "comparableSeasons": []
+      },
+      "history": [],
+      "warnings": [
+        {
+          "code": "ranking_coverage_inclusion",
+          "severity": "warning",
+          "message": "Published outside the model top-160 for coverage. Full-pool model rank: 175. FantasyPros PPR top-135 coverage audit Reference PPR rank: 68."
+        }
+      ],
+      "isAdjusted": false,
+      "adjustments": [],
+      "modelProjectedStats": null,
+      "context": {
+        "targets": 16.099999999999998,
+        "carries": 91.00913700366371,
+        "pass_attempts": null,
+        "modelOverallRank": 175.0
+      }
+    },
+    {
+      "playerId": "00-0036264",
+      "slug": "jordan-love",
+      "name": "Jordan Love",
+      "shortName": "J. Love",
+      "team": "GB",
+      "position": "QB",
+      "age": 27.83025325119781,
+      "experience": 6,
+      "rookie": false,
+      "headshotUrl": null,
+      "draft": {
+        "year": null,
+        "round": null,
+        "pick": null,
+        "team": null,
+        "undrafted": false
+      },
+      "projectionSeason": 2026,
+      "sourceSeason": 2025,
+      "modelVersion": "2026.2.0",
+      "modelArchitecture": "direct",
+      "rookieMode": "not_applicable",
+      "projectedStats": {
+        "games": 12.27132934078338,
+        "passAttempts": 358.1244885114027,
+        "completions": 256.77462608198726,
+        "passingYards": 2358.0484817337124,
+        "passingTouchdowns": 16.60442202432895,
+        "interceptions": 6.8999999999999995,
+        "carries": 39.207104403054025,
+        "rushingYards": 184.63234060484237,
+        "rushingTouchdowns": 1.284181854461396,
+        "targets": null,
+        "receptions": null,
+        "receivingYards": null,
+        "receivingTouchdowns": null,
+        "fumblesLost": 2.3
+      },
+      "fantasy": {
+        "defaultPprPoints": 168.5079525539169,
+        "pointsPerGame": 13.731841748708185,
+        "replacementValue": -56.01605911451611,
+        "overallRank": 166,
+        "positionRank": 20,
+        "tier": 10,
+        "pointsRank": 57,
+        "pointsPerGameRank": 47,
+        "vorpRank": 179,
+        "riskAdjustedRank": 187,
+        "riskAdjustedValue": -61.324059619964494
+      },
+      "range": {
+        "lowPprPoints": 138.17652109421186,
+        "medianPprPoints": 168.5079525539169,
+        "highPprPoints": 198.83938401362195,
+        "lowQuantile": 0.2,
+        "highQuantile": 0.8
+      },
+      "confidence": {
+        "score": 0.62,
+        "label": "medium",
+        "reasons": [
+          "Model + context blend"
+        ]
+      },
+      "explanation": {
+        "positiveFactors": [
+          {
+            "feature": "pass_attempts",
+            "label": "Pass attempts",
+            "value": 358.1244885114027,
+            "displayValue": "358.12",
+            "percentile": null,
+            "contribution": 358.1244885114027,
+            "direction": "positive",
+            "description": "Pass attempts contributed to the projection (upside signal)."
+          }
+        ],
+        "negativeFactors": [],
+        "summary": "Associated with Pass attempts. Caution associated with role or supporting-cast uncertainty.",
+        "optimisticNote": "Why the model is optimistic: Pass attempts.",
+        "cautiousNote": "Why the model is cautious: role or supporting-cast uncertainty.",
+        "method": "unavailable",
+        "comparableSeasons": []
+      },
+      "history": [],
+      "warnings": [
+        {
+          "code": "ranking_coverage_inclusion",
+          "severity": "warning",
+          "message": "Published outside the model top-160 for coverage. Full-pool model rank: 179. FantasyPros PPR top-135 coverage audit Reference PPR rank: 117."
+        }
+      ],
+      "isAdjusted": false,
+      "adjustments": [],
+      "modelProjectedStats": null,
+      "context": {
+        "targets": null,
+        "carries": 39.207104403054025,
+        "pass_attempts": 358.1244885114027,
+        "modelOverallRank": 179.0
+      }
+    },
+    {
+      "playerId": "00-0036442",
+      "slug": "joe-burrow",
+      "name": "Joe Burrow",
+      "shortName": "J. Burrow",
+      "team": "CIN",
+      "position": "QB",
+      "age": 29.724845995893222,
+      "experience": 6,
+      "rookie": false,
+      "headshotUrl": null,
+      "draft": {
+        "year": null,
+        "round": null,
+        "pick": null,
+        "team": null,
+        "undrafted": false
+      },
+      "projectionSeason": 2026,
+      "sourceSeason": 2025,
+      "modelVersion": "2026.2.0",
+      "modelArchitecture": "direct",
+      "rookieMode": "not_applicable",
+      "projectedStats": {
+        "games": 17.0,
+        "passAttempts": 297.84999999999997,
+        "completions": 198.95,
+        "passingYards": 2080.35,
+        "passingTouchdowns": 19.549999999999997,
+        "interceptions": 5.75,
+        "carries": 16.099999999999998,
+        "rushingYards": 47.15,
+        "rushingTouchdowns": 2.4562356883814496,
+        "targets": null,
+        "receptions": null,
+        "receivingYards": null,
+        "receivingTouchdowns": null,
+        "fumblesLost": 3.098525980743189
+      },
+      "fantasy": {
+        "defaultPprPoints": 163.1693621688023,
+        "pointsPerGame": 9.59819777463543,
+        "replacementValue": -61.35464949963071,
+        "overallRank": 167,
+        "positionRank": 21,
+        "tier": 10,
+        "pointsRank": 59,
+        "pointsPerGameRank": 137,
+        "vorpRank": 189,
+        "riskAdjustedRank": 192,
+        "riskAdjustedValue": -66.49448440794798
+      },
+      "range": {
+        "lowPprPoints": 133.7988769784179,
+        "medianPprPoints": 163.1693621688023,
+        "highPprPoints": 192.53984735918672,
+        "lowQuantile": 0.2,
+        "highQuantile": 0.8
+      },
+      "confidence": {
+        "score": 0.62,
+        "label": "medium",
+        "reasons": [
+          "Model + context blend"
+        ]
+      },
+      "explanation": {
+        "positiveFactors": [
+          {
+            "feature": "pass_attempts",
+            "label": "Pass attempts",
+            "value": 297.84999999999997,
+            "displayValue": "297.85",
+            "percentile": null,
+            "contribution": 297.84999999999997,
+            "direction": "positive",
+            "description": "Pass attempts contributed to the projection (upside signal)."
+          }
+        ],
+        "negativeFactors": [],
+        "summary": "Associated with Pass attempts. Caution associated with role or supporting-cast uncertainty.",
+        "optimisticNote": "Why the model is optimistic: Pass attempts.",
+        "cautiousNote": "Why the model is cautious: role or supporting-cast uncertainty.",
+        "method": "unavailable",
+        "comparableSeasons": []
+      },
+      "history": [],
+      "warnings": [
+        {
+          "code": "ranking_coverage_inclusion",
+          "severity": "warning",
+          "message": "Published outside the model top-160 for coverage. Full-pool model rank: 189. FantasyPros PPR top-135 coverage audit Reference PPR rank: 45."
+        }
+      ],
+      "isAdjusted": false,
+      "adjustments": [],
+      "modelProjectedStats": null,
+      "context": {
+        "targets": null,
+        "carries": 16.099999999999998,
+        "pass_attempts": 297.84999999999997,
+        "modelOverallRank": 189.0
+      }
+    },
+    {
+      "playerId": "00-0039491",
+      "slug": "jalen-coker",
+      "name": "Jalen Coker",
+      "shortName": "J. Coker",
+      "team": "CAR",
+      "position": "WR",
+      "age": 24.83778234086242,
+      "experience": 2,
+      "rookie": false,
+      "headshotUrl": null,
+      "draft": {
+        "year": null,
+        "round": null,
+        "pick": null,
+        "team": null,
+        "undrafted": false
+      },
+      "projectionSeason": 2026,
+      "sourceSeason": 2025,
+      "modelVersion": "2026.2.0",
+      "modelArchitecture": "direct",
+      "rookieMode": "not_applicable",
+      "projectedStats": {
+        "games": 10.099776311240662,
+        "passAttempts": null,
+        "completions": null,
+        "passingYards": null,
+        "passingTouchdowns": null,
+        "interceptions": null,
+        "carries": 0.0,
+        "rushingYards": -2.621727298787818,
+        "rushingTouchdowns": 0.02895283107844319,
+        "targets": 49.084501285139154,
+        "receptions": 25.60768428562371,
+        "receivingYards": 376.2843723970305,
+        "receivingTouchdowns": 1.8763479256946016,
+        "fumblesLost": 0.2226515327223299
+      },
+      "fantasy": {
+        "defaultPprPoints": 73.96045027064159,
+        "pointsPerGame": 7.322979043439453,
+        "replacementValue": -65.31845075691595,
+        "overallRank": 168,
+        "positionRank": 74,
+        "tier": 10,
+        "pointsRank": 206,
+        "pointsPerGameRank": 223,
+        "vorpRank": 196,
+        "riskAdjustedRank": 196,
+        "riskAdjustedValue": -67.64820494044116
+      },
+      "range": {
+        "lowPprPoints": 60.647569221926105,
+        "medianPprPoints": 73.96045027064159,
+        "highPprPoints": 87.27333131935707,
+        "lowQuantile": 0.2,
+        "highQuantile": 0.8
+      },
+      "confidence": {
+        "score": 0.58,
+        "label": "medium",
+        "reasons": [
+          "Model + context blend",
+          "2026 offseason context (extended)"
+        ]
+      },
+      "explanation": {
+        "positiveFactors": [
+          {
+            "feature": "targets",
+            "label": "Targets",
+            "value": 49.084501285139154,
+            "displayValue": "49.08",
+            "percentile": null,
+            "contribution": 49.084501285139154,
+            "direction": "positive",
+            "description": "Targets contributed to the projection (upside signal)."
+          }
+        ],
+        "negativeFactors": [],
+        "summary": "Associated with Targets. Caution associated with role or supporting-cast uncertainty.",
+        "optimisticNote": "Why the model is optimistic: Targets.",
+        "cautiousNote": "Why the model is cautious: role or supporting-cast uncertainty.",
+        "method": "unavailable",
+        "comparableSeasons": []
+      },
+      "history": [],
+      "warnings": [
+        {
+          "code": "ranking_coverage_inclusion",
+          "severity": "warning",
+          "message": "Published outside the model top-160 for coverage. Full-pool model rank: 196. FantasyPros PPR top-135 coverage audit Reference PPR rank: 128."
+        }
+      ],
+      "isAdjusted": false,
+      "adjustments": [],
+      "modelProjectedStats": null,
+      "context": {
+        "targets": 49.084501285139154,
+        "carries": 0.0,
+        "pass_attempts": null,
+        "modelOverallRank": 196.0
+      }
+    },
+    {
+      "playerId": "00-0040583",
+      "slug": "woody-marks",
+      "name": "Woody Marks",
+      "shortName": "W. Marks",
+      "team": "HOU",
+      "position": "RB",
+      "age": 25.672826830937712,
+      "experience": 1,
+      "rookie": false,
+      "headshotUrl": null,
+      "draft": {
+        "year": null,
+        "round": null,
+        "pick": null,
+        "team": null,
+        "undrafted": false
+      },
+      "projectionSeason": 2026,
+      "sourceSeason": 2025,
+      "modelVersion": "2026.2.0",
+      "modelArchitecture": "direct",
+      "rookieMode": "not_applicable",
+      "projectedStats": {
+        "games": 11.25101338445623,
+        "passAttempts": null,
+        "completions": null,
+        "passingYards": null,
+        "passingTouchdowns": null,
+        "interceptions": null,
+        "carries": 88.35761024761055,
+        "rushingYards": 373.60259393826937,
+        "rushingTouchdowns": 0.24432727074790023,
+        "targets": 15.839040690013345,
+        "receptions": 11.80774409616615,
+        "receivingYards": 100.67994847713629,
+        "receivingTouchdowns": 0.0,
+        "fumblesLost": 0.679004896981956
+      },
+      "fantasy": {
+        "defaultPprPoints": 59.34395216823021,
+        "pointsPerGame": 5.274542846977365,
+        "replacementValue": -71.83819276724259,
+        "overallRank": 169,
+        "positionRank": 47,
+        "tier": 10,
+        "pointsRank": 238,
+        "pointsPerGameRank": 324,
+        "vorpRank": 206,
+        "riskAdjustedRank": 206,
+        "riskAdjustedValue": -73.70752726054184
+      },
+      "range": {
+        "lowPprPoints": 48.662040777948775,
+        "medianPprPoints": 59.34395216823021,
+        "highPprPoints": 70.02586355851165,
+        "lowQuantile": 0.2,
+        "highQuantile": 0.8
+      },
+      "confidence": {
+        "score": 0.62,
+        "label": "medium",
+        "reasons": [
+          "Model + context blend"
+        ]
+      },
+      "explanation": {
+        "positiveFactors": [
+          {
+            "feature": "carries",
+            "label": "Carries",
+            "value": 88.35761024761055,
+            "displayValue": "88.36",
+            "percentile": null,
+            "contribution": 88.35761024761055,
+            "direction": "positive",
+            "description": "Carries contributed to the projection (upside signal)."
+          },
+          {
+            "feature": "targets",
+            "label": "Targets",
+            "value": 15.839040690013345,
+            "displayValue": "15.84",
+            "percentile": null,
+            "contribution": 15.839040690013345,
+            "direction": "positive",
+            "description": "Targets contributed to the projection (upside signal)."
+          }
+        ],
+        "negativeFactors": [],
+        "summary": "Associated with Carries, Targets. Caution associated with role or supporting-cast uncertainty.",
+        "optimisticNote": "Why the model is optimistic: Carries, Targets.",
+        "cautiousNote": "Why the model is cautious: role or supporting-cast uncertainty.",
+        "method": "unavailable",
+        "comparableSeasons": []
+      },
+      "history": [],
+      "warnings": [
+        {
+          "code": "ranking_coverage_inclusion",
+          "severity": "warning",
+          "message": "Published outside the model top-160 for coverage. Full-pool model rank: 206. FantasyPros PPR top-135 coverage audit Reference PPR rank: 133."
+        }
+      ],
+      "isAdjusted": false,
+      "adjustments": [],
+      "modelProjectedStats": null,
+      "context": {
+        "targets": 15.839040690013345,
+        "carries": 88.35761024761055,
+        "pass_attempts": null,
+        "modelOverallRank": 206.0
+      }
+    },
+    {
+      "playerId": "00-0039337",
+      "slug": "malik-nabers",
+      "name": "Malik Nabers",
+      "shortName": "M. Nabers",
+      "team": "NYG",
+      "position": "WR",
+      "age": 23.096509240246405,
+      "experience": 2,
+      "rookie": false,
+      "headshotUrl": null,
+      "draft": {
+        "year": null,
+        "round": null,
+        "pick": null,
+        "team": null,
+        "undrafted": false
+      },
+      "projectionSeason": 2026,
+      "sourceSeason": 2025,
+      "modelVersion": "2026.2.0",
+      "modelArchitecture": "direct",
+      "rookieMode": "not_applicable",
+      "projectedStats": {
+        "games": 11.728643841534566,
+        "passAttempts": null,
+        "completions": null,
+        "passingYards": null,
+        "passingTouchdowns": null,
+        "interceptions": null,
+        "carries": 3.1937559532490805,
+        "rushingYards": 16.767374412589522,
+        "rushingTouchdowns": 0.07056554883812309,
+        "targets": 40.25,
+        "receptions": 20.7,
+        "receivingYards": 311.65,
+        "receivingTouchdowns": 2.3,
+        "fumblesLost": 0.2059939207236314
+      },
+      "fantasy": {
+        "defaultPprPoints": 67.35314289284042,
+        "pointsPerGame": 5.742619846151624,
+        "replacementValue": -71.92575813471711,
+        "overallRank": 170,
+        "positionRank": 75,
+        "tier": 10,
+        "pointsRank": 214,
+        "pointsPerGameRank": 297,
+        "vorpRank": 207,
+        "riskAdjustedRank": 207,
+        "riskAdjustedValue": -74.04738213584159
+      },
+      "range": {
+        "lowPprPoints": 55.229577172129154,
+        "medianPprPoints": 67.35314289284042,
+        "highPprPoints": 79.4767086135517,
+        "lowQuantile": 0.2,
+        "highQuantile": 0.8
+      },
+      "confidence": {
+        "score": 0.62,
+        "label": "medium",
+        "reasons": [
+          "Model + context blend"
+        ]
+      },
+      "explanation": {
+        "positiveFactors": [
+          {
+            "feature": "targets",
+            "label": "Targets",
+            "value": 40.25,
+            "displayValue": "40.25",
+            "percentile": null,
+            "contribution": 40.25,
+            "direction": "positive",
+            "description": "Targets contributed to the projection (upside signal)."
+          }
+        ],
+        "negativeFactors": [],
+        "summary": "Associated with Targets. Caution associated with role or supporting-cast uncertainty.",
+        "optimisticNote": "Why the model is optimistic: Targets.",
+        "cautiousNote": "Why the model is cautious: role or supporting-cast uncertainty.",
+        "method": "unavailable",
+        "comparableSeasons": []
+      },
+      "history": [],
+      "warnings": [
+        {
+          "code": "ranking_coverage_inclusion",
+          "severity": "warning",
+          "message": "Published outside the model top-160 for coverage. Full-pool model rank: 207. FantasyPros PPR top-135 coverage audit Reference PPR rank: 36."
+        }
+      ],
+      "isAdjusted": false,
+      "adjustments": [],
+      "modelProjectedStats": null,
+      "context": {
+        "targets": 40.25,
+        "carries": 3.1937559532490805,
+        "pass_attempts": null,
+        "modelOverallRank": 207.0
+      }
+    },
+    {
+      "playerId": "00-0033921",
+      "slug": "chris-godwin",
+      "name": "Chris Godwin Jr.",
+      "shortName": "C. Godwin Jr.",
+      "team": "TB",
+      "position": "WR",
+      "age": 30.510609171800137,
+      "experience": 9,
+      "rookie": false,
+      "headshotUrl": null,
+      "draft": {
+        "year": null,
+        "round": null,
+        "pick": null,
+        "team": null,
+        "undrafted": false
+      },
+      "projectionSeason": 2026,
+      "sourceSeason": 2025,
+      "modelVersion": "2026.2.0",
+      "modelArchitecture": "direct",
+      "rookieMode": "not_applicable",
+      "projectedStats": {
+        "games": 9.376045298382628,
+        "passAttempts": null,
+        "completions": null,
+        "passingYards": null,
+        "passingTouchdowns": null,
+        "interceptions": null,
+        "carries": 0.8178249071367071,
+        "rushingYards": 3.6123154687736063,
+        "rushingTouchdowns": 0.046287806513095914,
+        "targets": 36.16226588361281,
+        "receptions": 30.683915118906743,
+        "receivingYards": 277.6160504904204,
+        "receivingTouchdowns": 1.30336685800085,
+        "fumblesLost": 0.0563193400429078
+      },
+      "fantasy": {
+        "defaultPprPoints": 66.792041021824,
+        "pointsPerGame": 7.123690094942871,
+        "replacementValue": -72.48686000573353,
+        "overallRank": 171,
+        "positionRank": 76,
+        "tier": 10,
+        "pointsRank": 217,
+        "pointsPerGameRank": 231,
+        "vorpRank": 213,
+        "riskAdjustedRank": 209,
+        "riskAdjustedValue": -74.59080929792098
+      },
+      "range": {
+        "lowPprPoints": 54.769473637895686,
+        "medianPprPoints": 66.792041021824,
+        "highPprPoints": 78.81460840575232,
+        "lowQuantile": 0.2,
+        "highQuantile": 0.8
+      },
+      "confidence": {
+        "score": 0.62,
+        "label": "medium",
+        "reasons": [
+          "Model + context blend"
+        ]
+      },
+      "explanation": {
+        "positiveFactors": [
+          {
+            "feature": "targets",
+            "label": "Targets",
+            "value": 36.16226588361281,
+            "displayValue": "36.16",
+            "percentile": null,
+            "contribution": 36.16226588361281,
+            "direction": "positive",
+            "description": "Targets contributed to the projection (upside signal)."
+          }
+        ],
+        "negativeFactors": [],
+        "summary": "Associated with Targets. Caution associated with role or supporting-cast uncertainty.",
+        "optimisticNote": "Why the model is optimistic: Targets.",
+        "cautiousNote": "Why the model is cautious: role or supporting-cast uncertainty.",
+        "method": "unavailable",
+        "comparableSeasons": []
+      },
+      "history": [],
+      "warnings": [
+        {
+          "code": "ranking_coverage_inclusion",
+          "severity": "warning",
+          "message": "Published outside the model top-160 for coverage. Full-pool model rank: 213. FantasyPros PPR top-135 coverage audit Reference PPR rank: 79."
+        }
+      ],
+      "isAdjusted": false,
+      "adjustments": [],
+      "modelProjectedStats": null,
+      "context": {
+        "targets": 36.16226588361281,
+        "carries": 0.8178249071367071,
+        "pass_attempts": null,
+        "modelOverallRank": 213.0
+      }
+    },
+    {
+      "playerId": "00-0037838",
+      "slug": "isaiah-likely",
+      "name": "Isaiah Likely",
+      "shortName": "I. Likely",
+      "team": "NYG",
+      "position": "TE",
+      "age": 26.3709787816564,
+      "experience": 4,
+      "rookie": false,
+      "headshotUrl": null,
+      "draft": {
+        "year": null,
+        "round": null,
+        "pick": null,
+        "team": null,
+        "undrafted": false
+      },
+      "projectionSeason": 2026,
+      "sourceSeason": 2025,
+      "modelVersion": "2026.2.0",
+      "modelArchitecture": "direct",
+      "rookieMode": "not_applicable",
+      "projectedStats": {
+        "games": 13.817842082935819,
+        "passAttempts": null,
+        "completions": null,
+        "passingYards": null,
+        "passingTouchdowns": null,
+        "interceptions": null,
+        "carries": 0.0,
+        "rushingYards": -0.09804186060363874,
+        "rushingTouchdowns": 0.0,
+        "targets": 32.98602313588397,
+        "receptions": 19.02068183907211,
+        "receivingYards": 293.56894072857875,
+        "receivingTouchdowns": 1.15,
+        "fumblesLost": 0.0
+      },
+      "fantasy": {
+        "defaultPprPoints": 55.26777172586962,
+        "pointsPerGame": 3.99973971291233,
+        "replacementValue": -77.83775423444986,
+        "overallRank": 172,
+        "positionRank": 28,
+        "tier": 10,
+        "pointsRank": 247,
+        "pointsPerGameRank": 448,
+        "vorpRank": 227,
+        "riskAdjustedRank": 227,
+        "riskAdjustedValue": -79.57868904381475
+      },
+      "range": {
+        "lowPprPoints": 45.31957281521309,
+        "medianPprPoints": 55.26777172586962,
+        "highPprPoints": 65.21597063652615,
+        "lowQuantile": 0.2,
+        "highQuantile": 0.8
+      },
+      "confidence": {
+        "score": 0.5,
+        "label": "medium",
+        "reasons": [
+          "Model + context blend",
+          "2026 offseason context (signed)"
+        ]
+      },
+      "explanation": {
+        "positiveFactors": [
+          {
+            "feature": "targets",
+            "label": "Targets",
+            "value": 32.98602313588397,
+            "displayValue": "32.99",
+            "percentile": null,
+            "contribution": 32.98602313588397,
+            "direction": "positive",
+            "description": "Targets contributed to the projection (upside signal)."
+          }
+        ],
+        "negativeFactors": [],
+        "summary": "Associated with Targets. Caution associated with role or supporting-cast uncertainty.",
+        "optimisticNote": "Why the model is optimistic: Targets.",
+        "cautiousNote": "Why the model is cautious: role or supporting-cast uncertainty.",
+        "method": "unavailable",
+        "comparableSeasons": []
+      },
+      "history": [],
+      "warnings": [
+        {
+          "code": "ranking_coverage_inclusion",
+          "severity": "warning",
+          "message": "Published outside the model top-160 for coverage. Full-pool model rank: 227. FantasyPros PPR top-135 coverage audit Reference PPR rank: 118."
+        }
+      ],
+      "isAdjusted": false,
+      "adjustments": [],
+      "modelProjectedStats": null,
+      "context": {
+        "targets": 32.98602313588397,
+        "carries": 0.0,
+        "pass_attempts": null,
+        "modelOverallRank": 227.0
+      }
+    },
+    {
+      "playerId": "00-0040743",
+      "slug": "tyler-shough",
+      "name": "Tyler Shough",
+      "shortName": "T. Shough",
+      "team": "NO",
+      "position": "QB",
+      "age": 26.926762491444215,
+      "experience": 1,
+      "rookie": false,
+      "headshotUrl": null,
+      "draft": {
+        "year": null,
+        "round": null,
+        "pick": null,
+        "team": null,
+        "undrafted": false
+      },
+      "projectionSeason": 2026,
+      "sourceSeason": 2025,
+      "modelVersion": "2026.2.0",
+      "modelArchitecture": "direct",
+      "rookieMode": "not_applicable",
+      "projectedStats": {
+        "games": 11.203134129610682,
+        "passAttempts": 316.63378574573653,
+        "completions": 208.40119571173713,
+        "passingYards": 2325.7384314463125,
+        "passingTouchdowns": 11.5,
+        "interceptions": 4.504139123364122,
+        "carries": 36.189398773648065,
+        "rushingYards": 99.26503348394697,
+        "rushingTouchdowns": 1.3834195207351017,
+        "targets": null,
+        "receptions": null,
+        "receivingYards": null,
+        "receivingTouchdowns": null,
+        "fumblesLost": 1.3721323034251272
+      },
+      "fantasy": {
+        "defaultPprPoints": 145.50401487707927,
+        "pointsPerGame": 12.987795485952613,
+        "replacementValue": -79.01999679135375,
+        "overallRank": 173,
+        "positionRank": 22,
+        "tier": 10,
+        "pointsRank": 80,
+        "pointsPerGameRank": 64,
+        "vorpRank": 230,
+        "riskAdjustedRank": 234,
+        "riskAdjustedValue": -83.60337325998174
+      },
+      "range": {
+        "lowPprPoints": 119.31329219920501,
+        "medianPprPoints": 145.50401487707927,
+        "highPprPoints": 171.69473755495352,
+        "lowQuantile": 0.2,
+        "highQuantile": 0.8
+      },
+      "confidence": {
+        "score": 0.62,
+        "label": "medium",
+        "reasons": [
+          "Model + context blend"
+        ]
+      },
+      "explanation": {
+        "positiveFactors": [
+          {
+            "feature": "pass_attempts",
+            "label": "Pass attempts",
+            "value": 316.63378574573653,
+            "displayValue": "316.63",
+            "percentile": null,
+            "contribution": 316.63378574573653,
+            "direction": "positive",
+            "description": "Pass attempts contributed to the projection (upside signal)."
+          }
+        ],
+        "negativeFactors": [],
+        "summary": "Associated with Pass attempts. Caution associated with role or supporting-cast uncertainty.",
+        "optimisticNote": "Why the model is optimistic: Pass attempts.",
+        "cautiousNote": "Why the model is cautious: role or supporting-cast uncertainty.",
+        "method": "unavailable",
+        "comparableSeasons": []
+      },
+      "history": [],
+      "warnings": [
+        {
+          "code": "ranking_coverage_inclusion",
+          "severity": "warning",
+          "message": "Published outside the model top-160 for coverage. Full-pool model rank: 230. FantasyPros PPR top-135 coverage audit Reference PPR rank: 122."
+        }
+      ],
+      "isAdjusted": false,
+      "adjustments": [],
+      "modelProjectedStats": null,
+      "context": {
+        "targets": null,
+        "carries": 36.189398773648065,
+        "pass_attempts": 316.63378574573653,
+        "modelOverallRank": 230.0
+      }
+    },
+    {
+      "playerId": "00-0039163",
+      "slug": "cj-stroud",
+      "name": "C.J. Stroud",
+      "shortName": "C. Stroud",
+      "team": "HOU",
+      "position": "QB",
+      "age": 24.91170431211499,
+      "experience": 3,
+      "rookie": false,
+      "headshotUrl": null,
+      "draft": {
+        "year": null,
+        "round": null,
+        "pick": null,
+        "team": null,
+        "undrafted": false
+      },
+      "projectionSeason": 2026,
+      "sourceSeason": 2025,
+      "modelVersion": "2026.2.0",
+      "modelArchitecture": "direct",
+      "rookieMode": "not_applicable",
+      "projectedStats": {
+        "games": 12.542731792128976,
+        "passAttempts": 285.1365885092979,
+        "completions": 209.92404772637232,
+        "passingYards": 1944.6768790623494,
+        "passingTouchdowns": 15.890061595786205,
+        "interceptions": 9.2,
+        "carries": 44.885636818372745,
+        "rushingYards": 213.3552708095996,
+        "rushingTouchdowns": 0.019074664197035494,
+        "targets": null,
+        "receptions": null,
+        "receivingYards": null,
+        "receivingTouchdowns": null,
+        "fumblesLost": 0.8600689733669007
+      },
+      "fantasy": {
+        "defaultPprPoints": 142.67715866504716,
+        "pointsPerGame": 11.375285785396631,
+        "replacementValue": -81.84685300338586,
+        "overallRank": 174,
+        "positionRank": 23,
+        "tier": 10,
+        "pointsRank": 86,
+        "pointsPerGameRank": 85,
+        "vorpRank": 236,
+        "riskAdjustedRank": 245,
+        "riskAdjustedValue": -86.34118350133484
+      },
+      "range": {
+        "lowPprPoints": 116.99527010533868,
+        "medianPprPoints": 142.67715866504716,
+        "highPprPoints": 168.35904722475564,
+        "lowQuantile": 0.2,
+        "highQuantile": 0.8
+      },
+      "confidence": {
+        "score": 0.62,
+        "label": "medium",
+        "reasons": [
+          "Model + context blend"
+        ]
+      },
+      "explanation": {
+        "positiveFactors": [
+          {
+            "feature": "pass_attempts",
+            "label": "Pass attempts",
+            "value": 285.1365885092979,
+            "displayValue": "285.14",
+            "percentile": null,
+            "contribution": 285.1365885092979,
+            "direction": "positive",
+            "description": "Pass attempts contributed to the projection (upside signal)."
+          },
+          {
+            "feature": "carries",
+            "label": "Carries",
+            "value": 44.885636818372745,
+            "displayValue": "44.89",
+            "percentile": null,
+            "contribution": 44.885636818372745,
+            "direction": "positive",
+            "description": "Carries contributed to the projection (upside signal)."
+          }
+        ],
+        "negativeFactors": [],
+        "summary": "Associated with Pass attempts, Carries. Caution associated with role or supporting-cast uncertainty.",
+        "optimisticNote": "Why the model is optimistic: Pass attempts, Carries.",
+        "cautiousNote": "Why the model is cautious: role or supporting-cast uncertainty.",
+        "method": "unavailable",
+        "comparableSeasons": []
+      },
+      "history": [],
+      "warnings": [
+        {
+          "code": "ranking_coverage_inclusion",
+          "severity": "warning",
+          "message": "Published outside the model top-160 for coverage. Full-pool model rank: 236. FantasyPros PPR top-135 coverage audit Reference PPR rank: 135."
+        }
+      ],
+      "isAdjusted": false,
+      "adjustments": [],
+      "modelProjectedStats": null,
+      "context": {
+        "targets": null,
+        "carries": 44.885636818372745,
+        "pass_attempts": 285.1365885092979,
+        "modelOverallRank": 236.0
+      }
+    },
+    {
+      "playerId": "00-0039146",
+      "slug": "jayden-reed",
+      "name": "Jayden Reed",
+      "shortName": "J. Reed",
+      "team": "GB",
+      "position": "WR",
+      "age": 26.34360027378508,
+      "experience": 3,
+      "rookie": false,
+      "headshotUrl": null,
+      "draft": {
+        "year": null,
+        "round": null,
+        "pick": null,
+        "team": null,
+        "undrafted": false
+      },
+      "projectionSeason": 2026,
+      "sourceSeason": 2025,
+      "modelVersion": "2026.2.0",
+      "modelArchitecture": "direct",
+      "rookieMode": "not_applicable",
+      "projectedStats": {
+        "games": 11.179259738443774,
+        "passAttempts": null,
+        "completions": null,
+        "passingYards": null,
+        "passingTouchdowns": null,
+        "interceptions": null,
+        "carries": 3.4499999999999997,
+        "rushingYards": 32.199999999999996,
+        "rushingTouchdowns": 0.16678355322122904,
+        "targets": 25.299999999999997,
+        "receptions": 21.849999999999998,
+        "receivingYards": 238.04999999999998,
+        "receivingTouchdowns": 1.15,
+        "fumblesLost": 0.23273956241725252
+      },
+      "fantasy": {
+        "defaultPprPoints": 56.31022219449287,
+        "pointsPerGame": 5.03702602068101,
+        "replacementValue": -82.96867883306467,
+        "overallRank": 175,
+        "positionRank": 77,
+        "tier": 10,
+        "pointsRank": 244,
+        "pointsPerGameRank": 364,
+        "vorpRank": 239,
+        "riskAdjustedRank": 238,
+        "riskAdjustedValue": -84.7424508321912
+      },
+      "range": {
+        "lowPprPoints": 46.17438219948416,
+        "medianPprPoints": 56.31022219449287,
+        "highPprPoints": 66.44606218950159,
+        "lowQuantile": 0.2,
+        "highQuantile": 0.8
+      },
+      "confidence": {
+        "score": 0.62,
+        "label": "medium",
+        "reasons": [
+          "Model + context blend"
+        ]
+      },
+      "explanation": {
+        "positiveFactors": [
+          {
+            "feature": "targets",
+            "label": "Targets",
+            "value": 25.299999999999997,
+            "displayValue": "25.30",
+            "percentile": null,
+            "contribution": 25.299999999999997,
+            "direction": "positive",
+            "description": "Targets contributed to the projection (upside signal)."
+          },
+          {
+            "feature": "carries",
+            "label": "Carries",
+            "value": 3.4499999999999997,
+            "displayValue": "3.45",
+            "percentile": null,
+            "contribution": 3.4499999999999997,
+            "direction": "positive",
+            "description": "Carries contributed to the projection (upside signal)."
+          }
+        ],
+        "negativeFactors": [],
+        "summary": "Associated with Targets, Carries. Caution associated with role or supporting-cast uncertainty.",
+        "optimisticNote": "Why the model is optimistic: Targets, Carries.",
+        "cautiousNote": "Why the model is cautious: role or supporting-cast uncertainty.",
+        "method": "unavailable",
+        "comparableSeasons": []
+      },
+      "history": [],
+      "warnings": [
+        {
+          "code": "ranking_coverage_inclusion",
+          "severity": "warning",
+          "message": "Published outside the model top-160 for coverage. Full-pool model rank: 239. FantasyPros PPR top-135 coverage audit Reference PPR rank: 114."
+        }
+      ],
+      "isAdjusted": false,
+      "adjustments": [],
+      "modelProjectedStats": null,
+      "context": {
+        "targets": 25.299999999999997,
+        "carries": 3.4499999999999997,
+        "pass_attempts": null,
+        "modelOverallRank": 239.0
+      }
+    },
+    {
+      "playerId": "00-0033553",
+      "slug": "james-conner",
+      "name": "James Conner",
+      "shortName": "J. Conner",
+      "team": "ARI",
+      "position": "RB",
+      "age": 31.326488706365502,
+      "experience": 9,
+      "rookie": false,
+      "headshotUrl": null,
+      "draft": {
+        "year": null,
+        "round": null,
+        "pick": null,
+        "team": null,
+        "undrafted": false
+      },
+      "projectionSeason": 2026,
+      "sourceSeason": 2025,
+      "modelVersion": "2026.2.0",
+      "modelArchitecture": "direct",
+      "rookieMode": "not_applicable",
+      "projectedStats": {
+        "games": 8.25223584723759,
+        "passAttempts": null,
+        "completions": null,
+        "passingYards": null,
+        "passingTouchdowns": null,
+        "interceptions": null,
+        "carries": 36.8,
+        "rushingYards": 109.24999999999999,
+        "rushingTouchdowns": 1.15,
+        "targets": 10.35,
+        "receptions": 9.2,
+        "receivingYards": 43.699999999999996,
+        "receivingTouchdowns": 0.6046483176017805,
+        "fumblesLost": 0.46106500498907893
+      },
+      "fantasy": {
+        "defaultPprPoints": 34.10075989563253,
+        "pointsPerGame": 4.132305538389048,
+        "replacementValue": -97.08138503984026,
+        "overallRank": 176,
+        "positionRank": 48,
+        "tier": 10,
+        "pointsRank": 342,
+        "pointsPerGameRank": 436,
+        "vorpRank": 293,
+        "riskAdjustedRank": 293,
+        "riskAdjustedValue": -98.15555897655268
+      },
+      "range": {
+        "lowPprPoints": 27.962623114418676,
+        "medianPprPoints": 34.10075989563253,
+        "highPprPoints": 40.23889667684638,
+        "lowQuantile": 0.2,
+        "highQuantile": 0.8
+      },
+      "confidence": {
+        "score": 0.62,
+        "label": "medium",
+        "reasons": [
+          "Model + context blend"
+        ]
+      },
+      "explanation": {
+        "positiveFactors": [
+          {
+            "feature": "carries",
+            "label": "Carries",
+            "value": 36.8,
+            "displayValue": "36.80",
+            "percentile": null,
+            "contribution": 36.8,
+            "direction": "positive",
+            "description": "Carries contributed to the projection (upside signal)."
+          },
+          {
+            "feature": "targets",
+            "label": "Targets",
+            "value": 10.35,
+            "displayValue": "10.35",
+            "percentile": null,
+            "contribution": 10.35,
+            "direction": "positive",
+            "description": "Targets contributed to the projection (upside signal)."
+          }
+        ],
+        "negativeFactors": [],
+        "summary": "Associated with Carries, Targets. Caution associated with role or supporting-cast uncertainty.",
+        "optimisticNote": "Why the model is optimistic: Carries, Targets.",
+        "cautiousNote": "Why the model is cautious: role or supporting-cast uncertainty.",
+        "method": "unavailable",
+        "comparableSeasons": []
+      },
+      "history": [],
+      "warnings": [
+        {
+          "code": "ranking_coverage_inclusion",
+          "severity": "warning",
+          "message": "Published outside the model top-160 for coverage. Full-pool model rank: 293. User-nominated fantasy-relevant coverage exception Reference PPR rank: 176."
+        }
+      ],
+      "isAdjusted": false,
+      "adjustments": [],
+      "modelProjectedStats": null,
+      "context": {
+        "targets": 10.35,
+        "carries": 36.8,
+        "pass_attempts": null,
+        "modelOverallRank": 293.0
+      }
+    },
+    {
+      "playerId": "00-0031408",
+      "slug": "mike-evans-1408",
+      "name": "Mike Evans",
+      "shortName": "M. Evans",
+      "team": "SF",
+      "position": "WR",
+      "age": 33.02943189596167,
+      "experience": 12,
+      "rookie": false,
+      "headshotUrl": null,
+      "draft": {
+        "year": null,
+        "round": null,
+        "pick": null,
+        "team": null,
+        "undrafted": false
+      },
+      "projectionSeason": 2026,
+      "sourceSeason": 2025,
+      "modelVersion": "2026.2.0",
+      "modelArchitecture": "direct",
+      "rookieMode": "not_applicable",
+      "projectedStats": {
+        "games": 7.940051077004644,
+        "passAttempts": null,
+        "completions": null,
+        "passingYards": null,
+        "passingTouchdowns": null,
+        "interceptions": null,
+        "carries": 0.1349045321666147,
+        "rushingYards": -1.660561316542188,
+        "rushingTouchdowns": 0.03914182715677851,
+        "targets": 32.560028596885026,
+        "receptions": 12.139615004185147,
+        "receivingYards": 181.94163403876894,
+        "receivingTouchdowns": 1.9121935664262917,
+        "fumblesLost": 0.0
+      },
+      "fantasy": {
+        "defaultPprPoints": 41.87573463790624,
+        "pointsPerGame": 5.273988067807709,
+        "replacementValue": -97.40316638965129,
+        "overallRank": 177,
+        "positionRank": 78,
+        "tier": 10,
+        "pointsRank": 292,
+        "pointsPerGameRank": 325,
+        "vorpRank": 296,
+        "riskAdjustedRank": 296,
+        "riskAdjustedValue": -98.72225203074534
+      },
+      "range": {
+        "lowPprPoints": 34.33810240308312,
+        "medianPprPoints": 41.87573463790624,
+        "highPprPoints": 49.41336687272936,
+        "lowQuantile": 0.2,
+        "highQuantile": 0.8
+      },
+      "confidence": {
+        "score": 0.44000000000000006,
+        "label": "low",
+        "reasons": [
+          "Model + context blend",
+          "2026 offseason context (signed)"
+        ]
+      },
+      "explanation": {
+        "positiveFactors": [
+          {
+            "feature": "targets",
+            "label": "Targets",
+            "value": 32.560028596885026,
+            "displayValue": "32.56",
+            "percentile": null,
+            "contribution": 32.560028596885026,
+            "direction": "positive",
+            "description": "Targets contributed to the projection (upside signal)."
+          }
+        ],
+        "negativeFactors": [],
+        "summary": "Associated with Targets. Caution associated with role or supporting-cast uncertainty.",
+        "optimisticNote": "Why the model is optimistic: Targets.",
+        "cautiousNote": "Why the model is cautious: role or supporting-cast uncertainty.",
+        "method": "unavailable",
+        "comparableSeasons": []
+      },
+      "history": [],
+      "warnings": [
+        {
+          "code": "ranking_coverage_inclusion",
+          "severity": "warning",
+          "message": "Published outside the model top-160 for coverage. Full-pool model rank: 296. FantasyPros PPR top-135 coverage audit Reference PPR rank: 49."
+        }
+      ],
+      "isAdjusted": false,
+      "adjustments": [],
+      "modelProjectedStats": null,
+      "context": {
+        "targets": 32.560028596885026,
+        "carries": 0.1349045321666147,
+        "pass_attempts": null,
+        "modelOverallRank": 296.0
+      }
+    },
+    {
+      "playerId": "00-0039910",
+      "slug": "jayden-daniels",
+      "name": "Jayden Daniels",
+      "shortName": "J. Daniels",
+      "team": "WAS",
+      "position": "QB",
+      "age": 25.702943189596166,
+      "experience": 2,
+      "rookie": false,
+      "headshotUrl": null,
+      "draft": {
+        "year": null,
+        "round": null,
+        "pick": null,
+        "team": null,
+        "undrafted": false
+      },
+      "projectionSeason": 2026,
+      "sourceSeason": 2025,
+      "modelVersion": "2026.2.0",
+      "modelArchitecture": "direct",
+      "rookieMode": "not_applicable",
+      "projectedStats": {
+        "games": 11.924631335108103,
+        "passAttempts": 216.2,
+        "completions": 131.1,
+        "passingYards": 1451.3,
+        "passingTouchdowns": 9.2,
+        "interceptions": 3.4499999999999997,
+        "carries": 51.1367222898615,
+        "rushingYards": 168.97486907090513,
+        "rushingTouchdowns": 1.8028131011766635,
+        "targets": null,
+        "receptions": null,
+        "receivingYards": null,
+        "receivingTouchdowns": null,
+        "fumblesLost": 2.3
+      },
+      "fantasy": {
+        "defaultPprPoints": 111.0663655141505,
+        "pointsPerGame": 9.314029288868044,
+        "replacementValue": -113.45764615428251,
+        "overallRank": 178,
+        "positionRank": 24,
+        "tier": 10,
+        "pointsRank": 129,
+        "pointsPerGameRank": 146,
+        "vorpRank": 417,
+        "riskAdjustedRank": 441,
+        "riskAdjustedValue": -116.95623666797826
+      },
+      "range": {
+        "lowPprPoints": 91.07441972160342,
+        "medianPprPoints": 111.0663655141505,
+        "highPprPoints": 131.0583113066976,
+        "lowQuantile": 0.2,
+        "highQuantile": 0.8
+      },
+      "confidence": {
+        "score": 0.62,
+        "label": "medium",
+        "reasons": [
+          "Model + context blend"
+        ]
+      },
+      "explanation": {
+        "positiveFactors": [
+          {
+            "feature": "pass_attempts",
+            "label": "Pass attempts",
+            "value": 216.2,
+            "displayValue": "216.20",
+            "percentile": null,
+            "contribution": 216.2,
+            "direction": "positive",
+            "description": "Pass attempts contributed to the projection (upside signal)."
+          },
+          {
+            "feature": "carries",
+            "label": "Carries",
+            "value": 51.1367222898615,
+            "displayValue": "51.14",
+            "percentile": null,
+            "contribution": 51.1367222898615,
+            "direction": "positive",
+            "description": "Carries contributed to the projection (upside signal)."
+          }
+        ],
+        "negativeFactors": [],
+        "summary": "Associated with Pass attempts, Carries. Caution associated with role or supporting-cast uncertainty.",
+        "optimisticNote": "Why the model is optimistic: Pass attempts, Carries.",
+        "cautiousNote": "Why the model is cautious: role or supporting-cast uncertainty.",
+        "method": "unavailable",
+        "comparableSeasons": []
+      },
+      "history": [],
+      "warnings": [
+        {
+          "code": "ranking_coverage_inclusion",
+          "severity": "warning",
+          "message": "Published outside the model top-160 for coverage. Full-pool model rank: 417. FantasyPros PPR top-135 coverage audit Reference PPR rank: 51."
+        }
+      ],
+      "isAdjusted": false,
+      "adjustments": [],
+      "modelProjectedStats": null,
+      "context": {
+        "targets": null,
+        "carries": 51.1367222898615,
+        "pass_attempts": 216.2,
+        "modelOverallRank": 417.0
+      }
+    },
+    {
+      "playerId": "00-0039344",
+      "slug": "jonathon-brooks",
+      "name": "Jonathon Brooks",
+      "shortName": "J. Brooks",
+      "team": "CAR",
+      "position": "RB",
+      "age": 23.11567419575633,
+      "experience": 2,
+      "rookie": false,
+      "headshotUrl": null,
+      "draft": {
+        "year": null,
+        "round": null,
+        "pick": null,
+        "team": null,
+        "undrafted": false
+      },
+      "projectionSeason": 2026,
+      "sourceSeason": 2025,
+      "modelVersion": "2026.2.0",
+      "modelArchitecture": "direct",
+      "rookieMode": "not_applicable",
+      "projectedStats": {
+        "games": 5.647073777977407,
+        "passAttempts": null,
+        "completions": null,
+        "passingYards": null,
+        "passingTouchdowns": null,
+        "interceptions": null,
+        "carries": 10.35,
+        "rushingYards": 25.299999999999997,
+        "rushingTouchdowns": 1.2891029795132438,
+        "targets": 3.4499999999999997,
+        "receptions": 3.4499999999999997,
+        "receivingYards": 26.45,
+        "receivingTouchdowns": 0.0059702526085900496,
+        "fumblesLost": 0.25392890161039317
+      },
+      "fantasy": {
+        "defaultPprPoints": 15.887581589510216,
+        "pointsPerGame": 2.8134184560274362,
+        "replacementValue": -115.29456334596257,
+        "overallRank": 179,
+        "positionRank": 49,
+        "tier": 10,
+        "pointsRank": 502,
+        "pointsPerGameRank": 612,
+        "vorpRank": 431,
+        "riskAdjustedRank": 428,
+        "riskAdjustedValue": -115.79502216603214
+      },
+      "range": {
+        "lowPprPoints": 13.027816903398378,
+        "medianPprPoints": 15.887581589510216,
+        "highPprPoints": 18.747346275622053,
+        "lowQuantile": 0.2,
+        "highQuantile": 0.8
+      },
+      "confidence": {
+        "score": 0.62,
+        "label": "medium",
+        "reasons": [
+          "Model + context blend"
+        ]
+      },
+      "explanation": {
+        "positiveFactors": [
+          {
+            "feature": "carries",
+            "label": "Carries",
+            "value": 10.35,
+            "displayValue": "10.35",
+            "percentile": null,
+            "contribution": 10.35,
+            "direction": "positive",
+            "description": "Carries contributed to the projection (upside signal)."
+          },
+          {
+            "feature": "targets",
+            "label": "Targets",
+            "value": 3.4499999999999997,
+            "displayValue": "3.45",
+            "percentile": null,
+            "contribution": 3.4499999999999997,
+            "direction": "positive",
+            "description": "Targets contributed to the projection (upside signal)."
+          }
+        ],
+        "negativeFactors": [],
+        "summary": "Associated with Carries, Targets. Caution associated with role or supporting-cast uncertainty.",
+        "optimisticNote": "Why the model is optimistic: Carries, Targets.",
+        "cautiousNote": "Why the model is cautious: role or supporting-cast uncertainty.",
+        "method": "unavailable",
+        "comparableSeasons": []
+      },
+      "history": [],
+      "warnings": [
+        {
+          "code": "ranking_coverage_inclusion",
+          "severity": "warning",
+          "message": "Published outside the model top-160 for coverage. Full-pool model rank: 431. FantasyPros PPR top-135 coverage audit Reference PPR rank: 119."
+        }
+      ],
+      "isAdjusted": false,
+      "adjustments": [],
+      "modelProjectedStats": null,
+      "context": {
+        "targets": 3.4499999999999997,
+        "carries": 10.35,
+        "pass_attempts": null,
+        "modelOverallRank": 431.0
+      }
+    },
+    {
+      "playerId": "00-0035228",
+      "slug": "kyler-murray",
+      "name": "Kyler Murray",
+      "shortName": "K. Murray",
+      "team": "MIN",
+      "position": "QB",
+      "age": 29.06776180698152,
+      "experience": 7,
+      "rookie": false,
+      "headshotUrl": null,
+      "draft": {
+        "year": null,
+        "round": null,
+        "pick": null,
+        "team": null,
+        "undrafted": false
+      },
+      "projectionSeason": 2026,
+      "sourceSeason": 2025,
+      "modelVersion": "2026.2.0",
+      "modelArchitecture": "direct",
+      "rookieMode": "not_applicable",
+      "projectedStats": {
+        "games": 11.179287026639432,
+        "passAttempts": 185.14999999999998,
+        "completions": 126.49999999999999,
+        "passingYards": 1106.3,
+        "passingTouchdowns": 6.8999999999999995,
+        "interceptions": 3.4499999999999997,
+        "carries": 33.349999999999994,
+        "rushingYards": 198.95,
+        "rushingTouchdowns": 1.15,
+        "targets": null,
+        "receptions": null,
+        "receivingYards": null,
+        "receivingTouchdowns": null,
+        "fumblesLost": 1.15
+      },
+      "fantasy": {
+        "defaultPprPoints": 89.44699999999999,
+        "pointsPerGame": 8.001136368254457,
+        "replacementValue": -135.07701166843304,
+        "overallRank": 180,
+        "positionRank": 25,
+        "tier": 10,
+        "pointsRank": 175,
+        "pointsPerGameRank": 187,
+        "vorpRank": 819,
+        "riskAdjustedRank": 833,
+        "riskAdjustedValue": -137.89459216843304
+      },
+      "range": {
+        "lowPprPoints": 73.34653999999999,
+        "medianPprPoints": 89.44699999999999,
+        "highPprPoints": 105.54745999999999,
+        "lowQuantile": 0.2,
+        "highQuantile": 0.8
+      },
+      "confidence": {
+        "score": 0.5,
+        "label": "medium",
+        "reasons": [
+          "Model + context blend",
+          "2026 offseason context (signed)"
+        ]
+      },
+      "explanation": {
+        "positiveFactors": [
+          {
+            "feature": "pass_attempts",
+            "label": "Pass attempts",
+            "value": 185.14999999999998,
+            "displayValue": "185.15",
+            "percentile": null,
+            "contribution": 185.14999999999998,
+            "direction": "positive",
+            "description": "Pass attempts contributed to the projection (upside signal)."
+          },
+          {
+            "feature": "carries",
+            "label": "Carries",
+            "value": 33.349999999999994,
+            "displayValue": "33.35",
+            "percentile": null,
+            "contribution": 33.349999999999994,
+            "direction": "positive",
+            "description": "Carries contributed to the projection (upside signal)."
+          }
+        ],
+        "negativeFactors": [],
+        "summary": "Associated with Pass attempts, Carries. Caution associated with role or supporting-cast uncertainty.",
+        "optimisticNote": "Why the model is optimistic: Pass attempts, Carries.",
+        "cautiousNote": "Why the model is cautious: role or supporting-cast uncertainty.",
+        "method": "unavailable",
+        "comparableSeasons": []
+      },
+      "history": [],
+      "warnings": [
+        {
+          "code": "ranking_coverage_inclusion",
+          "severity": "warning",
+          "message": "Published outside the model top-160 for coverage. Full-pool model rank: 819. FantasyPros PPR top-135 coverage audit Reference PPR rank: 113."
+        }
+      ],
+      "isAdjusted": false,
+      "adjustments": [],
+      "modelProjectedStats": null,
+      "context": {
+        "targets": null,
+        "carries": 33.349999999999994,
+        "pass_attempts": 185.14999999999998,
+        "modelOverallRank": 819.0
+      }
+    },
+    {
+      "playerId": "00-0038128",
+      "slug": "malik-willis",
+      "name": "Malik Willis",
+      "shortName": "M. Willis",
+      "team": "MIA",
+      "position": "QB",
+      "age": 27.27173169062286,
+      "experience": 4,
+      "rookie": false,
+      "headshotUrl": null,
+      "draft": {
+        "year": null,
+        "round": null,
+        "pick": null,
+        "team": null,
+        "undrafted": false
+      },
+      "projectionSeason": 2026,
+      "sourceSeason": 2025,
+      "modelVersion": "2026.2.0",
+      "modelArchitecture": "direct",
+      "rookieMode": "not_applicable",
+      "projectedStats": {
+        "games": 4.242686669092161,
+        "passAttempts": 40.25,
+        "completions": 34.5,
+        "passingYards": 485.29999999999995,
+        "passingTouchdowns": 3.4499999999999997,
+        "interceptions": 3.7239198418539385,
+        "carries": 25.299999999999997,
+        "rushingYards": 115.11677971370445,
+        "rushingTouchdowns": 1.2832445713733958,
+        "targets": null,
+        "receptions": null,
+        "receivingYards": null,
+        "receivingTouchdowns": null,
+        "fumblesLost": 1.15
+      },
+      "fantasy": {
+        "defaultPprPoints": 42.675305715902944,
+        "pointsPerGame": 10.058557005114519,
+        "replacementValue": -181.84870595253008,
+        "overallRank": 181,
+        "positionRank": 26,
+        "tier": 10,
+        "pointsRank": 290,
+        "pointsPerGameRank": 126,
+        "vorpRank": 852,
+        "riskAdjustedRank": 852,
+        "riskAdjustedValue": -183.19297808258102
+      },
+      "range": {
+        "lowPprPoints": 34.99375068704042,
+        "medianPprPoints": 42.675305715902944,
+        "highPprPoints": 50.35686074476547,
+        "lowQuantile": 0.2,
+        "highQuantile": 0.8
+      },
+      "confidence": {
+        "score": 0.44000000000000006,
+        "label": "low",
+        "reasons": [
+          "Model + context blend",
+          "2026 offseason context (signed)"
+        ]
+      },
+      "explanation": {
+        "positiveFactors": [
+          {
+            "feature": "pass_attempts",
+            "label": "Pass attempts",
+            "value": 40.25,
+            "displayValue": "40.25",
+            "percentile": null,
+            "contribution": 40.25,
+            "direction": "positive",
+            "description": "Pass attempts contributed to the projection (upside signal)."
+          },
+          {
+            "feature": "carries",
+            "label": "Carries",
+            "value": 25.299999999999997,
+            "displayValue": "25.30",
+            "percentile": null,
+            "contribution": 25.299999999999997,
+            "direction": "positive",
+            "description": "Carries contributed to the projection (upside signal)."
+          }
+        ],
+        "negativeFactors": [],
+        "summary": "Associated with Pass attempts, Carries. Caution associated with role or supporting-cast uncertainty.",
+        "optimisticNote": "Why the model is optimistic: Pass attempts, Carries.",
+        "cautiousNote": "Why the model is cautious: role or supporting-cast uncertainty.",
+        "method": "unavailable",
+        "comparableSeasons": []
+      },
+      "history": [],
+      "warnings": [
+        {
+          "code": "ranking_coverage_inclusion",
+          "severity": "warning",
+          "message": "Published outside the model top-160 for coverage. Full-pool model rank: 852. FantasyPros PPR top-135 coverage audit Reference PPR rank: 130."
+        }
+      ],
+      "isAdjusted": false,
+      "adjustments": [],
+      "modelProjectedStats": null,
+      "context": {
+        "targets": null,
+        "carries": 25.299999999999997,
+        "pass_attempts": 40.25,
+        "modelOverallRank": 852.0
       }
     }
   ]
