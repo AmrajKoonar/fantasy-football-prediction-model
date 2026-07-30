@@ -67,7 +67,7 @@ export function NewDraftForm() {
       const result = await getSupabase().rpc("create_mock_draft", {
         draft_settings: parsed.data,
         player_snapshot: players,
-        display_name: displayName.trim(),
+        p_display_name: displayName.trim(),
       });
       if (result.error) throw result.error;
       router.push(`/mock-drafts/${result.data}`);
@@ -227,4 +227,3 @@ export function NewDraftForm() {
     </form>
   );
 }
-

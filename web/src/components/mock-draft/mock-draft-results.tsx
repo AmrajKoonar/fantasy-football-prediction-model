@@ -64,7 +64,7 @@ export function MockDraftResults({ draftKey }: { draftKey: string }) {
   async function createCopy() {
     if (!draft) return;
     const result = await getSupabase().rpc("copy_mock_draft", {
-      source_draft: draft.id, display_name: getDisplayName(),
+      source_draft: draft.id, p_display_name: getDisplayName(),
     });
     if (result.error) setError(result.error.message);
     else router.push(`/mock-drafts/${result.data}`);

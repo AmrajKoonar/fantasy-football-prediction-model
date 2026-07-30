@@ -191,7 +191,7 @@ export function MockDraftRoom({ draftKey }: { draftKey: string }) {
   async function claim(slot: number) {
     await action("claim_draft_slot", {
       target_draft: draft!.id, target_slot: slot,
-      display_name: getDisplayName(), team_name: getDisplayName(),
+      p_display_name: getDisplayName(), p_team_name: getDisplayName(),
     });
   }
 

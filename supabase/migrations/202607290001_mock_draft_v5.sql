@@ -264,7 +264,7 @@ language sql security definer set search_path = public, pg_temp as $$
 $$;
 
 create or replace function public.create_mock_draft(
-  draft_settings jsonb, player_snapshot jsonb, display_name text
+  draft_settings jsonb, player_snapshot jsonb, p_display_name text
 ) returns uuid language plpgsql security definer set search_path = public, pg_temp as $$
 declare new_id uuid; teams integer; roster_size integer; selected_rounds integer;
 begin
@@ -277,7 +277,7 @@ begin
     then raise exception 'Rounds must match roster size'; end if;
   if jsonb_array_length(player_snapshot) < 450 then raise exception 'Player snapshot is incomplete'; end if;
 
-  insert into public.profiles (id, display_name) values (auth.uid(), left(display_name, 30))
+  insert into public.profiles (id, display_name) values (auth.uid(), left(p_display_name, 30))
     on conflict (id) do update set display_name=excluded.display_name, updated_at=now();
   insert into public.drafts (
     name, host_user_id, format, scoring_preset, team_count, rounds,
@@ -292,8 +292,8 @@ begin
   insert into public.draft_slots (draft_id, slot_number, budget_remaining)
     select new_id, value, coalesce((draft_settings->>'auctionBudget')::integer, 200)
     from generate_series(1, teams) value;
-  update public.draft_slots set user_id=auth.uid(), display_name=left(display_name,30),
-    team_name=left(display_name,30) where draft_id=new_id and slot_number=1;
+  update public.draft_slots set user_id=auth.uid(), display_name=left(p_display_name,30),
+    team_name=left(p_display_name,30) where draft_id=new_id and slot_number=1;
 
   insert into public.draft_player_snapshots (
     draft_id, player_id, name, team, primary_position, eligible_positions, rookie,
@@ -313,7 +313,7 @@ end;
 $$;
 
 create or replace function public.claim_draft_slot(
-  target_draft uuid, target_slot integer, display_name text, team_name text default ''
+  target_draft uuid, target_slot integer, p_display_name text, p_team_name text default ''
 ) returns void language plpgsql security definer set search_path = public, pg_temp as $$
 declare current_status public.draft_status;
 begin
@@ -323,21 +323,22 @@ begin
   if exists(select 1 from public.draft_slots where draft_id=target_draft and user_id=auth.uid())
     then raise exception 'You already have a slot'; end if;
   update public.draft_slots set user_id=auth.uid(), is_cpu=false,
-    display_name=left(display_name,30), team_name=left(coalesce(nullif(team_name,''),display_name),30)
+    display_name=left(p_display_name,30),
+    team_name=left(coalesce(nullif(p_team_name,''),p_display_name),30)
   where draft_id=target_draft and slot_number=target_slot and user_id is null;
   if not found then raise exception 'That slot is no longer available'; end if;
 end;
 $$;
 
 create or replace function public.copy_mock_draft(
-  source_draft uuid, display_name text
+  source_draft uuid, p_display_name text
 ) returns uuid language plpgsql security definer set search_path = public, pg_temp as $$
 declare source public.drafts%rowtype; new_id uuid;
 begin
   if auth.uid() is null then raise exception 'Authentication required'; end if;
   select * into source from public.drafts where id=source_draft and status='completed';
   if source.id is null then raise exception 'Only completed drafts can be copied'; end if;
-  insert into public.profiles(id,display_name) values(auth.uid(),left(display_name,30))
+  insert into public.profiles(id,display_name) values(auth.uid(),left(p_display_name,30))
     on conflict(id) do update set display_name=excluded.display_name,updated_at=now();
   insert into public.drafts(
     name,host_user_id,format,scoring_preset,team_count,rounds,pick_timer_seconds,settings,seed
@@ -349,8 +350,8 @@ begin
   insert into public.draft_slots(draft_id,slot_number,budget_remaining)
     select new_id,value,coalesce((source.settings->>'auctionBudget')::integer,200)
     from generate_series(1,source.team_count) value;
-  update public.draft_slots set user_id=auth.uid(),display_name=left(display_name,30),
-    team_name=left(display_name,30) where draft_id=new_id and slot_number=1;
+  update public.draft_slots set user_id=auth.uid(),display_name=left(p_display_name,30),
+    team_name=left(p_display_name,30) where draft_id=new_id and slot_number=1;
   insert into public.draft_player_snapshots(
     draft_id,player_id,name,team,primary_position,eligible_positions,rookie,age,
     overall_rank,position_rank,tier,projected_points,points_per_game,adp,source
